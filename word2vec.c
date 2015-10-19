@@ -40,7 +40,7 @@ char save_vocab_file[MAX_STRING], read_vocab_file[MAX_STRING]; /* char型save_vo
 struct vocab_word *vocab; /* 構造体型struct vocab_wordでポインタvocabを宣言 */
 int binary = 0, cbow = 1, debug_mode = 2, window = 5, min_count = 5, num_threads = 12, min_reduce = 1;
 int *vocab_hash; /* int型ポインタvocab_hash(SearchVocab()で使用) */
-long long vocab_max_size = 1000, vocab_size = 0, layer1_size = 100;
+long long vocab_max_size = 1000, vocab_size = 0, layer1_size = 100; /* long long型vocab_max_size, vocab_sizeとlayer1_sizeを宣言 */
 long long train_words = 0, word_count_actual = 0, iter = 5, file_size = 0, classes = 0;
 real alpha = 0.025, starting_alpha, sample = 1e-3;
 real *syn0, *syn1, *syn1neg, *expTable;
@@ -122,32 +122,32 @@ int ReadWordIndex(FILE *fin) { /* ファイルポインタfinを引数に持つi
 int AddWordToVocab(char *word) { /* char型ポインタwordを引数に持つint型関数AddWordToVocab() */
   unsigned int hash, length = strlen(word) + 1; /* 符号無int型bash, length(wordの文字長+1を代入) */
   if (length > MAX_STRING) length = MAX_STRING; /* lengthが最大文字数より大きい場合はlenghに最大文字数を代入 */
-  vocab[vocab_size].word = (char *)calloc(length, sizeof(char)); /* vocab[vocab_size].wordに */
-  strcpy(vocab[vocab_size].word, word);
-  vocab[vocab_size].cn = 0;
-  vocab_size++;
-  // Reallocate memory if needed
-  if (vocab_size + 2 >= vocab_max_size) {
-    vocab_max_size += 1000;
-    vocab = (struct vocab_word *)realloc(vocab, vocab_max_size * sizeof(struct vocab_word));
+  vocab[vocab_size].word = (char *)calloc(length, sizeof(char)); /* length個のcharサイズのメモリを確保し，char型にしてvocab[vocab_size].wordに代入 */
+  strcpy(vocab[vocab_size].word, word); /* vocab[vocab_size].wordにwordをコピー */
+  vocab[vocab_size].cn = 0; /* vocab[vocab_size].cnに0を代入 */
+  vocab_size++; /* vocab_sizeに1を足す */
+  // Reallocate memory if needed /* 必要時にメモリの割当を変更 */
+  if (vocab_size + 2 >= vocab_max_size) { /* vocab_size + 2がvocab_max_size以上の時 */
+    vocab_max_size += 1000; /* vocab_max_sizeに1000を足す */
+    vocab = (struct vocab_word *)realloc(vocab, vocab_max_size * sizeof(struct vocab_word)); /*  */
   }
-  hash = GetWordHash(word);
+  hash = GetWordHash(word); /* hashにwordのhashを代入 */
   while (vocab_hash[hash] != -1) hash = (hash + 1) % vocab_hash_size;
   vocab_hash[hash] = vocab_size - 1;
   return vocab_size - 1;
 }
 
-// Used later for sorting by word counts
+// Used later for sorting by word counts /* 単語数で並替えをする際に使用 */
 int VocabCompare(const void *a, const void *b) {
     return ((struct vocab_word *)b)->cn - ((struct vocab_word *)a)->cn;
 }
 
-// Sorts the vocabulary by frequency using word counts
-void SortVocab() {
-  int a, size;
+// Sorts the vocabulary by frequency using word counts /* 語彙を単語数を用いて頻度順に並替え */
+void SortVocab() { /* void関数SortVocab() */
+  int a, size; 
   unsigned int hash;
-  // Sort the vocabulary and keep </s> at the first position
-  qsort(&vocab[1], vocab_size - 1, sizeof(struct vocab_word), VocabCompare);
+  // Sort the vocabulary and keep </s> at the first position /* 語彙を並替えて文字列</s>を先頭に保つ */
+  qsort(&vocab[1], vocab_size - 1, sizeof(struct vocab_word), VocabCompare);/* vocab[1]のアドレス，vocab_size -1， */
   for (a = 0; a < vocab_hash_size; a++) vocab_hash[a] = -1;
   size = vocab_size;
   train_words = 0;
