@@ -18,7 +18,7 @@
 #include <math.h>
 #include <pthread.h>
 
-#define MAX_STRING 100
+#define MAX_STRING 100 /* 最大文字数は100字まで */
 #define EXP_TABLE_SIZE 1000
 #define MAX_EXP 6
 #define MAX_SENTENCE_LENGTH 1000
@@ -28,17 +28,18 @@ const int vocab_hash_size = 30000000;  // Maximum 30 * 0.7 = 21M words in the vo
 
 typedef float real;                    // Precision of float numbers
 
+/* 構造体型struct vocab_wordを宣言 */
 struct vocab_word {
-  long long cn;
-  int *point;
-  char *word, *code, codelen;
+  long long cn; /* long long型(64 bit符号付整数型) cn */
+  int *point; /* int型ポインタpointを宣言 */
+  char *word, *code, codelen; /* char型(1 byte文字型)codelenとポインタword，codeを宣言 */
 };
 
-char train_file[MAX_STRING], output_file[MAX_STRING];
-char save_vocab_file[MAX_STRING], read_vocab_file[MAX_STRING];
-struct vocab_word *vocab;
+char train_file[MAX_STRING], output_file[MAX_STRING]; /* 最大文字数MAX_STRINGを引数に持つchar型(1 byte文字型)train_fileとoutput_fileを宣言 */
+char save_vocab_file[MAX_STRING], read_vocab_file[MAX_STRING]; /* char型save_vocab_fileとread_vocab_fileを宣言 */
+struct vocab_word *vocab; /* 構造体型struct vocab_wordでポインタvocabを宣言 */
 int binary = 0, cbow = 1, debug_mode = 2, window = 5, min_count = 5, num_threads = 12, min_reduce = 1;
-int *vocab_hash;
+int *vocab_hash; /* int型ポインタvocab_hash(SearchVocab()で使用) */
 long long vocab_max_size = 1000, vocab_size = 0, layer1_size = 100;
 long long train_words = 0, word_count_actual = 0, iter = 5, file_size = 0, classes = 0;
 real alpha = 0.025, starting_alpha, sample = 1e-3;
@@ -48,12 +49,12 @@ clock_t start;
 int hs = 0, negative = 5;
 const int table_size = 1e8;
 int *table;
-
+/* void型(値を返さない関数)InitUnigramTable()←かなり後に出てくる */
 void InitUnigramTable() {
   int a, i;
   double train_words_pow = 0;
   double d1, power = 0.75;
-  table = (int *)malloc(table_size * sizeof(int));
+  table = (int *)malloc(table_size * sizeof(int)); /* table_size * sizeof(int)分のメモリを動的に割り当て(free()でメモリを解放) */
   for (a = 0; a < vocab_size; a++) train_words_pow += pow(vocab[a].cn, power);
   i = 0;
   d1 = pow(vocab[i].cn, power) / train_words_pow;
@@ -67,61 +68,61 @@ void InitUnigramTable() {
   }
 }
 
-// Reads a single word from a file, assuming space + tab + EOL to be word boundaries
-void ReadWord(char *word, FILE *fin) {
-  int a = 0, ch;
-  while (!feof(fin)) {
-    ch = fgetc(fin);
+// Reads a single word from a file, assuming space + tab + EOL to be word boundaries /* ファイルから1単語読込み，スペース・タブ・行末を単語の切れ目と見なす */
+void ReadWord(char *word, FILE *fin) { /* char型ポインタwordとファイルポインタfinが引数のvoid型関数ReadWord() */
+  int a = 0, ch; /* int型aとch */
+  while (!feof(fin)) { /* ファイルポインタfinがファイルの終端に達した時にループ終了 */
+    ch = fgetc(fin); /* ファイルポインタfinから1文字読込んでint型で返す */
     if (ch == 13) continue;
-    if ((ch == ' ') || (ch == '\t') || (ch == '\n')) {
-      if (a > 0) {
-        if (ch == '\n') ungetc(ch, fin);
+    if ((ch == ' ') || (ch == '\t') || (ch == '\n')) {/* 空白・タブ・改行がある場合 */
+      if (a > 0) { /* 最初は条件を満たさない */
+        if (ch == '\n') ungetc(ch, fin); /* ファイルポインタfinに1文字返却しchを返す */
         break;
       }
-      if (ch == '\n') {
-        strcpy(word, (char *)"</s>");
+      if (ch == '\n') { /* 改行がある場合 */
+        strcpy(word, (char *)"</s>"); /* 配列wordに文字列"</s>"をコピー */
         return;
       } else continue;
     }
-    word[a] = ch;
+    word[a] = ch; /* 配列wordのa番目にint型chを代入 */
     a++;
-    if (a >= MAX_STRING - 1) a--;   // Truncate too long words
+    if (a >= MAX_STRING - 1) a--;   // Truncate too long words /* 長すぎる単語を削除 */
   }
   word[a] = 0;
 }
 
-// Returns hash value of a word
-int GetWordHash(char *word) {
-  unsigned long long a, hash = 0;
-  for (a = 0; a < strlen(word); a++) hash = hash * 257 + word[a];
-  hash = hash % vocab_hash_size;
-  return hash;
+// Returns hash value of a word /* 単語のhash値を返す */
+int GetWordHash(char *word) { /* char型ポインタwordを引数に持つint型関数GetWordHash */
+  unsigned long long a, hash = 0; /* 符号無long long型a, hash */
+  for (a = 0; a < strlen(word); a++) hash = hash * 257 + word[a]; /* aが文字列wordの文字長未満の時hashにhash * 257 + word[a]を代入 */
+  hash = hash % vocab_hash_size; /* hashにhashをvocab_hash_sizeの剰余を代入 */
+  return hash; /* hashを返す */
 }
 
-// Returns position of a word in the vocabulary; if the word is not found, returns -1
-int SearchVocab(char *word) {
-  unsigned int hash = GetWordHash(word);
-  while (1) {
-    if (vocab_hash[hash] == -1) return -1;
-    if (!strcmp(word, vocab[vocab_hash[hash]].word)) return vocab_hash[hash];
-    hash = (hash + 1) % vocab_hash_size;
+// Returns position of a word in the vocabulary; if the word is not found, returns -1 /* 語彙中の単語の位置を返す(単語が語彙中に無い場合は-1を返す) */
+int SearchVocab(char *word) { /* char型ポインタwordを引数に持つint型関数SearchVocab() */
+  unsigned int hash = GetWordHash(word); /* 符号無int型hashにwordのhash値を代入 */
+  while (1) { /* 無限ループ */
+    if (vocab_hash[hash] == -1) return -1; /* vocab_hash[hash]が-1の時-1を返す */
+    if (!strcmp(word, vocab[vocab_hash[hash]].word)) return vocab_hash[hash]; /* 文字列wordとvocab[vocab_hash[hash]].wordが等しい時vocab_hash[hash]を返す */
+    hash = (hash + 1) % vocab_hash_size; /* hashに(hash + 1) % vocab_hash_sizeを返す */
   }
   return -1;
 }
 
-// Reads a word and returns its index in the vocabulary
-int ReadWordIndex(FILE *fin) {
-  char word[MAX_STRING];
-  ReadWord(word, fin);
-  if (feof(fin)) return -1;
-  return SearchVocab(word);
+// Reads a word and returns its index in the vocabulary /* 単語を読取り，語彙中での単語の番号を返す */
+int ReadWordIndex(FILE *fin) { /* ファイルポインタfinを引数に持つint型関数ReadWordIndex() */
+  char word[MAX_STRING]; /* MAX_STRINGを引数に持つchar型wordを宣言 */
+  ReadWord(word, fin); /* 先程定義したReadWordをchar型ポインタwordとファイルポインタfinを引数に計算 */
+  if (feof(fin)) return -1; /* ファイルポインタが終端に達した時-1を返す */
+  return SearchVocab(word); /* 単語wordの語彙中での位置を返す */
 }
 
-// Adds a word to the vocabulary
-int AddWordToVocab(char *word) {
-  unsigned int hash, length = strlen(word) + 1;
-  if (length > MAX_STRING) length = MAX_STRING;
-  vocab[vocab_size].word = (char *)calloc(length, sizeof(char));
+// Adds a word to the vocabulary /* 単語を語彙に加える */
+int AddWordToVocab(char *word) { /* char型ポインタwordを引数に持つint型関数AddWordToVocab() */
+  unsigned int hash, length = strlen(word) + 1; /* 符号無int型bash, length(wordの文字長+1を代入) */
+  if (length > MAX_STRING) length = MAX_STRING; /* lengthが最大文字数より大きい場合はlenghに最大文字数を代入 */
+  vocab[vocab_size].word = (char *)calloc(length, sizeof(char)); /* vocab[vocab_size].wordに */
   strcpy(vocab[vocab_size].word, word);
   vocab[vocab_size].cn = 0;
   vocab_size++;
