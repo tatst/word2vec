@@ -22,7 +22,7 @@
 #define EXP_TABLE_SIZE 1000
 #define MAX_EXP 6
 #define MAX_SENTENCE_LENGTH 1000
-#define MAX_CODE_LENGTH 40
+#define MAX_CODE_LENGTH 40 /* 最大コード長は40字まで */
 
 const int vocab_hash_size = 30000000;  // Maximum 30 * 0.7 = 21M words in the vocabulary
 
@@ -152,12 +152,12 @@ void SortVocab() { /* void関数SortVocab() */
   size = vocab_size;
   train_words = 0;
   for (a = 0; a < size; a++) {
-    // Words occuring less than min_count times will be discarded from the vocab
-    if ((vocab[a].cn < min_count) && (a != 0)) {
-      vocab_size--;
-      free(vocab[a].word);
+    // Words occuring less than min_count times will be discarded from the vocab /* min_count以下の頻度の単語をvocabから除外する */
+    if ((vocab[a].cn < min_count) && (a != 0)) { /* vocab[a].cnがmin_count未満かつaが0でない時 */
+      vocab_size--; /* vocab_sizeから1引く */
+      free(vocab[a].word); /* vocab[a].wordのメモリを解放 */
     } else {
-      // Hash will be re-computed, as after the sorting it is not actual
+      // Hash will be re-computed, as after the sorting it is not actual /* ハッシュを */
       hash=GetWordHash(vocab[a].word);
       while (vocab_hash[hash] != -1) hash = (hash + 1) % vocab_hash_size;
       vocab_hash[hash] = a;
@@ -193,19 +193,19 @@ void ReduceVocab() {
   min_reduce++;
 }
 
-// Create binary Huffman tree using the word counts
-// Frequent words will have short uniqe binary codes
-void CreateBinaryTree() {
+// Create binary Huffman tree using the word counts /* 語数を用いて2値Huffman木を作成 */
+// Frequent words will have short uniqe binary codes /* 高頻度の単語に短い一意的な2進数を割当る */
+void CreateBinaryTree() { /* void関数CreateBinaryTree() */
   long long a, b, i, min1i, min2i, pos1, pos2, point[MAX_CODE_LENGTH];
-  char code[MAX_CODE_LENGTH];
-  long long *count = (long long *)calloc(vocab_size * 2 + 1, sizeof(long long));
+  char code[MAX_CODE_LENGTH]; /* char型code[最大コード長MAX_CODE_LENGTH] */
+  long long *count = (long long *)calloc(vocab_size * 2 + 1, sizeof(long long)); /* long long型ポインタcount =  */
   long long *binary = (long long *)calloc(vocab_size * 2 + 1, sizeof(long long));
   long long *parent_node = (long long *)calloc(vocab_size * 2 + 1, sizeof(long long));
   for (a = 0; a < vocab_size; a++) count[a] = vocab[a].cn;
   for (a = vocab_size; a < vocab_size * 2; a++) count[a] = 1e15;
   pos1 = vocab_size - 1;
   pos2 = vocab_size;
-  // Following algorithm constructs the Huffman tree by adding one node at a time
+  // Following algorithm constructs the Huffman tree by adding one node at a time /* Huffman木 */
   for (a = 0; a < vocab_size - 1; a++) {
     // First, find two smallest nodes 'min1, min2'
     if (pos1 >= 0) {
