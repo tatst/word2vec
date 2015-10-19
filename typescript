@@ -735,3 +735,182 @@ Untracked files:
 
 no changes added to commit (use "git add" and/or "git commit -a")
 bash-3.2$ git add .
+bash-3.2$ git status
+On branch other
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+	[32mnew file:   compute-accuracy[m
+	[32mmodified:   compute-accuracy.c[m
+	[32mmodified:   demo-analogy.sh[m
+	[32mmodified:   demo-classes.sh[m
+	[32mmodified:   demo-phrase-accuracy.sh[m
+	[32mmodified:   demo-phrases.sh[m
+	[32mmodified:   demo-word-accuracy.sh[m
+	[32mmodified:   demo-word.sh[m
+	[32mnew file:   distance[m
+	[32mmodified:   distance.c[m
+	[32mnew file:   text8[m
+	[32mnew file:   text8.zip[m
+	[32mnew file:   typescript[m
+	[32mnew file:   vectors.bin[m
+	[32mnew file:   word-analogy[m
+	[32mmodified:   word-analogy.c[m
+	[32mnew file:   word2phrase[m
+	[32mnew file:   word2vec[m
+
+bash-3.2$ git o[Kcommit -m ""m"a"k"e"[1P"[1P"[1P"[1P"M"a"k"e"
+[other 42749fb] Make
+ 18 files changed, 741 insertions(+), 3 deletions(-)
+ create mode 100755 compute-accuracy
+ mode change 100644 => 100755 demo-analogy.sh
+ mode change 100644 => 100755 demo-classes.sh
+ mode change 100644 => 100755 demo-phrase-accuracy.sh
+ mode change 100644 => 100755 demo-phrases.sh
+ mode change 100644 => 100755 demo-word-accuracy.sh
+ mode change 100644 => 100755 demo-word.sh
+ create mode 100755 distance
+ create mode 100644 text8
+ create mode 100644 text8.zip
+ create mode 100644 typescript
+ create mode 100644 vectors.bin
+ create mode 100755 word-analogy
+ create mode 100755 word2phrase
+ create mode 100755 word2vec
+bash-3.2$ git co master
+error: Your local changes to the following files would be overwritten by checkout:
+	typescript
+Please, commit your changes or stash them before you can switch branches.
+Aborting
+bash-3.2$ git [K[K[Kt che[K[K[K[K[Kit checkout master
+error: Your local changes to the following files would be overwritten by checkout:
+	typescript
+Please, commit your changes or stash them before you can switch branches.
+Aborting
+bash-3.2$ git branch
+  master[m
+* [32mother[m
+bash-3.2$ git log
+[?1h=[33mcommit 42749fb14bfc5b57e519afb94683e4e04cd1bf09[m[m
+Author: Tatsuya Toyoda <b8eansatz@gmail.com>[m
+Date:   Mon Oct 19 12:10:16 2015 +0900[m
+[m
+    Make[m
+[m
+[33mcommit d83ccfba4dd08f113d5e75d67c9f6cd30f6532c4[m[m
+Author: tmikolov <tmikolov@c84ef02e-58a5-4c83-e53e-41fc32d635eb>[m
+Date:   Fri Jan 30 19:30:30 2015 +0000[m
+[m
+    bugfix in InitUnigramTable() - some words could not have been sampled as neg[m ative examples[m
+[m
+[33mcommit 330c98d0c5d1835f6e31f6a728b867355c3aeeb4[m[m
+Author: tmikolov <tmikolov@c84ef02e-58a5-4c83-e53e-41fc32d635eb>[m
+Date:   Mon Sep 15 21:12:09 2014 +0000[m
+[m
+    Bug fix - added questions-phrases.txt[m
+[m
+[33mcommit 02c556d9b529f4ebe4f7376a9c357102a05c2841[m[m
+Author: tmikolov <tmikolov@c84ef02e-58a5-4c83-e53e-41fc32d635eb>[m
+Date:   Tue Sep 9 19:34:50 2014 +0000[m
+[m
+    added script for training big word vector model using public corpora[m
+:[K[K[?1l>bash-3.2$ git logbranchcheckout master
+error: Your local changes to the following files would be overwritten by checkout:
+	typescript
+Please, commit your changes or stash them before you can switch branches.
+Aborting
+bash-3.2$ vi typescript 
+[?1049h[?1h=[1;25r[?12;25h[?12l[?25h[27m[m[H[2J[?25l[25;1H"typescript" [noeol] 822L, 1496773C[>c[1;1HScript started on Mon Oct 19 10:40:46 2015
+bash: /path/to/your/virtualenvwrapper.sh: No such file or directory[38;5;81m^M
+^[[m[?1034hbash-3.2$ ls[38;5;81m^M[m
+LICENSE[24C distance.c[38;5;81m^M[m
+README.txt[21C makefile[38;5;81m^M[m
+compute-accuracy.c[13C questions-phrases.txt[38;5;81m^M[m
+demo-analogy.sh[16C questions-words.txt[38;5;81m^M[m
+demo-classes.sh[16C typescript[38;5;81m^M[m
+demo-phrase-accuracy.sh[8C word-analogy.c[38;5;81m^M[m
+demo-phrases.sh[16C word2phrase[38;5;81m^M[m
+demo-train-big-model-v1.sh      word2phrase.c[38;5;81m^M[m
+demo-word-accuracy.sh[10C word2vec[38;5;81m^M[m
+demo-word.sh[19C word2vec.c[38;5;81m^M[m
+bash-3.2$ vi distance.c [38;5;81m^M
+^[[m[?1049h[38;5;81m^[[m[?1h[38;5;81m^[[m=[38;5;81m^[[m[1;25r[38;5;81m^[[m[?12;25h[38;5;81m^[[m[?12l[38;5;81m^[[m[?25h[38;5;81m^[[m[27m[38;5;81m^[[m[m[38;5;81m^[[m[H[38;5;81m^[[m[2J[38;5;81m^[[m[?25l[38;5;81m^[[m[22[16;1H5;1H"distance.c" 142L, 4557C[38;5;81m^[[m[>c[38;5;81m^[[m[1;1H//  Copyright 2013 Google Inc. All Rightt[17;1Hs Reserved.[38;5;81m^M[m
+//[38;5;81m^M[m
+//  Licensed under the Apache License, Version 2.0 (the "License");[38;5;81m^M[m
+//  you may not use this file except in compliance with the License.[38;5;81m^M[m
+//  You may obtain a copy of the License at[38;5;81m^M[m
+//[38;5;81m^M[m
+//      http://www.apache.org/licenses/LICENSE-2.0[38;5;81m^M[m
+//[38;5;81m^M[1;1H[?12l[?25h
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[?25l[1;24r[m[24;1H
+[1;25r[24;1H//  Unless required by applicable law or agreed to in writing, software[38;5;81m^M[m[25;1H[K[24;1H[?12l[?25h[?25l[1;24r[24;1H
+[1;25r[24;1H//  distributed under the License is distributed on an "AS IS" BASIS,[38;5;81m^M[?12l[?25h[?25l[1;24r[m[24;1H
+[1;25r[24;1H//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.[38;5;81m^M[?12l[?25h[?25l[1;24r[m[24;1H
+[1;25r[24;1H//  See the License for the specific language governing permissions and[38;5;81m^M[?12l[?25h[?25l[1;24r[m[24;1H
+[1;25r[24;1H//  limitations under the License.[38;5;81m^M[?12l[?25h[?25l[1;24r[m[24;1H
+[1;25r[24;1H[38;5;81m^M[?12l[?25h[?25l[1;24r[m[24;1H
+[1;25r[24;1H#include <stdio.h>[38;5;81m^M[?12l[?25h[?25l[1;24r[m[24;1H
+[1;25r[24;1H#include <string.h>[38;5;81m^M[?12l[?25h[?25l[1;24r[m[24;1H
+[1;25r[24;1H#include <math.h>[38;5;81m^M[?12l[?25h[?25l[1;24r[m[24;1H
+[1;25r[24;1H#include <malloc.h>[38;5;81m^M[?12l[?25h[?25l[1;24r[m[24;1H
+[1;25r[24;1H[38;5;81m^M[?12l[?25h[?25l[1;24r[m[24;1H
+[1;25r[24;1Hconst long long max_size = 2000;[38;5;81m^[[m[8C // max length of strings[38;5;81m^M[?12l[?25h[?25l[1;24r[m[1;1H[2M[1;25r[23;1Hconst long long N = 40;[38;5;81m^[[m[17C // number of closest words that will bee[38;5;81m^[[m[22;1H ss[24;1Hhown[38;5;81m^M[23;1H[?12l[?25h[?25l[1;24r[m[1;1H[3M[1;25r[22;1Hconst long long max_w = 50;[38;5;81m^[[m[13C // max length of vocabulary entries[38;5;81m^[[m[1;1H[38;5;81m^[[m[??[23;1H12l[38;5;81m^[[m[?25h[38;5;81m^[[m[?25l[38;5;81m^[[m[25;1H[38;5;81m^[[m[K[38;5;81m^[[m[25;1H:[38;5;81m^[[m[?12l[38;5;81m^[[m[?25hset number[38;5;81m^M^[[m[?25l[38;5;81m^[[m[1;1H[38;5;81m^[[[m[24;1H[93m  1 [38;5;81m^[[m[m//  Copyright 2013 Google Inc. All Rights Reserved.[38;5;81m^M[22;1H[?12l[?25h[?25l[1;24r[m[24;1H
+[1;25r[24;1H[38;5;81m^[[m[93m  2 [38;5;81m^[[m[m//[38;5;81m^M[?12l[?25h[?25l[1;24r[m[1;1H[2M[1;25r[23;1H[38;5;81m^[[m[93m  3 [38;5;81m^[[m[m//  Licensed under the Apache License, Version 2.0 (the "License"))[24;1H;[38;5;81m^M[23;1H[?12l[?25h[?25l[1;24r[m[1;1H[2M[1;25r[23;1H[38;5;81m^[[m[93m  4 [38;5;81m^[[m[m//  you may not use this file except in compliance with the Licenss[24;1He.[38;5;81m^M[23;1H[?12l[?25h[?25l[1;24r[m[24;1H
+[1;25r[24;1H[38;5;81m^[[m[93m  5 [38;5;81m^[[m[m//  You may obtain a copy of the License at[38;5;81m^M[?12l[?25h[?25l[1;24r[m[24;1H
+[1;25r[24;1H[38;5;81m^[[m[93m  6 [38;5;81m^[[m[m//[38;5;81m^M[?12l[?25h[?25l[1;24r[m[24;1H
+[1;25r[24;1H[38;5;81m^[[m[93m  7 [38;5;81m^[[m[m//      http://www.apache.org/licenses/LICENSE-2.0[38;5;81m^M[?12l[?25h[?25l[1;24r[m[24;1H
+[1;25r[24;1H[38;5;81m^[[m[93m  8 [38;5;81m^[[m[m//[38;5;81m^M[?12l[?25h[?25l[1;24r[m[1;1H[2M[1;25r[23;1H[38;5;81m^[[m[93m  9 [38;5;81m^[[m[m//  Unless required by applicable law or agreed to in writing, soff[24;1Htware[38;5;81m^M[23;1H[?12l[?25h[?25l[1;24r[m[1;1H[2M[1;25r[23;1H[38;5;81m^[[m[93m 10 [38;5;81m^[[m[m//  distributed under the License is distributed on an "AS IS" BASS[24;1HIS,[38;5;81m^M[23;1H[?12l[?25h[?25l[1;24r[m[1;1H[3M[1;25r[22;1H[38;5;81m^[[m[93m 11 [38;5;81m^[[m[m//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express oo[23;1Hr implied.[38;5;81m^[[m[12;1H[38;5;81m^[[m[93m 12 [38;5;81m^[[m[m//  See the License for the specific language goo[24;1Hverning permissions and[38;5;81m^M[22;1H[?12l[?25h[?25l[1;24r[m[24;1H
+[1;25r[24;1H[38;5;81m^[[m[93m 13 [38;5;81m^[[m[m//  limitations under the License.[38;5;81m^M[?12l[?25h[?25l[1;24r[m[24;1H
+[1;25r[24;1H[38;5;81m^[[m[93m 14 [38;5;81m^M[?12l[?25h[?25l[1;24r[m[24;1H
+[1;25r[24;1H 15 [38;5;81m^[[m[m#include <stdio.h>[38;5;81m^M[?12l[?25h[?25l[1;24r[m[1;1H[2M[1;25r[23;1H[38;5;81m^[[m[93m 16 [38;5;81m^[[m[m#include <string.h>[38;5;81m^M
+^[[m[93m 17 [38;5;81m^[[m[m#include <math.h>[38;5;81m^M[23;1H[?12l[?25h
+[?25l[1;24r[m[1;1H[3M[1;25r[22;1H[38;5;81m^[[m[93m 18 [38;5;81m^[[m[m#include <malloc.h>[38;5;81m^M
+^[[m[93m 19 [38;5;81m^M[m
+ 20 [38;5;81m^[[m[mconst long long max_size = 2000;[8C // max length of strings[38;5;81m^M[22;1H[?12l[?25h
+
+[?25l[1;24r[m[1;1H[3M[1;25r[22;1H[38;5;81m^[[m[93m 21 [38;5;81m^[[m[mconst long long N = 40;[38;5;81m^[[m[13C     // number of closest words that  [23;1Hwill[38;5;81m^[[m[22;1H[38;5;81m^[[m[93m    [38;5;81m^[[m[ml be shown[38;5;81m^M
+^[[m[93m 22 [38;5;81m^[[m[mconst long long max_w = 50;[38;5;81m^[[m[9C     // max length of vocabulary e[24;1H[94m@                                                                               [22;1H[?12l[?25h[?25l[1;24r[m[1;1H[13M[1;25r[11;1H[38;5;81m^[[m[93m 22 [38;5;81m^[[m[mconst long long max_w = 50;[38;5;81m^[[m[9C     // max length of vocabulary ee[12;1Hntries[38;5;81m^[[m[24;1H[38;5;81m^[[m[93m 23 [38;5;81m^[[m[1;5H[38;5;81m^[[m[?12l[38;5;81m^[[m[?25h[38;5;81m^[[m[?25l[38;5;81m^[[m[m[38;5;81m^[[m[25;1H[38;5;81m^[[m[K[38;5;81m^[[m[25;1H:[38;5;81m^[[m[[[13;1H?12l[38;5;81m^[[m[?25h18[38;5;81m^M^[[m[?25l[38;5;81m^[[m[18;5H[38;5;81m^[[m[?12l[38;5;81m^[[m[?25h#include <[38;5;81m^[[m[?25l[38;5;81m^H[m<alloc.h>[38;5;81m^[[m[18;233[14;1HH[38;5;81m^[[m[K[38;5;81m^[[m[18;15H[38;5;81m^[[m[?12l[38;5;81m^[[m[?25h[38;5;81m^[[m[?25l[38;5;81m^H[m<lloc.h>[38;5;81m^[[m[18;22H[38;5;81m^[[m[K[38;5;81m^[[m[18;15H[38;5;81m^[[m[?12l[38;5;81m^[[m[?255[15;1Hh[38;5;81m^[[m[?25lloc.h>[38;5;81m^[[m[18;21H[38;5;81m^[[m[K[38;5;81m^[[m[18;15H[38;5;81m^[[m[?12l[38;5;81m^[[m[?25h[38;5;81m^[[m[?25l[38;5;81m^H[m<oc.h>[38;5;81m^[[m[18;20H[38;5;81m^[[m[K[38;5;81m^[[[m[16;1H[18;15H[38;5;81m^[[m[?12l[38;5;81m^[[m[?25h[38;5;81m^[[m[?25l[38;5;81m^H[m<c.h>[38;5;81m^[[m[18;19H[38;5;81m^[[m[K[38;5;81m^[[m[18;15H[38;5;81m^[[m[?12l[38;5;81m^[[m[?25h[38;5;81m^[[m[?25l[38;5;81m^HH[m[17;1H<.h>[38;5;81m^[[m[18;18H[38;5;81m^[[m[K[38;5;81m^[[m[18;15H[38;5;81m^[[m[?12l[38;5;81m^[[m[?25h[38;5;81m^[[m[?25l[38;5;81m^[[m[25;1H[38;5;81m^[[m[1m-- INSERT --[38;5;81m^[[m[18;166[18;1HH[38;5;81m^[[m[?12l[38;5;81m^[[m[?25h[38;5;81m^H^[[m[?25l[38;5;81m^[[m[m[38;5;81m^H[m<s.h>[38;5;81m^H^H^H^[[m[?12l[38;5;81m^[[m[?25h[38;5;81m^[[m[?25l[38;5;81m^H[mst.h>[38;5;81m^H^H^H^[[m[?11[19;1H2l[38;5;81m^[[m[?25h[38;5;81m^[[m[?25l[38;5;81m^H[mtd.h>[38;5;81m^H^H^H^[[m[?12l[38;5;81m^[[m[?25h[38;5;81m^[[m[?25l[38;5;81m^H[mdl.h>[38;5;81m^H^H^H^[[m[?12l[38;5;81m^[[m[?25h[38;5;81m^[[m[[[20;1H?25l[38;5;81m^H[mli.h>[38;5;81m^H^H^H^[[m[?12l[38;5;81m^[[m[?25h[38;5;81m^[[m[?25l[38;5;81m^H[mib.h>[38;5;81m^H^H^H^[[m[?12l[38;5;81m^[[m[?25h[38;5;81m^[[m[25;1H[38;5;81m^[[m[K[38;5;81m^[[m[[[21;1H18;20H[38;5;81m^[[m[?25l[38;5;81m^[[m[?12l[38;5;81m^[[m[?25h[38;5;81m^[[m[?25l[38;5;81m^[[m[25;1H:[38;5;81m^[[m[?12l[38;5;81m^[[m[?25hw[38;5;81m^M^[[m[?25l"distance.c"  [22;1H142L, 4557C written[38;5;81m^[[m[18;20H[38;5;81m^[[m[?12l[38;5;81m^[[m[?25h[38;5;81m^[[m[?25l[38;5;81m^[[m[25;1H[38;5;81m^[[m[K[38;5;81m^[[m[25;1H:[38;5;81m^[[m[?12l[38;5;81m^[[m[[[23;1H?25hq[38;5;81m^M^[[m[?25l[38;5;81m^[[m[25;1H[38;5;81m^[[m[K[38;5;81m^[[m[25;1H[38;5;81m^[[m[?1l[38;5;81m^[[m>[38;5;81m^[[m[?12l[38;5;81m^[[m[?25h[38;5;81m^[[m[?1049lbash-3.2$ vi ww[24;1Hor[38;5;81m^G[md-analogy.c [38;5;81m^M[11;1H[?12l[?25h[?25l[1;24r[m[1;1H[3M[1;25r[22;1H[38;5;81m^[[m[?1049h[38;5;81m^[[m[?1h[38;5;81m^[[m=[38;5;81m^[[m[1;25r[38;5;81m^[[m[?12;25h[38;5;81m^[[m[?12l[38;5;81m^[[m[?25h[38;5;81m^[[m[27m[38;5;81m^[[m[m[38;5;81m^[[m[H[38;5;81m^[[m[2J[38;5;81m^[[m[?25l[38;5;81m^[[m[22[23;1H5;1H"word-analogy.c" 144L, 4664C[38;5;81m^[[m[>c[38;5;81m^[[m[1;1H//  Copyright 2013 Google Inc. All RR[24;1Hights Reserved.[38;5;81m^M[22;1H[?12l[?25h[?25l[1;24r[m[24;1H
+[1;25r[24;1H//[38;5;81m^M[?12l[?25h[?25l[1;24r[m[24;1H
+[1;25r[24;1H//  Licensed under the Apache License, Version 2.0 (the "License");[38;5;81m^M[?12l[?25h[?25l[1;24r[m[24;1H
+[1;25r[24;1H//  you may not use this file except in compliance with the License.[38;5;81m^M[?12l[?25h[?25l[1;24r[m[24;1H
+[1;25r[24;1H//  You may obtain a copy of the License at[38;5;81m^M[?12l[?25h[?25l[1;24r[m[24;1H
+[1;25r[24;1H//[38;5;81m^M[?12l[?25h[?25l[1;24r[m[1;1H[2M[1;25r[23;1H//      http://www.apache.org/licenses/LICENSE-2.0[38;5;81m^M[m
+//[38;5;81m^M[23;1H[?12l[?25h
+[?25l[1;24r[m[1;1H[14M[1;25r[11;1H//  Unless required by applicable law or agreed to in writing, software[38;5;81m^M[m
+//  distributed under the License is distributed on an "AS IS" BASIS,[38;5;81m^M[m
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.[38;5;81m^M[m
+//  See the License for the specific language governing permissions and[38;5;81m^M[m
+//  limitations under the License.[38;5;81m^M
+^M[m
+#include <stdio.h>[38;5;81m^M[m
+#include <string.h>[38;5;81m^M[m
+#include <math.h>[38;5;81m^M[m
+#include <malloc.h>[38;5;81m^M
+^M[m
+const long long max_size = 2000;[38;5;81m^[[m[8C // max length of strings[38;5;81m^M[m
+const long long N = 40;[38;5;81m^[[m[17C // number of closest words that will bee[38;5;81m^[[m[22;1H ss[24;1Hhown[38;5;81m^M[11;1H[?12l[?25h
+
+
+[?25l[25;1H[m:[?12l[?25hq[?25l[25;1H[K[25;1H[?1l>[?12l[?25h[?1049lbash-3.2$ 
