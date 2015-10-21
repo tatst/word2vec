@@ -1,0 +1,916 @@
+Script started on Mon Oct 19 10:40:46 2015
+bash: /path/to/your/virtualenvwrapper.sh: No such file or directory
+?1034hbash-3.2$ ls
+LICENSE                         distance.c
+README.txt                      makefile
+compute-accuracy.c              questions-phrases.txt
+demo-analogy.sh                 questions-words.txt
+demo-classes.sh                 typescript
+demo-phrase-accuracy.sh         word-analogy.c
+demo-phrases.sh                 word2phrase
+demo-train-big-model-v1.sh      word2phrase.c
+demo-word-accuracy.sh           word2vec
+demo-word.sh                    word2vec.c
+bash-3.2$ vi distance.c
+?1049h?1h1;25r?12;25h?12l?25h27mmH2J?25l25;1H"distance.c" 142L, 4557C>c1;1H//  Copyright 2013 Google Inc. All Rights Reserved.
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <malloc.h>
+
+const long long max_size = 2000;8C // max length of strings
+const long long N = 40;17C // number of closest words that will bee22;1H shown
+?25l1;1H93mlo1gm//x_CopyrightC2013mGooglegInc.fAllcRightsyReserved.;1H?12l?25h?25l25;1HK25;1H:?12l?25hset number
+93m  2 m//
+93m  3 m//  Licensed under the Apache License, Version 2.0 (the "License");
+93m  4 m//  you may not use this file except in compliance with the License.
+93m  5 m//  You may obtain a copy of the License at
+93m  6 m//
+93m  7 m//      http://www.apache.org/licenses/LICENSE-2.0
+93m  8 m//
+93m  9 m//  Unless required by applicable law or agreed to in writing, software
+93m 10 m//  distributed under the License is distributed on an "AS IS" BASIS,
+93m 11 m//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.12;1H93m 12 m//  See the License for the specific language governing permissions and
+93m 13 m//  limitations under the License.
+93m 14
+ 15 m#include <stdio.h>
+93m 16 m#include <string.h>
+93m 17 m#include <math.h>
+93m 18 m#include <malloc.h>
+93m 19
+ 20 mconst long long max_size = 2000;         // max length of strings
+93m 21 mconst long long N = 40;13C     // number of closest words that will22;1H93m    ml be shown
+?25l25;1HK25;1H?1l?12l?25h?1049lbash-3.2$Hvi2word-analogy.cK25;1H:?12l?25hq2HK18;15H?12l?25h?25lloc.h>18;21HK18;15H?12l?25h?25<oc.h>18;20HK18;15H?12l?25h?25<c.h>18;19HK18;15H?12l?25h?25<.h>18;18HK18;15H?12l?25h?25l25;1H1m-- INSERT --18;16H?12l?25?25l<s?12l?25h?25st?12l?25h?25td?12l?25h?25dl?12l?25h?25li?12l?25h?25ib?12l?25h25;1HK18;20H?25l?12l?25h?25l25;1H:?12l?25hw
+?1049h?1h1;25r?12;25h?12l?25h27mmH2J?25l25;1H"word-analogy.c" 144L, 4664C>c1;1H//  Copyright 2013 Google Inc. All Rights Reserved.
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <malloc.h>
+
+const long long max_size = 2000;8C // max length of strings
+const long long N = 40;17C // number of closest words that will bee22;1H shown
+?25l1;1H93mlo1gm//x_CopyrightC2013mGooglegInc.fAllcRightsyReserved.;1H?12l?25h?25l25;1HK25;1H:?12l?25hset number
+93m  2 m//
+93m  3 m//  Licensed under the Apache License, Version 2.0 (the "License");
+93m  4 m//  you may not use this file except in compliance with the License.
+93m  5 m//  You may obtain a copy of the License at
+93m  6 m//
+93m  7 m//      http://www.apache.org/licenses/LICENSE-2.0
+93m  8 m//
+93m  9 m//  Unless required by applicable law or agreed to in writing, software
+93m 10 m//  distributed under the License is distributed on an "AS IS" BASIS,
+93m 11 m//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.12;1H93m 12 m//  See the License for the specific language governing permissions and
+93m 13 m//  limitations under the License.
+93m 14
+ 15 m#include <stdio.h>
+93m 16 m#include <string.h>
+93m 17 m#include <math.h>
+93m 18 m#include <malloc.h>
+93m 19
+ 20 mconst long long max_size = 2000;         // max length of strings
+93m 21 mconst long long N = 40;13C     // number of closest words that will22;1H93m    ml be shown
+?25l25;1HK25;1H?1l?12l?25h?1049lbash-3.2$8vi0comKpute-accuracy.c25;1H:?12l?25hq8;15H?12l?25h?25lloc.h>18;21HK18;15H?12l?25h?25<oc.h>18;20HK18;15H?12l?25h?25<c.h>18;19HK18;15H?12l?25h?25<.h>18;18HK18;15H?12l?25h?25l25;1H1m-- INSERT --18;16H?12l?25?25l<s?12l?25h?25st?12l?25h?25td?12l?25h?25dl?12l?25h?25li?12l?25h?25ib?12l?25h25;1HK18;20H?25l?12l?25h?25l25;1H:?12l?25hw
+?1049h?1h1;25r?12;25h?12l?25h27mmH2J?25l25;1H"compute-accuracy.c" 143L, 5241C>c1;1H//  Copyright 2013 Google Inc. All Rights Reserved.
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+#include <malloc.h>
+#include <ctype.h>
+
+const long long max_size = 2000;8C // max length of strings
+const long long N = 1;18C // number of closest words
+?25l1;1H93mlo1gm//x_CopyrightC2013mGooglegInc.fAllcRightsyReserved.;1H?12l?25h?25l25;1HK25;1H:?12l?25hsete?25l25;5HK25;5H?12l?25h number
+93m  2 m//
+93m  3 m//  Licensed under the Apache License, Version 2.0 (the "License");
+93m  4 m//  you may not use this file except in compliance with the License.
+93m  5 m//  You may obtain a copy of the License at
+93m  6 m//
+93m  7 m//      http://www.apache.org/licenses/LICENSE-2.0
+93m  8 m//
+93m  9 m//  Unless required by applicable law or agreed to in writing, software
+93m 10 m//  distributed under the License is distributed on an "AS IS" BASIS,
+93m 11 m//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.12;1H93m 12 m//  See the License for the specific language governing permissions and
+93m 13 m//  limitations under the License.
+93m 14
+ 15 m#include <stdio.h>
+93m 16 m#include <stdlib.h>
+93m 17 m#include <string.h>
+93m 18 m#include <math.h>
+93m 19 m#include <malloc.h>
+93m 20 m#include <ctype.h>
+93m 21
+ 22 mconst long long max_size = 2000;         // max length of strings
+93m 23 mconst long long N = 1;14C     // number of closest words
+?25l25;1HK25;1H?1l?12l?25h?1049lbash-3.2$tmake;20H?12l?25h?25l25;1HK25;1H:?12l?25hqH?12l?25h?25lloc.h>19;21HK19;15H?12l?25h?25<oc.h>19;20HK19;15H?12l?25h?25<c.h>19;19HK19;15H?12l?25h?25<.h>19;18HK19;15H?12l?25h?25l25;1H1m-- INSERT --19;16H?12l?25?25l<s?12l?25h?25st?12l?25h?25te?12l?25h?2t.h>19;20HK19;17H?12l?25h?25td?12l?25h?25dl?12l?25h?25li?12l?25h?25iv?12l?25h?2i.h>19;23HK19;20H?12l?25h?25ib?12l?25h25;1HK19;20H?25l?12l?25h?25l25;1H:?12l?25hw
+gcc distance.c -o distance -lm -pthread -O3 -march=native -Wall -funroll-loops -Wno-unused-result
+1mdistance.c:31:8: 0m0;1;35mwarning: 0m1munused variable 'ch' [-Wunused-variable]0m
+  char ch;
+0;1;32m       ^
+0m1 warning generated.
+gcc word-analogy.c -o word-analogy -lm -pthread -O3 -march=native -Wall -funroll-loops -Wno-unused-result
+1mword-analogy.c:31:8: 0m0;1;35mwarning: 0m1munused variable 'ch' [-Wunused-variable]0m
+  char ch;
+0;1;32m       ^
+0m1 warning generated.
+gcc compute-accuracy.c -o compute-accuracy -lm -pthread -O3 -march=native -Wall -funroll-loops -Wno-unused-result
+1mcompute-accuracy.c:29:109: 0m0;1;35mwarning: 0m1munused variable 'ch' [-Wunused-variable]0m
+  ...st4[max_size], bestw[N][max_size], file_name[max_size], ch;
+0;1;32m                                                             ^
+0m1 warning generated.
+chmod +x *.sh
+bash-3.2$ curl http://mattmahoney.net/dc/text8.zip > text8.zip
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 29.8M  100 29.8M    0     0  4254k      0 -0:02:00 -0:02:00 --:--:-- 9191k
+bash-3.2$ unzip text8.zip
+Archive:  text8.zip
+  inflating: text8
+bash-3.2$ bKash demo-word.sh
+make: Nothing to be done for `all'.
+Starting training using file text8
+VocabKsize: 71291
+Words in train file: 16718843
+Alpha: 0.000005  Progress: 100.10%WWWords/thread/sec:770.42k
+real    18m26.747s
+user    58m59.897s
+sys     0m43.922s
+Enter word or sentence (EXIT to break): EXIT
+bash-3.2$ wc text8
+       0 17005207 100000000 text8
+bash-3.2$ ./distance vectors.bin
+Enter word or sentence (EXIT to break): okinawa
+
+Word: okinawa  Position in vocabulary: 14109
+
+                                              Word       Cosine distance
+------------------------------------------------------------------------
+                                            ryukyu              0.602586
+                                            honshu              0.594333
+                                           shikoku              0.572349
+                                          hokkaido              0.565121
+                                              attu              0.562160
+                                             kuril              0.554658
+                                             kiska              0.553132
+                                           peleliu              0.552756
+                                       guadalcanal              0.550572
+                                           fukuoka              0.543125
+                                          marianas              0.541050
+                                          kumamoto              0.539546
+                                          japanese              0.535923
+                                              naha              0.535678
+                                        kitakyushu              0.534894
+                                            saipan              0.534545
+                                              jima              0.516172
+                                            kyushu              0.512454
+                                         aleutians              0.508461
+                                            bataan              0.508396
+                                          nagasaki              0.504535
+                                          tsushima              0.498827
+                                         warplanes              0.495643
+                                          aleutian              0.493540
+                                             osaka              0.491250
+                                             japan              0.490321
+                                               iwo              0.489317
+                                       philippines              0.487488
+                                            yamato              0.487416
+                                         hiroshima              0.484927
+                                              guam              0.481890
+                                             samar              0.481748
+                                         manchukuo              0.479228
+                                             luzon              0.466726
+                                          sakhalin              0.466552
+                                              maru              0.465796
+                                            rabaul              0.464707
+                                            daimyo              0.461559
+                                          yamamoto              0.461102
+                                           niigata              0.460677
+Enter word or sentence (EXIT to break): anime
+
+Word: anime  Position in vocabulary: 3613
+
+                                              Word       Cosine distance
+------------------------------------------------------------------------
+                                             manga              0.741059
+                                             oshii              0.603642
+                                             otaku              0.581930
+                                            hentai              0.566800
+                                          masamune              0.549102
+                                           digimon              0.541093
+                                           macross              0.538113
+                                            tezuka              0.533051
+                                              toei              0.532757
+                                         tokusatsu              0.529079
+                                            mamoru              0.527445
+                                             seiya              0.524314
+                                             kaiju              0.516800
+                                          inuyasha              0.513853
+                                            masami              0.513386
+                                          robotech              0.513291
+                                               ova              0.511184
+                                           asamiya              0.502924
+                                         bubblegum              0.501948
+                                          hiroyuki              0.493393
+                                           fandoms              0.486383
+                                              yaoi              0.484662
+                                          miyazaki              0.484178
+                                             bebop              0.483167
+                                        dragonball              0.480767
+                                          doraemon              0.478737
+                                          bishoujo              0.478001
+                                            shirow              0.475820
+                                         megatokyo              0.473327
+                                               xlr              0.465125
+                                            fandom              0.461891
+                                      pornographic              0.459226
+                                             mecha              0.454839
+                                             akira              0.452910
+                                          tokyopop              0.452829
+                                              anim              0.451957
+                                          webcomic              0.449644
+                                             osamu              0.448481
+                                            jinshi              0.447704
+                                            themed              0.446977
+Enter word or sentence (EXIT to break): robot
+
+Word: robot  Position in vocabulary: 5411
+
+                                              Word       Cosine distance
+------------------------------------------------------------------------
+                                            robots              0.623273
+                                          humanoid              0.594635
+                                              robo              0.594333
+                                           android              0.589978
+                                           robotic              0.589418
+                                            cyborg              0.572044
+                                        positronic              0.528888
+                                        cybernetic              0.527732
+                                              goro              0.472830
+                                           macross              0.460732
+                                            sentai              0.449043
+                                             asimo              0.444006
+                                           megalon              0.442456
+                                         ringworld              0.438873
+                                         tachikoma              0.437783
+                                      megalomaniac              0.433938
+                                           robocop              0.433102
+                                             dalek              0.431612
+                                          robotics              0.430581
+                                            bionic              0.430232
+                                         monstrous              0.414436
+                                            kzinti              0.413207
+                                          ultraman              0.413128
+                                            hirata              0.409285
+                                         rahxephon              0.405206
+                                          brainiac              0.404824
+                                           cyborgs              0.397928
+                                         doraemons              0.396395
+                                          androids              0.395733
+                                            gundam              0.393309
+                                        futuristic              0.392821
+                                            davros              0.391300
+                                             rogue              0.390909
+                                            golems              0.389786
+                                             gohan              0.389035
+                                             alien              0.388562
+                                            asimov              0.388013
+                                              hulk              0.386470
+                                           monster              0.386000
+                                           villain              0.385961
+Enter word or sentence (EXIT to break): windows
+
+Word: windows  Position in vocabulary: 981
+
+                                              Word       Cosine distance
+------------------------------------------------------------------------
+                                                os              0.606539
+                                         microsoft              0.600226
+                                              bsod              0.584629
+                                                xp              0.557136
+                                         workbench              0.553995
+                                           desktop              0.552876
+                                           amigaos              0.540717
+                                               gui              0.537188
+                                          desktops              0.536648
+                                         installer              0.535068
+                                      enhancements              0.534840
+                                           directx              0.523907
+                                              irix              0.522837
+                                           plugins              0.521612
+                                            plugin              0.521083
+                                          debugger              0.518470
+                                             macos              0.510861
+                                           solaris              0.510133
+                                            vmware              0.509457
+                                          frontend              0.507975
+                                          toolbars              0.507376
+                                              unix              0.507273
+                                               dos              0.504447
+                                             excel              0.503490
+                                               sdk              0.501690
+                                           freebsd              0.501293
+                                            cygwin              0.500454
+                                             linux              0.499940
+                                               api              0.499489
+                                            opengl              0.498402
+                                               mdi              0.498361
+                                         graphical              0.494734
+                                      intellimouse              0.494075
+                                               kde              0.490833
+                                               cli              0.489236
+                                             xfree              0.489061
+                                         quickdraw              0.487416
+                                               osr              0.485949
+                                         emulators              0.482431
+                                         operating              0.479808
+Enter word or sentence (EXIT to break): EXIT
+CCCCCCCCCCKlsdistancevvectors.bin
+LICENSE                         makefile
+README.txt                      questions-phrases.txt
+compute-accuracy                questions-words.txt
+compute-accuracy.c              text8
+demo-analogy.sh                 text8.zip
+demo-classes.sh                 typescript
+demo-phrase-accuracy.sh         vectors.bin
+demo-phrases.sh                 word-analogy
+demo-train-big-model-v1.sh      word-analogy.c
+demo-word-accuracy.sh           word2phrase
+demo-word.sh                    word2phrase.c
+distance                        word2vec
+distance.c                      word2vec.c
+bash-3.2$ vi word2vec.c
+?1049h?1h1;25r?12;25h?12l?25h27mmH2J?25l25;1H"word2vec.c" 702L, 26184C>c1;1H//  Copyright 2013 Google Inc. All Rights Reserved.
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+#include <pthread.h>
+
+#define MAX_STRING 100
+#define EXP_TABLE_SIZE 1000
+#define MAX_EXP 6
+#define MAX_SENTENCE_LENGTH 10001;1H?12l?25h
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+?25l1;24r24;1H
+1;25r24;1H#define MAX_CODE_LENGTH 4025;1HK24;1H?12l?25h?25l1;24r24;1H
+1;25r24;1H?12l?25h?25l1;24r1;1H2M1;25r23;1Hconst int vocab_hash_size = 30000000;  // Maximum 30 * 0.7 = 21M words in the voo24;1Hcabulary23;1H?12l?25h?25l1;24r24;1H
+?25l1;1H93m126?m//22;1H21;1H20;1H19;1H18;1H17;1H16;1H15;1H14;1H13;1H12;1H11;1H?25l25;1H:?12l?25hset number
+93m  7 m//      http://www.apache.org/licenses/LICENSE-2.0
+93m  8 m//
+93m  9 m//  Unless required by applicable law or agreed to in writing, software
+93m 10 m//  distributed under the License is distributed on an "AS IS" BASIS,
+93m 11 m//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.7;1H93m 12 m//  See the License for the specific language governing permissions and
+93m 13 m//  limitations under the License.
+93m 14
+ 15 m#include <stdio.h>
+93m 16 m#include <stdlib.h>
+93m 17 m#include <string.h>
+93m 18 m#include <math.h>
+93m 19 m#include <pthread.h>
+93m 20
+ 21 m#define MAX_STRING 100
+93m 22 m#define EXP_TABLE_SIZE 1000
+93m 23 m#define MAX_EXP 6
+93m 24 m#define MAX_SENTENCE_LENGTH 1000
+93m 25 m#define MAX_CODE_LENGTH 40
+93m 26
+ 27 mconst int vocab_hash_size = 30000000;  // Maximum 30 * 0.7 = 21M words in thh23;1H93m    me vocabulary
+93m 28 11;5H?12l?25h
+ 17
+?25l25;1HK25;1H?1l?12l?25h?1049lbash-3.2$ vi distance
+?1049h?1h1;25r?12;25h?12l?25h27mmH2J?25l25;1H"distance" [noeol][converted] 31L, 15140C>c1;1HÏúíþ38;5;81m^G^@^@^A^C^@^@<80>^B^@^@^@^O^@^@^@m 38;5;81m^E^@^@<85>^@m 38;5;81m^@^@^@^@^@^Y^@^@^@mH38;5;81m^@^@^@m__PP2;1HAGEZERO38;5;81m^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^A^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^^3;1H@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^Y^@^@^@mx38;5;81m^B^@^@m__TEXT38;5;81m^@^@^@^@^@^@^@^@^@^@^@^@@4;1H^@^@^A^@^@^@^@m 38;5;81m^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@m 38;5;81m^@^@^@^@^@^@^G^@^@^@^E^@^@^@^G^@^@@5;1H^@^@^@^@^@m__text38;5;81m^@^@^@^@^@^@^@^@^@^@m__TEXT38;5;81m^@^@^@^@^@^@^@^@^@^@<80>^Q^@^@^A^@^@^@@m6;1Hÿ
+?25l25;1HK25;1H?1l?12l?25h?1049lbash-3.2$@vi^distance.c@^D^@<80>^@^@^@^@^@^@^@^@^@^@^@^@@m8;1H__stubs38;5;81m^@^@^@^@^@^@^@^@^@m__TEXT38;5;81m^@^@^@^@^@^@^@^@^@^@<80>^\^@^@^A^@^@^@mZ38;5;81m^@^@^@^@^@@9;1H^@^@<80>^\^@^@^A^@^@^@^@^@^@^@^@^@^@^@^H^D^@<80>^@^@^@^@^F^@^@^@^@^@^@^@m__stub_hh10;1Helper38;5;81m^@^@^@m__TEXT38;5;81m^@^@^@^@^@^@^@^@^@^@mÜ38;5;81m^\^@^@^A^@^@^@m¦38;5;81m^@^@^@^@^@^@^@mÜ38;5;81m^\^@^@^B^@^@@11;1H^@^@^@^@^@^@^@^@^@^@^D^@<80>^@^@^@^@^@^@^@^@^@^@^@^@m__const38;5;81m^@^@^@^@^@^@^@^@^@m__TT12;1HEXT38;5;81m^@^@^@^@^@^@^@^@^@^@<90>^]^@^@^A^@^@^@m038;5;81m^@^@^@^@^@^@^@<90>^]^@^@^D^@^@^@^@^@^@@13;1H^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@m__cstring38;5;81m^@^@^@^@^@^@^@m__TEXT38;5;81m^@^@^@^@^^14;1H@^@^@^@^@^@mÀ38;5;81m^]^@^@^A^@^@^@mÓ38;5;81m^A^@^@^@^@^@^@mÀ38;5;81m^]^@^@^D^@^@^@^@^@^@^@^@^@^@^@^B^@^@^@@15;1H^@^@^@^@^@^@^@^@^@^@^@^@m__unwind_info38;5;81m^@^@^@m__TEXT38;5;81m^@^@^@^@^@^@^@^@^@^@<94>^_^@^@^^16;1HA^@^@^@mH38;5;81m^@^@^@^@^@^@^@<94>^_^@^@^B^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@@17;1H^@^@^@^@m__eh_frame38;5;81m^@^@^@^@^@^@m__TEXT38;5;81m^@^@^@^@^@^@^@^@^@^@mà38;5;81m^_^@^@^A^@^@^@^X^@^@^@^^18;1H@^@^@^@mà38;5;81m^_^@^@^C^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^@^Y^@^@^@m838;5;81m^^19;1HA^@^@m__DATA38;5;81m^@^@^@^@^@^@^@^@^@^@^@m 38;5;81m^@^@^A^@^@^@^@^P^@^@^@^@^@^@^@m 38;5;81m^@^@^@^@^@^@^@^^20;1HP^@^@^@^@^@^@^G^@^@^@^C^@^@^@^C^@^@^@^@^@^@^@m__nl_symbol_ptr38;5;81m^@m__DATA38;5;81m^@^@^@^@^@^@@21;1H^@^@^@^@^@m 38;5;81m^@^@^A^@^@^@^P^@^@^@^@^@^@^@^@m 38;5;81m^@^@^C^@^@^@^@^@^@^@^@^@^@^@^F^@^@^@^OO22;1H^@^@^@^@^@^@^@^@^@^@^@m__got38;5;81m^@^@^@^@^@^@^@^@^@^@^@m__DATA38;5;81m^@^@^@^@^@^@^@^@^@^@^Pm 38;5;81m^@@23;1H^@^A^@^@^@^P^@^@^@^@^@^@^@^Pm 38;5;81m^@^@^C^@^@^@^@^@^@^@^@^@^@^@^F^@^@^@^Q^@^@^@^@^@^@^^24;1H@^@^@^@^@m__la_symbol_ptr38;5;81m^@m__DATA38;5;81m^@^@^@^@^@^@^@^@^@^@m  38;5;81m^@^@^A^@^@^@mx38;5;81m^@^@^@^@^@^@^m7;1H94m@                                                                               8;1H@                                                                               9;1H@                                                                               10;1H@                                                                               11;1H@                                                                               12;1H@                                                                               13;1H@                                                                               14;1H@                                                                               15;1H@                                                                               16;1H@                                                                               17;1H@                                                                               18;1H@                                                                               19;1H@                                                                               20;1H@                                                                               21;1H@                                                                               22;1H@                                                                               23;1H@                                                                               24;1H@                                                                               1;1H?12l?25h?25lm25;1HK25;1H:?12l?25hq
+?1049h?1h1;25r?12;25h?12l?25h27mmH2J?25l25;1H"distance.c" 142L, 4557C>c1;1H//  Copyright 2013 Google Inc. All Rights Reserved.
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+
+const long long max_size = 2000;8C // max length of strings
+const long long N = 40;17C // number of closest words that will bee22;1H shown
+?25l1;1H93mlo1gm//x_CopyrightC2013mGooglegInc.fAllcRightsyReserved.;1H?12l?25h?25l25;1HK25;1H:?12l?25hset number
+93m  2 m//
+93m  3 m//  Licensed under the Apache License, Version 2.0 (the "License");
+93m  4 m//  you may not use this file except in compliance with the License.
+93m  5 m//  You may obtain a copy of the License at
+93m  6 m//
+93m  7 m//      http://www.apache.org/licenses/LICENSE-2.0
+93m  8 m//
+93m  9 m//  Unless required by applicable law or agreed to in writing, software
+93m 10 m//  distributed under the License is distributed on an "AS IS" BASIS,
+93m 11 m//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.12;1H93m 12 m//  See the License for the specific language governing permissions and
+93m 13 m//  limitations under the License.
+93m 14
+ 15 m#include <stdio.h>
+93m 16 m#include <string.h>
+93m 17 m#include <math.h>
+93m 18 m#include <stdlib.h>
+93m 19
+ 20 mconst long long max_size = 2000;         // max length of strings
+93m 21 mconst long long N = 40;13C     // number of closest words that will22;1H93m    ml be shown
+?25l25;1HK25;1H?1l?12l?25h?1049lbash-3.2$Hgitllogh?25l25;1HK25;1H:?12l?25hqlm2?12l?25h?25l#?12l?25h?25#i?12l?25h?25in?12l?25h?25nc?12l?25h?25cl?12l?25h?25lu?12l?25h?25ud?12l?25h?25de?12l?25h?25l ?12l?25h?25l<?12l?25h?25<>?12l?25?25<m?12l?25h?25ma?12l?25h?25al?12l?25h?25ll?12l?25h?25lo?12l?25h?25oc?12l?25h?25c.?12l?25h?25.h?12l?25h>?25>から?12l?25h?25l変更?12l?25h?25l:?12l?25h?25:w?12l?25h?25l18;53HK18;53H?12l?25h?25l18;52HK18;52H?12l?25h25;1HK18;50H?25l?12l?25h?25l25;1H:?12l?25hw
+33mcommit d83ccfba4dd08f113d5e75d67c9f6cd30f6532c4mm
+Author: tmikolov <tmikolov@c84ef02e-58a5-4c83-e53e-41fc32d635eb>m
+Date:   Fri Jan 30 19:30:30 2015 +0000m
+m
+    bugfix in InitUnigramTable() - some words could not have been sampled as negmative examplesm
+m
+33mcommit 330c98d0c5d1835f6e31f6a728b867355c3aeeb4mm
+Author: tmikolov <tmikolov@c84ef02e-58a5-4c83-e53e-41fc32d635eb>m
+Date:   Mon Sep 15 21:12:09 2014 +0000m
+m
+    Bug fix - added questions-phrases.txtm
+m
+33mcommit 02c556d9b529f4ebe4f7376a9c357102a05c2841mm
+Author: tmikolov <tmikolov@c84ef02e-58a5-4c83-e53e-41fc32d635eb>m
+Date:   Tue Sep 9 19:34:50 2014 +0000m
+m
+    added script for training big word vector model using public corporam
+m
+33mcommit ffd46fd134188c423054645fc0a73af8223f9b29mm
+Author: tmikolov <tmikolov@c84ef02e-58a5-4c83-e53e-41fc32d635eb>m
+Date:   Mon Sep 8 20:14:01 2014 +0000m
+m
+    fixed minor bugsm
+K?1lbash-3.2$
+bash-3.2$ git
+usage: git [--version] [--help] [-C <path>] [-c name=value]
+           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
+           [-p|--paginate|--no-pager] [--no-replace-objects] [--bare]
+           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
+           <command> [<args>]
+
+The most commonly used git commands are:
+   add        Add file contents to the index
+   bisect     Find by binary search the change that introduced a bug
+   branch     List, create, or delete branches
+   checkout   Checkout a branch or paths to the working tree
+   clone      Clone a repository into a new directory
+   commit     Record changes to the repository
+   diff       Show changes between commits, commit and working tree, etc
+   fetch      Download objects and refs from another repository
+   grep       Print lines matching a pattern
+   init       Create an empty Git repository or reinitialize an existing one
+   log        Show commit logs
+   merge      Join two or more development histories together
+   mv         Move or rename a file, a directory, or a symlink
+   pull       Fetch from and integrate with another repository or a local branch
+   push       Update remote refs along with associated objects
+   rebase     Forward-port local commits to the updated upstream head
+   reset      Reset current HEAD to the specified state
+   rm         Remove files from the working tree and from the index
+   show       Show various types of objects
+   status     Show the working tree status
+   tag        Create, list, delete or verify a tag object signed with GPG
+
+'git help -a' and 'git help -g' list available subcommands and some
+concept guides. See 'git help <command>' or 'git help <concept>'
+to read about a specific subcommand or concept.
+bash-3.2$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        31mmodified:   compute-accuracy.cm
+        31mmodified:   demo-analogy.shm
+        31mmodified:   demo-classes.shm
+        31mmodified:   demo-phrase-accuracy.shm
+        31mmodified:   demo-phrases.shm
+        31mmodified:   demo-word-accuracy.shm
+        31mmodified:   demo-word.shm
+        31mmodified:   distance.cm
+        31mmodified:   word-analogy.cm
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        31mcompute-accuracym
+        31mdistancem
+        31mtext8m
+        31mtext8.zipm
+        31mtypescriptm
+        31mvectors.binm
+        31mword-analogym
+        31mword2phrasem
+        31mword2vecm
+
+no changes added to commit (use "git add" and/or "git commit -a")
+bash-3.2$ git branch
+* 32mmasterm
+bash-3.2$ git remove -v
+git: 'remove' is not a git command. See 'git --help'.
+
+Did you mean this?
+        remote
+bash-3.2$ gite remote -v
+bash: gite: command not found
+bash-3.2$ git remote -v
+origin  https://github.com/tatst/word2vec.git (fetch)
+origin  https://github.com/tatst/word2vec.git (push)
+bash-3.2$ git remote add origin https://github.com/tatst/word2vec.git
+fatal: remote origin already exists.
+bash-3.2$ git branch other
+bash-3.2$ git checkouKt other
+M       compute-accuracy.c
+M       demo-analogy.sh
+M       demo-classes.sh
+M       demo-phrase-accuracy.sh
+M       demo-phrases.sh
+M       demo-word-accuracy.sh
+M       demo-word.sh
+M       distance.c
+M       word-analogy.c
+Switched to branch 'other'
+bash-3.2$ git statuKstatus
+On branch other
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        31mmodified:   compute-accuracy.cm
+        31mmodified:   demo-analogy.shm
+        31mmodified:   demo-classes.shm
+        31mmodified:   demo-phrase-accuracy.shm
+        31mmodified:   demo-phrases.shm
+        31mmodified:   demo-word-accuracy.shm
+        31mmodified:   demo-word.shm
+        31mmodified:   distance.cm
+        31mmodified:   word-analogy.cm
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        31mcompute-accuracym
+        31mdistancem
+        31mtext8m
+        31mtext8.zipm
+        31mtypescriptm
+        31mvectors.binm
+        31mword-analogym
+        31mword2phrasem
+        31mword2vecm
+
+no changes added to commit (use "git add" and/or "git commit -a")
+bash-3.2$ giKt branch
+  masterm
+* 32motherm
+bash-3.2$ git checkout master
+M       compute-accuracy.c
+M       demo-analogy.sh
+M       demo-classes.sh
+M       demo-phrase-accuracy.sh
+M       demo-phrases.sh
+M       demo-word-accuracy.sh
+M       demo-word.sh
+M       distance.c
+M       word-analogy.c
+Switched to branch 'master'
+Your branch is up-to-date with 'origin/master'.
+bash-3.2$ git baranch
+git: 'baranch' is not a git command. See 'git --help'.
+
+Did you mean this?
+        branch
+bash-3.2$ git branch
+* 32mmasterm
+  otherm
+bash-3.2$ git statsKus
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        31mmodified:   compute-accuracy.cm
+        31mmodified:   demo-analogy.shm
+        31mmodified:   demo-classes.shm
+        31mmodified:   demo-phrase-accuracy.shm
+        31mmodified:   demo-phrases.shm
+        31mmodified:   demo-word-accuracy.shm
+        31mmodified:   demo-word.shm
+        31mmodified:   distance.cm
+        31mmodified:   word-analogy.cm
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        31mcompute-accuracym
+        31mdistancem
+        31mtext8m
+        31mtext8.zipm
+        31mtypescriptm
+        31mvectors.binm
+        31mword-analogym
+        31mword2phrasem
+        31mword2vecm
+
+no changes added to commit (use "git add" and/or "git commit -a")
+bash-3.2$ git co other
+M       compute-accuracy.c
+M       demo-analogy.sh
+M       demo-classes.sh
+M       demo-phrase-accuracy.sh
+M       demo-phrases.sh
+M       demo-word-accuracy.sh
+M       demo-word.sh
+M       distance.c
+M       word-analogy.c
+Switched to branch 'other'
+bash-3.2$ git status
+On branch other
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        31mmodified:   compute-accuracy.cm
+        31mmodified:   demo-analogy.shm
+        31mmodified:   demo-classes.shm
+        31mmodified:   demo-phrase-accuracy.shm
+        31mmodified:   demo-phrases.shm
+        31mmodified:   demo-word-accuracy.shm
+        31mmodified:   demo-word.shm
+        31mmodified:   distance.cm
+        31mmodified:   word-analogy.cm
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        31mcompute-accuracym
+        31mdistancem
+        31mtext8m
+        31mtext8.zipm
+        31mtypescriptm
+        31mvectors.binm
+        31mword-analogym
+        31mword2phrasem
+        31mword2vecm
+
+no changes added to commit (use "git add" and/or "git commit -a")
+bash-3.2$ git add .
+bash-3.2$ git status
+On branch other
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        32mnew file:   compute-accuracym
+        32mmodified:   compute-accuracy.cm
+        32mmodified:   demo-analogy.shm
+        32mmodified:   demo-classes.shm
+        32mmodified:   demo-phrase-accuracy.shm
+        32mmodified:   demo-phrases.shm
+        32mmodified:   demo-word-accuracy.shm
+        32mmodified:   demo-word.shm
+        32mnew file:   distancem
+        32mmodified:   distance.cm
+        32mnew file:   text8m
+        32mnew file:   text8.zipm
+        32mnew file:   typescriptm
+        32mnew file:   vectors.binm
+        32mnew file:   word-analogym
+        32mmodified:   word-analogy.cm
+        32mnew file:   word2phrasem
+        32mnew file:   word2vecm
+
+bash-3.2$ git Kcommit -m "mak1111PMake"
+[other 42749fb] Make
+ 18 files changed, 741 insertions(+), 3 deletions(-)
+ create mode 100755 compute-accuracy
+ mode change 100644 => 100755 demo-analogy.sh
+ mode change 100644 => 100755 demo-classes.sh
+ mode change 100644 => 100755 demo-phrase-accuracy.sh
+ mode change 100644 => 100755 demo-phrases.sh
+ mode change 100644 => 100755 demo-word-accuracy.sh
+ mode change 100644 => 100755 demo-word.sh
+ create mode 100755 distance
+ create mode 100644 text8
+ create mode 100644 text8.zip
+ create mode 100644 typescript
+ create mode 100644 vectors.bin
+ create mode 100755 word-analogy
+ create mode 100755 word2phrase
+ create mode 100755 word2vec
+bash-3.2$ git co master
+error: Your local changes to the following files would be overwritten by checkout:
+        typescript
+Please, commit your changes or stash them before you can switch branches.
+Aborting
+bash-3.2$ gitKt chKit checkout master
+error: Your local changes to the following files would be overwritten by checkout:
+        typescript
+Please, commit your changes or stash them before you can switch branches.
+Aborting
+bash-3.2$ git branch
+  masterm
+* 32motherm
+bash-3.2$ git log
+33mcommit 42749fb14bfc5b57e519afb94683e4e04cd1bf09mm
+Author: Tatsuya Toyoda <b8eansatz@gmail.com>m
+Date:   Mon Oct 19 12:10:16 2015 +0900m
+m
+    Makem
+m
+33mcommit d83ccfba4dd08f113d5e75d67c9f6cd30f6532c4mm
+Author: tmikolov <tmikolov@c84ef02e-58a5-4c83-e53e-41fc32d635eb>m
+Date:   Fri Jan 30 19:30:30 2015 +0000m
+m
+    bugfix in InitUnigramTable() - some words could not have been sampled as negmative examplesm
+m
+33mcommit 330c98d0c5d1835f6e31f6a728b867355c3aeeb4mm
+Author: tmikolov <tmikolov@c84ef02e-58a5-4c83-e53e-41fc32d635eb>m
+Date:   Mon Sep 15 21:12:09 2014 +0000m
+m
+    Bug fix - added questions-phrases.txtm
+m
+33mcommit 02c556d9b529f4ebe4f7376a9c357102a05c2841mm
+Author: tmikolov <tmikolov@c84ef02e-58a5-4c83-e53e-41fc32d635eb>m
+Date:   Tue Sep 9 19:34:50 2014 +0000m
+m
+    added script for training big word vector model using public corporam
+K?1lbash-3.2$ git checkout master
+error: Your local changes to the following files would be overwritten by checkout:
+        typescript
+Please, commit your changes or stash them before you can switch branches.
+Aborting
+bash-3.2$ vi typescript
+?1049h?1h1;25r?12;25h?12l?25h27mmH2J?25l25;1H"typescript" [noeol] 822L, 1496773C>c1;1HScript started on Mon Oct 19 10:40:46 2015
+bash: /path/to/your/virtualenvwrapper.sh: No such file or directory38;5;81m^M
+^[m[?1034hbash-3.2$ ls38;5;81m^Mm
+LICENSE24C distance.c38;5;81m^Mm
+README.txt21C makefile38;5;81m^Mm
+compute-accuracy.c13C questions-phrases.txt38;5;81m^Mm
+demo-analogy.sh16C questions-words.txt38;5;81m^Mm
+demo-classes.sh16C typescript38;5;81m^Mm
+demo-phrase-accuracy.sh8C word-analogy.c38;5;81m^Mm
+demo-phrases.sh16C word2phrase38;5;81m^Mm
+demo-train-big-model-v1.sh      word2phrase.c38;5;81m^Mm
+demo-word-accuracy.sh10C word2vec38;5;81m^Mm
+demo-word.sh19C word2vec.c38;5;81m^Mm
+bash-3.2$ vi distance.c 38;5;81m^M
+^[m[?1049h38;5;81m^[m[?1h38;5;81m^[m=38;5;81m^[m[1;25r38;5;81m^[m[?12;25h38;5;81m^[m[?12l38;5;81m^[m[?25h38;5;81m^[m[27m38;5;81m^[m[m38;5;81m^[m[H38;5;81m^[m[2J38;5;81m^[m[?25l38;5;81m^[m[2216;1H5;1H"distance.c" 142L, 4557C38;5;81m^[m[>c38;5;81m^[m[1;1H//  Copyright 2013 Google Inc. All Rightt17;1Hs Reserved.38;5;81m^Mm
+//38;5;81m^Mm
+//  Licensed under the Apache License, Version 2.0 (the "License");38;5;81m^Mm
+//  you may not use this file except in compliance with the License.38;5;81m^Mm
+//  You may obtain a copy of the License at38;5;81m^Mm
+//38;5;81m^Mm
+//      http://www.apache.org/licenses/LICENSE-2.038;5;81m^Mm
+//38;5;81m^M1;1H?12l?25h
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+?25l1;24rm24;1H
+1;25r24;1H//  Unless required by applicable law or agreed to in writing, software38;5;81m^Mm25;1HK24;1H?12l?25h?25l1;24r24;1H
+?12l?25h?25l1;24rm24;1Hed under the License is distributed on an "AS IS" BASIS,38;5;81m^M
+?12l?25h?25l1;24rm24;1HARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.38;5;81m^M
+?12l?25h?25l1;24rm24;1Hicense for the specific language governing permissions and38;5;81m^M
+?12l?25h?25l1;24rm24;1Hns under the License.38;5;81m^M
+?12l?25h?25l1;24rm24;1H
+?12l?25h?25l1;24rm24;1Hio.h>38;5;81m^M
+?12l?25h?25l1;24rm24;1Hing.h>38;5;81m^M
+?12l?25h?25l1;24rm24;1Hh.h>38;5;81m^M
+?12l?25h?25l1;24rm24;1Hloc.h>38;5;81m^M
+?12l?25h?25l1;24rm24;1H
+?12l?25h?25l1;24rm1;1H2M1;25r23;1Hconst0long;longmN[=[40;38;5;81m^[m[17Cf//tnumber8of;closest words that will bee38;5;81m^[m[22;1H ss24;1Hhown38;5;81m^M23;1H?12l?25h?25l1;24rm1;1H3M1;25r22;1Hconst long long max_w = 50;38;5;81m^[m[13C // max length of vocabulary entries38;5;81m^[m[1;1H38;5;81m^[m[??23;1H12l38;5;81m^[m[?25h38;5;81m^[m[?25l38;5;81m^[m[25;1H38;5;81m^[m[K38;5;81m^[m[25;1H:38;5;81m^[m[?12l38;5;81m^[m[?25hset number38;5;81m^M^[m[?25l38;5;81m^[m[1;1H38;5;81m^[[m24;1H[93m  1 38;5;81m^[m[m//  Copyright 2013 Google Inc. All Rights Reserved.38;5;81m^M22;1H?12l?25h?25l1;24rm24;1H
+?12l?25h?25l1;24rm1;1H2M1;25r23;1H38;5;81m^[m[93m813^38;5;81m^[m[m//  Licensed under the Apache License, Version 2.0 (the "License"))24;1H;38;5;81m^M23;1H?12l?25h?25l1;24rm1;1H2M1;25r23;1H38;5;81m^[m[93m  4 38;5;81m^[m[m//  you may not use this file except in compliance with the Licenss24;1He.38;5;81m^M23;1H?12l?25h?25l1;24rm24;1H
+?12l?25h?25l1;24rm24;1H3m  5 38;5;81m^[m[m//  You may obtain a copy of the License at38;5;81m^M
+?12l?25h?25l1;24rm24;1H3m  6 38;5;81m^[m[m//38;5;81m^M
+?12l?25h?25l1;24rm24;1H3m  7 38;5;81m^[m[m//      http://www.apache.org/licenses/LICENSE-2.038;5;81m^M
+?12l?25h?25l1;24rm1;1H2M1;25r23;1H38;5;81m^[m[93m819^38;5;81m^[m[m//  Unless required by applicable law or agreed to in writing, soff24;1Htware38;5;81m^M23;1H?12l?25h?25l1;24rm1;1H2M1;25r23;1H38;5;81m^[m[93m 10 38;5;81m^[m[m//  distributed under the License is distributed on an "AS IS" BASS24;1HIS,38;5;81m^M23;1H?12l?25h?25l1;24rm1;1H3M1;25r22;1H38;5;81m^[m[93m 11 38;5;81m^[m[m//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express oo23;1Hr implied.38;5;81m^[m[12;1H38;5;81m^[m[93m 12 38;5;81m^[m[m//  See the License for the specific language goo24;1Hverning permissions and38;5;81m^M22;1H?12l?25h?25l1;24rm24;1H
+?12l?25h?25l1;24rm24;1H3m 13 38;5;81m^[m[m//  limitations under the License.38;5;81m^M
+?12l?25h?25l1;24rm24;1H3m 14 38;5;81m^M
+?12l?25h?25l1;24rm1;1H2M1;25r23;1H38;5;81m^[m[93m;16m38;5;81m^[m[m#include <string.h>38;5;81m^M
+^[m[93m 17 38;5;81m^[m[m#include <math.h>38;5;81m^M23;1H?12l?25h
+?25l1;24rm1;1H3M1;25r22;1H38;5;81m^[m[93m 18 38;5;81m^[m[m#include <malloc.h>38;5;81m^M
+^[m[93m 19 38;5;81m^Mm
+ 20 38;5;81m^[m[mconst long long max_size = 2000;8C // max length of strings38;5;81m^M22;1H?12l?25h
+
+?25l1;24rm1;1H3M1;25r22;1H38;5;81m^[m[93m 21 38;5;81m^[m[mconst long long N = 40;38;5;81m^[m[13C     // number of closest words that  23;1Hwill38;5;81m^[m[22;1H38;5;81m^[m[93m    38;5;81m^[m[ml be shown38;5;81m^M
+^[m[93m 22 38;5;81m^[m[mconst long long max_w = 50;38;5;81m^[m[9C     // max length of vocabulary e24;1H94m@                                                                               22;1H?12l?25h?25l1;24rm1;1H13M1;25r11;1H38;5;81m^[m[93m 22 38;5;81m^[m[mconst long long max_w = 50;38;5;81m^[m[9C     // max length of vocabulary ee12;1Hntries38;5;81m^[m[24;1H38;5;81m^[m[93m 23 38;5;81m^[m[1;5H38;5;81m^[m[?12l38;5;81m^[m[?25h38;5;81m^[m[?25l38;5;81m^[m[m38;5;81m^[m[25;1H38;5;81m^[m[K38;5;81m^[m[25;1H:38;5;81m^[m[[13;1H?12l38;5;81m^[m[?25h1838;5;81m^M^[m[?25l38;5;81m^[m[18;5H38;5;81m^[m[?12l38;5;81m^[m[?25h#include <38;5;81m^[m[?25l38;5;81m^Hm<alloc.h>38;5;81m^[m[18;23314;1HH38;5;81m^[m[K38;5;81m^[m[18;15H38;5;81m^[m[?12l38;5;81m^[m[?25h38;5;81m^[m[?25l38;5;81m^Hm<lloc.h>38;5;81m^[m[18;22H38;5;81m^[m[K38;5;81m^[m[18;15H38;5;81m^[m[?12l38;5;81m^[m[?25515;1Hh38;5;81m^[m[?25lloc.h>38;5;81m^[m[18;21H38;5;81m^[m[K38;5;81m^[m[18;15H38;5;81m^[m[?12l38;5;81m^[m[?25h38;5;81m^[m[?25l38;5;81m^Hm<oc.h>38;5;81m^[m[18;20H38;5;81m^[m[K38;5;81m^[[m16;1H[18;15H38;5;81m^[m[?12l38;5;81m^[m[?25h38;5;81m^[m[?25l38;5;81m^Hm<c.h>38;5;81m^[m[18;19H38;5;81m^[m[K38;5;81m^[m[18;15H38;5;81m^[m[?12l38;5;81m^[m[?25h38;5;81m^[m[?25l38;5;81m^HHm17;1H<.h>38;5;81m^[m[18;18H38;5;81m^[m[K38;5;81m^[m[18;15H38;5;81m^[m[?12l38;5;81m^[m[?25h38;5;81m^[m[?25l38;5;81m^[m[25;1H38;5;81m^[m[1m-- INSERT --38;5;81m^[m[18;16618;1HH38;5;81m^[m[?12l38;5;81m^[m[?25h38;5;81m^H^[m[?25l38;5;81m^[m[m38;5;81m^Hm<s.h>38;5;81m^H^H^H^[m[?12l38;5;81m^[m[?25h38;5;81m^[m[?25l38;5;81m^Hmst.h>38;5;81m^H^H^H^[m[?1119;1H2l38;5;81m^[m[?25h38;5;81m^[m[?25l38;5;81m^Hmtd.h>38;5;81m^H^H^H^[m[?12l38;5;81m^[m[?25h38;5;81m^[m[?25l38;5;81m^Hmdl.h>38;5;81m^H^H^H^[m[?12l38;5;81m^[m[?25h38;5;81m^[m[[20;1H?25l38;5;81m^Hmli.h>38;5;81m^H^H^H^[m[?12l38;5;81m^[m[?25h38;5;81m^[m[?25l38;5;81m^Hmib.h>38;5;81m^H^H^H^[m[?12l38;5;81m^[m[?25h38;5;81m^[m[25;1H38;5;81m^[m[K38;5;81m^[m[[21;1H18;20H38;5;81m^[m[?25l38;5;81m^[m[?12l38;5;81m^[m[?25h38;5;81m^[m[?25l38;5;81m^[m[25;1H:38;5;81m^[m[?12l38;5;81m^[m[?25hw38;5;81m^M^[m[?25l"distance.c"  22;1H142L, 4557C written38;5;81m^[m[18;20H38;5;81m^[m[?12l38;5;81m^[m[?25h38;5;81m^[m[?25l38;5;81m^[m[25;1H38;5;81m^[m[K38;5;81m^[m[25;1H:38;5;81m^[m[?12l38;5;81m^[m[[23;1H?25hq38;5;81m^M^[m[?25l38;5;81m^[m[25;1H38;5;81m^[m[K38;5;81m^[m[25;1H38;5;81m^[m[?1l38;5;81m^[m>38;5;81m^[m[?12l38;5;81m^[m[?25h38;5;81m^[m[?1049lbash-3.2$ vi ww24;1Hor38;5;81m^Gmd-analogy.c 38;5;81m^M11;1H?12l?25h?25l1;24rm1;1H3M1;25r22;1H38;5;81m^[m[?1049h38;5;81m^[m[?1h38;5;81m^[m=38;5;81m^[m[1;25r38;5;81m^[m[?12;25h38;5;81m^[m[?12l38;5;81m^[m[?25h38;5;81m^[m[27m38;5;81m^[m[m38;5;81m^[m[H38;5;81m^[m[2J38;5;81m^[m[?25l38;5;81m^[m[2223;1H5;1H"word-analogy.c" 144L, 4664C38;5;81m^[m[>c38;5;81m^[m[1;1H//  Copyright 2013 Google Inc. All RR24;1Hights Reserved.38;5;81m^M22;1H?12l?25h?25l1;24rm24;1H
+?12l?25h?25l1;24rm24;1H
+?12l?25h?25l1;24rm24;1Hunder the Apache License, Version 2.0 (the "License");38;5;81m^M
+?12l?25h?25l1;24rm24;1Hot use this file except in compliance with the License.38;5;81m^M
+?12l?25h?25l1;24rm24;1Hbtain a copy of the License at38;5;81m^M
+?12l?25h?25l1;24rm1;1H2M1;25r23;1H//      http://www.apache.org/licenses/LICENSE-2.038;5;81m^Mm
+//38;5;81m^M23;1H?12l?25h
+?25l1;24rm1;1H14M1;25r11;1H//  Unless required by applicable law or agreed to in writing, software38;5;81m^Mm
+//  distributed under the License is distributed on an "AS IS" BASIS,38;5;81m^Mm
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.38;5;81m^Mm
+//  See the License for the specific language governing permissions and38;5;81m^Mm
+//  limitations under the License.38;5;81m^M
+^Mm
+#include <stdio.h>38;5;81m^Mm
+#include <string.h>38;5;81m^Mm
+#include <math.h>38;5;81m^Mm
+#include <malloc.h>38;5;81m^M
+^Mm
+const long long max_size = 2000;38;5;81m^[m[8C // max length of strings38;5;81m^Mm
+const long long N = 40;38;5;81m^[m[17C // number of closest words that will bee38;5;81m^[m[22;1H ss24;1Hhown38;5;81m^M11;1H?12l?25h
+
+
+?25l25;1HK25;1H?1l?12l?25h?1049lbash-3.2$
