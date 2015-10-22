@@ -21,7 +21,7 @@
 #define MAX_STRING 100 /* 最大文字数は100字まで */
 #define EXP_TABLE_SIZE 1000
 #define MAX_EXP 6
-#define MAX_SENTENCE_LENGTH 1000
+#define MAX_SENTENCE_LENGTH 1000 /* 365行目と403行目で使用 */
 #define MAX_CODE_LENGTH 40 /* 最大コード長は40字まで */
 
 const int vocab_hash_size = 30000000;  // Maximum 30 * 0.7 = 21M words in the vocabulary
@@ -42,19 +42,19 @@ int binary = 0, cbow = 1, debug_mode = 2, window = 5, min_count = 5, num_threads
 int *vocab_hash; /* int型ポインタvocab_hash(SearchVocab()で使用) */
 long long vocab_max_size = 1000, vocab_size = 0, layer1_size = 100; /* long long型vocab_max_size, vocab_sizeとlayer1_sizeを宣言 */
 long long train_words = 0, word_count_actual = 0, iter = 5, file_size = 0, classes = 0;
-real alpha = 0.025, starting_alpha, sample = 1e-3;
-real *syn0, *syn1, *syn1neg, *expTable;
+real alpha = 0.025, starting_alpha, sample = 1e-3; /* 655, 656行目よりalphaは学習比(learning rate) */
+real *syn0, *syn1, *syn1neg, *expTable; /* real型ポインタ */
 clock_t start;
 
 int hs = 0, negative = 5; /* hsは344行目，negativeは350行目で初出 */
 const int table_size = 1e8;
-int *table;
+int *table; /* int型ポインタtable */
 /* void型(値を返さない関数)InitUnigramTable()←かなり後に出てくる */
 void InitUnigramTable() {
   int a, i;
   double train_words_pow = 0;
   double d1, power = 0.75;
-  table = (int *)malloc(table_size * sizeof(int)); /* table_size * sizeof(int)分のメモリを動的に割り当て(free()でメモリを解放) */
+  table = (int *)malloc(table_size * sizeof(int)); /* table_size * sizeof(int)分のメモリを動的に割り当て(このメモリはどこで解放？) */
   for (a = 0; a < vocab_size; a++) train_words_pow += pow(vocab[a].cn, power);
   i = 0;
   d1 = pow(vocab[i].cn, power) / train_words_pow;
@@ -73,16 +73,16 @@ void ReadWord(char *word, FILE *fin) { /* char型ポインタwordとファイル
   int a = 0, ch; /* int型aとch */
   while (!feof(fin)) { /* ファイルポインタfinがファイルの終端に達した時にループ終了 */
     ch = fgetc(fin); /* ファイルポインタfinから1文字読込んでint型で返す */
-    if (ch == 13) continue;
+    if (ch == 13) continue; /* ch == 13の時処理をスキップ */
     if ((ch == ' ') || (ch == '\t') || (ch == '\n')) {/* 空白・タブ・改行がある場合 */
       if (a > 0) { /* 最初は条件を満たさない */
         if (ch == '\n') ungetc(ch, fin); /* ファイルポインタfinに1文字返却しchを返す */
         break;
       }
-      if (ch == '\n') { /* 改行がある場合 */
+      if (ch == '\n') { /* 改行が有る場合 */
         strcpy(word, (char *)"</s>"); /* 配列wordに文字列"</s>"をコピー */
         return;
-      } else continue;
+      } else continue; /* 改行が無い場合処理をスキップ */
     }
     word[a] = ch; /* 配列wordのa番目にint型chを代入 */
     a++;
@@ -362,14 +362,14 @@ void InitNet() { /* void関数IniNet() */
 
 void *TrainModelThread(void *id) { /* 543行目まである */
   long long a, b, d, cw, word, last_word, sentence_length = 0, sentence_position = 0;
-  long long word_count = 0, last_word_count = 0, sen[MAX_SENTENCE_LENGTH + 1];
-  long long l1, l2, c, target, label, local_iter = iter;
+  long long word_count = 0, last_word_count = 0, sen[MAX_SENTENCE_LENGTH + 1]; /* 配列senは1001個の要素を持つ */
+  long long l1, l2, c, target, label, local_iter = iter; /* 44行目よりiter == 5 */
   unsigned long long next_random = (long long)id;
-  real f, g;
+  real f, g; /* real型変数f, g (skip-gram等で頻出) */
   clock_t now;
-  real *neu1 = (real *)calloc(layer1_size, sizeof(real));
-  real *neu1e = (real *)calloc(layer1_size, sizeof(real));
-  FILE *fi = fopen(train_file, "rb");
+  real *neu1 = (real *)calloc(layer1_size, sizeof(real)); /* *neu1にメモリを動的に割当， 540行目で解放*/
+  real *neu1e = (real *)calloc(layer1_size, sizeof(real)); /* *neu1eにメモリを動的に割当，541行目で解放 */
+  FILE *fi = fopen(train_file, "rb"); /* 読取モードでtrain_fileを開き，ファイルポインタfiに代入，374行目から538行目までの無限ループの後539行目で閉じる */
   fseek(fi, file_size / (long long)num_threads * (long long)id, SEEK_SET);
   while (1) { /* 無限ループ(538行目まで) */
     if (word_count - last_word_count > 10000) { /* 387行目まで */
@@ -385,42 +385,42 @@ void *TrainModelThread(void *id) { /* 543行目まである */
       alpha = starting_alpha * (1 - word_count_actual / (real)(iter * train_words + 1));
       if (alpha < starting_alpha * 0.0001) alpha = starting_alpha * 0.0001;
     }
-    if (sentence_length == 0) {
+    if (sentence_length == 0) { /* if文(406行目まで),364行目より当初はsentence_length == 0だが389行目からの無限ループで最終的にsentence_lengthが1000になる */
       while (1) { /* 無限ループ(404行目まで) */
         word = ReadWordIndex(fi); /* 114行目で定義の単語を読取り，語彙中での単語の番号を返すReadWordIndex */
         if (feof(fi)) break; /* ファイルポインタが終端に達した時389行目からの無限ループから脱出 */
-        if (word == -1) continue;
+        if (word == -1) continue; /* word == -1の時処理をスキップ */
         word_count++;
         if (word == 0) break; /* 389行目からの無限ループから脱出 */
         // The subsampling randomly discards frequent words while keeping the ranking same
-        if (sample > 0) {
+        if (sample > 0) { /* sample > 0 の時(400行目まで) */
           real ran = (sqrt(vocab[word].cn / (sample * train_words)) + 1) * (sample * train_words) / vocab[word].cn;
           next_random = next_random * (unsigned long long)25214903917 + 11;
-          if (ran < (next_random & 0xFFFF) / (real)65536) continue;
-        }
-        sen[sentence_length] = word;
-        sentence_length++;
-        if (sentence_length >= MAX_SENTENCE_LENGTH) break; /* 389行目からの無限ループから脱出 */
-      }
-      sentence_position = 0;
-    }
-    if (feof(fi) || (word_count > train_words / num_threads)) {
+          if (ran < (next_random & 0xFFFF) / (real)65536) continue; /* ran < (next_random & 0xFFFF) / (real)65536 の時処理をスキップして390行目に戻る */
+        } /* 396行目からのif文ここまで */
+        sen[sentence_length] = word; /* 配列senの各要素にwordを代入 */
+        sentence_length++; /* ここでsentence_lengthが増える */
+	if (sentence_length >= MAX_SENTENCE_LENGTH) break; /* sentence_lengthがMAX_SENTENCE_LENGTH == 1000に達した時389行目からの無限ループから脱出 (i.e. 配列senはMAX_SENTENCE_LENGTH + 1個の要素が有るので，senの各要素にwordを代入し終わったら無限ループを抜ける) */
+      } /*  389行目からの無限ループここまで */
+      sentence_position = 0; /* 364行目でlong long sentence_position = 0と置いているが，ここでも改めて代入(533行目のsentence_position++はここに響く？) */
+    } /* 388行目から */
+    if (feof(fi) || (word_count > train_words / num_threads)) { /* ファイルポインタが終端に達した若くはword_countがtrain_words / num_threadsより多い場合(416行目まで) */
       word_count_actual += word_count - last_word_count;
-      local_iter--;
+      local_iter--; /* local_iterを1つ減らす(366行目より当初はlocal_iter == 5) */
       if (local_iter == 0) break; /* ここで374行目からの無限ループから脱出！ */
       word_count = 0;
       last_word_count = 0;
       sentence_length = 0;
       fseek(fi, file_size / (long long)num_threads * (long long)id, SEEK_SET);
-      continue;
-    }
-    word = sen[sentence_position];
+      continue; /* 以下の処理をスキップして375行目に一気に戻る */
+    } /* 407行目から */
+    word = sen[sentence_position]; /* 最初はword = sen[0] */
     if (word == -1) continue;
     for (c = 0; c < layer1_size; c++) neu1[c] = 0;
     for (c = 0; c < layer1_size; c++) neu1e[c] = 0;
-    next_random = next_random * (unsigned long long)25214903917 + 11;
-    b = next_random % window;
-    if (cbow) {  //train the cbow architecture
+    next_random = next_random * (unsigned long long)25214903917 + 11; /* 線形合同法で乱数next_randomを生成 */
+    b = next_random % window; /* 41行目よりwindow = 5, このbは483行目以降のelseで使う */
+    if (cbow) {  //train the cbow architecture /* 連続単語集合モデルCBOWの学習(41行目からcbow == 1よりデフォルトだとこれが動く)ここから482行目まで読み飛ばす */
       // in -> hidden
       cw = 0;
       for (a = b; a < window * 2 + 1 - b; a++) if (a != window) {
@@ -480,41 +480,41 @@ void *TrainModelThread(void *id) { /* 543行目まである */
           for (c = 0; c < layer1_size; c++) syn0[c + last_word * layer1_size] += neu1e[c];
         }
       }
-    } else {  //train skip-gram
-      for (a = b; a < window * 2 + 1 - b; a++) if (a != window) {
-        c = sentence_position - window + a;
-        if (c < 0) continue;
-        if (c >= sentence_length) continue;
+    } else {  //train skip-gram /* skip-gramの学習(41行目からcbow == 1よりデフォルトだと動かない！)，532行目まで */
+      for (a = b; a < window * 2 + 1 - b; a++) if (a != window) { /* 531行目まで，(422行目より next_random % window =) b <= a < window *2 + 1 -bの間で，a != windowの時 */
+        c = sentence_position - window + a; /* 41行目よりwindow == 5 */
+        if (c < 0) continue; /* c < 0の時処理をスキップして485行目に戻る */
+        if (c >= sentence_length) continue; /* c >= sentence_lengthの時処理をスキップして485行目に戻る(384行目より当初はsentence_lengh == 0) */
         last_word = sen[c];
-        if (last_word == -1) continue;
-        l1 = last_word * layer1_size;
+        if (last_word == -1) continue; /* last_word == -1の時処理をスキップ */
+        l1 = last_word * layer1_size; /* 366行目で定義したl1にlast_word * layer1_sizeを代入 */
         for (c = 0; c < layer1_size; c++) neu1e[c] = 0;
-        // HIERARCHICAL SOFTMAX
-        if (hs) for (d = 0; d < vocab[word].codelen; d++) {
-          f = 0;
+        // HIERARCHICAL SOFTMAX /* 階層的ソフトマックス */
+        if (hs) for (d = 0; d < vocab[word].codelen; d++) { /* 507行目まで(デフォルトだとhs == 0だから動かない！) */
+          f = 0; /* real型変数f(368行目で宣言済)に0を代入 */
           l2 = vocab[word].point[d] * layer1_size;
-          // Propagate hidden -> output
+          // Propagate hidden -> output /* hiddenからoutputに反映 */
           for (c = 0; c < layer1_size; c++) f += syn0[c + l1] * syn1[c + l2];
-          if (f <= -MAX_EXP) continue;
-          else if (f >= MAX_EXP) continue;
-          else f = expTable[(int)((f + MAX_EXP) * (EXP_TABLE_SIZE / MAX_EXP / 2))];
-          // 'g' is the gradient multiplied by the learning rate
+          if (f <= -MAX_EXP) continue; /* f <= -MAX_EXP(== -6, 23行目)の時処理をスキップ */
+          else if (f >= MAX_EXP) continue; /* f >= MAX_EXP(== 6, 23行目)の時処理をスキップ */
+          else f = expTable[(int)((f + MAX_EXP) * (EXP_TABLE_SIZE / MAX_EXP / 2))]; /* -MAX_EXP < f < MAX_EXPの時 fにexpTable[(int)((f + MAX_EXP) * (EXP_TABLE_SIZE / MAX_EXP / 2))]を代入 */
+          // 'g' is the gradient multiplied by the learning rate /* 'g'は勾配と学習比の積 */
           g = (1 - vocab[word].code[d] - f) * alpha;
-          // Propagate errors output -> hidden
+          // Propagate errors output -> hidden /* エラーをoutputからhiddenに反映 */
           for (c = 0; c < layer1_size; c++) neu1e[c] += g * syn1[c + l2];
-          // Learn weights hidden -> output
+          // Learn weights hidden -> output /* 重みを学習してhidenから */
           for (c = 0; c < layer1_size; c++) syn1[c + l2] += g * syn0[c + l1];
-        }
-        // NEGATIVE SAMPLING
-        if (negative > 0) for (d = 0; d < negative + 1; d++) {
-          if (d == 0) {
+        } /* 493行目から */
+        // NEGATIVE SAMPLING /* ネガティブサンプリング */
+        if (negative > 0) for (d = 0; d < negative + 1; d++) { /* 528行目まで(デフォルトだとnegative == 5だからこっちが動く) */
+          if (d == 0) { /* ループの最初だけ */
             target = word;
             label = 1;
-          } else {
-            next_random = next_random * (unsigned long long)25214903917 + 11;
-            target = table[(next_random >> 16) % table_size];
+          } else { /* ループの2回目以降 */
+            next_random = next_random * (unsigned long long)25214903917 + 11; /* 線形合同法 */
+            target = table[(next_random >> 16) % table_size]; /* targetにtable[(next_random >> 16) % table_size]を代入 */
             if (target == 0) target = next_random % (vocab_size - 1) + 1;
-            if (target == word) continue;
+            if (target == word) continue; /* target == wordの時処理をスキップして510行目に戻る */
             label = 0;
           }
           l2 = target * layer1_size;
@@ -525,20 +525,20 @@ void *TrainModelThread(void *id) { /* 543行目まである */
           else g = (label - expTable[(int)((f + MAX_EXP) * (EXP_TABLE_SIZE / MAX_EXP / 2))]) * alpha;
           for (c = 0; c < layer1_size; c++) neu1e[c] += g * syn1neg[c + l2];
           for (c = 0; c < layer1_size; c++) syn1neg[c + l2] += g * syn0[c + l1];
-        }
+        } /* 509行目からのfor文はここまで */
         // Learn weights input -> hidden
         for (c = 0; c < layer1_size; c++) syn0[c + l1] += neu1e[c];
       }
-    }
-    sentence_position++;
+    } /* 483行目からのskip-gram終わり */
+    sentence_position++; /* sentence_positionはここで1増える */
     if (sentence_position >= sentence_length) {
       sentence_length = 0;
-      continue;
+      continue; /* sentence_position >= sentence_lengthの時sentence_length = 0とした上で処理をスキップし，375行目に戻る */
     }
-  }
-  fclose(fi);
-  free(neu1);
-  free(neu1e);
+  } /* 374行目から無限ループ終り */
+  fclose(fi); /* 372行目で開いたtrain_fileを閉じる */
+  free(neu1); /* 370行目で確保したneu1のメモリを解放 */
+  free(neu1e); /* 371行目で確保したneu1eのメモリを解放 */
   pthread_exit(NULL);
 }
 
