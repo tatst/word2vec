@@ -7571,4 +7571,376 @@ const int vocab_hash_size = 30000000;  // Maximum 30 * 0.7 = 21M words in the vo
 628 [mint main(int argc, char **argv) { /* main関数，703行目まで(argc:コマンドライン引数の[24;1H[93m    [m総個数-1(何も引数をつけない時はargc==1)，argv: コマンドライン引数の文字列を指すポイ[94m>>[m[25;1H[93m    [mンタの配列 */
 [93m629 [m  int i;
 [93m630 [m  if (argc == 1) { /* コマンドライン引数に何も付けない時，672行目まで */
-[93m631 [m    printf("WORD VECTOR estimation toolkit v 0.1c\n\n");[13;11H[?12l[?25h[16;6H[?25l[29;1H[1m-- INSERT --[16;7H[?12l[?25h[?25l[m*/[?12l[?25h[?25l[11;28H[46m{[17;9H}[?12l[?25h[?25l[m[11;28H{[17;9H}[18;78H[?12l[?25h[?25l [?12l[?25h[?25l :[?12l[?25h[?25l[18;79H[K[18;79H[?12l[?25h[?25l *[?12l[?25h[?25l*/[?12l[?25h[?25l[46m[[ma[46m][?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[m[a][?12l[?25h[?25l/ 1 <= a < argc -1かつ文字列str==argv[a]の時だけここに来る */[18;80H[K[18;20H[?12l[?25h[19;19H[2C[2C[18;21H[?25l/* 1 <= a < argc -1かつ文字列str==argv[a]の時だけここに来る */[18;21H[?12l[?25h[19;21H[2C[?25l [?12l[?25h[?25l *[?12l[?25h[?25l*_[?12l[?25h_[?25l[19;25H[K[19;25H[?12l[?25h[?25l*/[?12l[?25h[20;25H[19;23H[20;23H[19;21H[?25l/ 618行目から */[19;25H[K[19;10H[?12l[?25h[?25l/* 618行目から */[19;11H[?12l[?25h[29;1H[K[19;10H
+[93m631 [m    printf("WORD VECTOR estimation toolkit v 0.1c\n\n");[13;11H[?12l[?25h[16;6H[?25l[29;1H[1m-- INSERT --[16;7H[?12l[?25h[?25l[m*/[?12l[?25h[?25l[11;28H[46m{[17;9H}[?12l[?25h[?25l[m[11;28H{[17;9H}[18;78H[?12l[?25h[?25l [?12l[?25h[?25l :[?12l[?25h[?25l[18;79H[K[18;79H[?12l[?25h[?25l *[?12l[?25h[?25l*/[?12l[?25h[?25l[46m[[ma[46m][?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[m[a][?12l[?25h[?25l/ 1 <= a < argc -1かつ文字列str==argv[a]の時だけここに来る */[18;80H[K[18;20H[?12l[?25h[19;19H[2C[2C[18;21H[?25l/* 1 <= a < argc -1かつ文字列str==argv[a]の時だけここに来る */[18;21H[?12l[?25h[19;21H[2C[?25l [?12l[?25h[?25l *[?12l[?25h[?25l*_[?12l[?25h_[?25l[19;25H[K[19;25H[?12l[?25h[?25l*/[?12l[?25h[20;25H[19;23H[20;23H[19;21H[?25l/ 618行目から */[19;25H[K[19;10H[?12l[?25h[?25l/* 618行目から */[19;11H[?12l[?25h[29;1H[K[19;10H[?25l[?12l[?25h[?25l[29;1H:[?12l[?25hw[?25l"word2vec.c" 703L, 44593C written[19;10H[?12l[?25h[?25l[29;1H[K[29;1H:[?12l[?25hq[?25l[29;1H[K[29;1H[?1l>[?12l[?25h[?1049lbash-3.2$ vi word2vec.c[C[C[C[C[C[C[C[C[C[C[5Pgit pushcommit -m "Add comments on word2vec.c 2015-10-26-2"[C[C[C[C[C[C[C[C[C[C[C[C[C[Cadd .[Kvi word2vec.c[C[C[C[C[C[C[C[C[C[Cmake[K
+gcc word2vec.c -o word2vec -lm -pthread -O3 -march=native -Wall -funroll-loops -Wno-unused-result
+bash-3.2$ gi [Kt add .
+bash-3.2$ git commit -m ""C"o"r"r"e"c"t" "e"r"r"o"r"s"
+[other a99d486] Correct errors
+ 2 files changed, 124 insertions(+), 4 deletions(-)
+bash-3.2$ git push
+warning: push.default is unset; its implicit value has changed in
+Git 2.0 from 'matching' to 'simple'. To squelch this message
+and maintain the traditional behavior, use:
+
+  git config --global push.default matching
+
+To squelch this message and adopt the new behavior now, use:
+
+  git config --global push.default simple
+
+When push.default is set to 'matching', git will push local branches
+to the remote branches that already exist with the same name.
+
+Since Git 2.0, Git defaults to the more conservative 'simple'
+behavior, which only pushes the current branch to the corresponding
+remote branch that 'git pull' uses to update the current branch.
+
+See 'git help config' and search for 'push.default' for further information.
+(the 'simple' mode was introduced in Git 1.7.11. Use the similar mode
+'current' instead of 'simple' if you sometimes use older versions of Git)
+
+Username for 'https://github.com': tatst  
+Password for 'https://tatst@github.com': 
+Counting objects: 4, done.
+Delta compression using up to 4 threads.
+Compressing objects:  25% (1/4)   Compressing objects:  50% (2/4)   Compressing objects:  75% (3/4)   Compressing objects: 100% (4/4)   Compressing objects: 100% (4/4), done.
+Writing objects:  25% (1/4)   Writing objects:  50% (2/4)   Writing objects:  75% (3/4)   Writing objects: 100% (4/4)   Writing objects: 100% (4/4), 2.26 KiB | 0 bytes/s, done.
+Total 4 (delta 3), reused 0 (delta 0)
+To https://github.com/tatst/word2vec.git
+   280aed8..a99d486  other -> other
+bash-3.2$ git pushcommit -m "Correct errors"[C[C[C[C[C[C[C[C[C[C[C[C[C[Cadd .[K[5Pmakevi word2vec.c
+[?1049h[?1h=[1;29r[?12;25h[?12l[?25h[27m[m[H[2J[?25l[29;1H"word2vec.c" 703L, 44593C[>c[1;1H//  Copyright 2013 Google Inc. All Rights Reserved.
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+#include <pthread.h>
+
+#define MAX_STRING 100 /* 最大文字数は100字まで */
+#define EXP_TABLE_SIZE 1000
+#define MAX_EXP 6
+#define MAX_SENTENCE_LENGTH 1000 /* 365行目と403行目で使用 */
+#define MAX_CODE_LENGTH 40 /* 最大コード長は40字まで */
+
+const int vocab_hash_size = 30000000;  // Maximum 30 * 0.7 = 21M words in the vocabulary[1;1H[?12l[?25h[?25l[29;1H[K[29;1H:[?12l[?25hset nun[?25l[29;8H[K[29;8H[?12l[?25hmber[?25l[1;1H[93m  1 [m//  Copyright 2013 Google Inc. All Rights Reserved.
+[93m  2 [m//
+[93m  3 [m//  Licensed under the Apache License, Version 2.0 (the "License");
+[93m  4 [m//  you may not use this file except in compliance with the License.
+[93m  5 [m//  You may obtain a copy of the License at
+[93m  6 [m//
+[93m  7 [m//      http://www.apache.org/licenses/LICENSE-2.0
+[93m  8 [m//
+[93m  9 [m//  Unless required by applicable law or agreed to in writing, software
+[93m 10 [m//  distributed under the License is distributed on an "AS IS" BASIS,
+[93m 11 [m//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+[93m 12 [m//  See the License for the specific language governing permissions and
+[93m 13 [m//  limitations under the License.
+[93m 14 
+ 15 [m#include <stdio.h>
+[93m 16 [m#include <stdlib.h>
+[93m 17 [m#include <string.h>
+[93m 18 [m#include <math.h>
+[93m 19 [m#include <pthread.h>
+[93m 20 
+ 21 [m#define MAX_STRING 100 /* 最大文字数は100字まで */
+[93m 22 [m#define EXP_TABLE_SIZE 1000
+[93m 23 [m#define MAX_EXP 6
+[93m 24 [m#define MAX_SENTENCE_LENGTH 1000 /* 365行目と403行目で使用 */
+[93m 25 [m#define MAX_CODE_LENGTH 40 /* 最大コード長は40字まで */
+[93m 26 
+ 27 [mconst int vocab_hash_size = 30000000;  // Maximum 30 * 0.7 = 21M words in the vocabuu[28;1H[93m    [mlary[1;5H[?12l[?25h[?25l[29;1H[K[29;1H:[?12l[?25h545[?25l[27m[m[H[2J[1;1H[93m534 [m    if (sentence_position >= sentence_length) {
+[93m535 [m      sentence_length = 0;
+[93m536 [m      continue; /* sentence_position >= sentence_lengthの時sentence_length = 0とした[4;1H[93m    [m上で処理をスキップし，375行目に戻る */
+[93m537 [m    }
+[93m538 [m  } /* 374行目から無限ループ終り */
+[93m539 [m  fclose(fi); /* 372行目で開いたtrain_fileを閉じる */
+[93m540 [m  free(neu1); /* 370行目で確保したneu1のメモリを解放 */
+[93m541 [m  free(neu1e); /* 371行目で確保したneu1eのメモリを解放 */
+[93m542 [m  pthread_exit(NULL); /* 呼び出したスレッドを終了(557行目と558行目に関係) */
+[93m543 [m} /* 363行目からのTrainModelThread終わり */
+[93m544 
+545 [mvoid TrainModel() { /* 614行目まで */
+[93m546 [m  long a, b, c, d;
+[93m547 [m  FILE *fo;
+[93m548 [m  pthread_t *pt = (pthread_t *)malloc(num_threads * sizeof(pthread_t)); /* pthread([94m>>[m[17;1H[93m    [mマルチスレッドのライブラリ) */
+[93m549 [m  printf("Starting training using file %s\n", train_file);
+[93m550 [m  starting_alpha = alpha;
+[93m551 [m  if (read_vocab_file[0] != 0) ReadVocab(); else LearnVocabFromTrainFile();
+[93m552 [m  if (save_vocab_file[0] != 0) SaveVocab();
+[93m553 [m  if (output_file[0] == 0) return;
+[93m554 [m  InitNet();
+[93m555 [m  if (negative > 0) InitUnigramTable();
+[93m556 [m  start = clock();
+[93m557 [m  for (a = 0; a < num_threads; a++) pthread_create(&pt[a], NULL, TrainModelThread, (([27;1H[93m    [mvoid *)a); /* 0 <= 1 < num_threadsで新規にスレッド(ID: pt[a])を作成し，TrainModelThrr[28;1H[93m    [meadを実行する */[13;5H[?12l[?25h[14;5H[15;5H[16;5H[18;5H[19;5H[18;5H[16;5H  pthread_t *pt =[?25l [46m([11C)[m[52C[94m>>[m[17;1H[93m [16;23H[?12l[?25h[?25l[m([11C)[52C[94m>>[m[17;1H[93m [16;24H[?12l[?25h[mpt[18;26H[19;26H[?25l[20;26H[46m[[m0[46m][?12l[?25h[?25l[m[0][21;26H[46m[[m0[46m][?12l[?25h[?25l[m[0][22;26H[?12l[?25h[23;16H[24;26H[25;22H[26;26H[?25l[1;28r[1;1H[2M[1;29r[27;1H[93m558 [m  for (a = 0; a < num_threads; a++) pthread_join(pt[a], NULL); /* スレッドID: pt[a][94m>>[m[28;1H[93m    [mが終了(TrainModelThreadが543行目でスレッドを終わらせる)するまで実行を一時停止 */[27;26H[?12l[?25h[?25l[1;28r[1;1H[2M[1;29r[27;1H[93m559 [m  fo = fopen(output_file, "wb"); /* output_fileをバイナリモードで書込専用で開く，6133[28;1H[93m    [m行目で閉じる */[27;26H[?12l[?25h[?25l[1;28r[28;1H
+[1;29r[28;1H[93m560 [m  if (classes == 0) { /* デフォルトでは44行目のclasses = 0よりTRUE，569行目まで */[28;26H[?12l[?25h[?25l[1;28r[28;1H
+[1;29r[28;1H[93m561 [m    // Save the word vectors[28;26H[?12l[?25h[?25l[1;28r[1;1H[2M[1;29r[27;1H[93m562 [m    fprintf(fo, "%lld %lld\n", vocab_size, layer1_size); /* foにvocab_sizeとlayer1_ss[28;1H[93m    [mizeをlong long型でそれぞれ出力 */[27;26H[?12l[?25h[?25l[1;28r[28;1H
+[1;29r[28;1H[93m563 [m    for (a = 0; a < vocab_size; a++) { /* 0 <= a < vocab_sizeの時，568行目まで */[28;26H[?12l[?25h[?25l[1;28r[28;1H
+[1;29r[28;1H[93m564 [m      fprintf(fo, "%s ", vocab[a].word); /* foにvocab[a].wordを文字列として出力 */[28;26H[?12l[?25h[?25l[1;28r[1;1H[4M[1;29r[25;1H[93m565 [m      if (binary) for (b = 0; b < layer1_size; b++) fwrite(&syn0[a * layer1_size + bb[26;1H[93m    [m], sizeof(real), 1, fo); /* デフォルトでは41行目のbinary = 0より動く，0 <= b < layerr[27;1H[93m    [m1_sizeの時foにポインタsyn0[a * layer1_size + b]からsizeof(real) bytes単位で1個のデー[28;1H[93m    [mタを書込み */[25;26H[?12l[?25h[?25l[1;28r[1;1H[3M[1;29r[26;1H[93m566 [m      else for (b = 0; b < layer1_size; b++) fprintf(fo, "%lf ", syn0[a * layer1_sizz[27;1H[93m    [me + b]); /* デフォルトでは動かない */
+[93m567 [m      fprintf(fo, "\n"); /* foに改行を出力 */[26;26H[?12l[?25h[28;26H[?25l[1;28r[28;1H
+[1;29r[28;1H[93m568 [m    } /* 563行目からのfor文ここまで */[28;25H[?12l[?25h[?25l[1;28r[28;1H
+[1;29r[28;1H[93m569 [m  } else { /* 612行目まで，デフォルトではclasses == 0より動かない！ */[28;26H[?12l[?25h[?25l[1;28r[28;1H
+[1;29r[28;1H[93m570 [m    // Run K-means on the word vectors[28;26H[?12l[?25h[?25l[1;28r[28;1H
+[1;29r[28;1H[93m571 [m    int clcn = classes, iter = 10, closeid;[28;26H[?12l[?25h[?25l[1;28r[1;1H[2M[1;29r[27;1H[93m572 [m    int *centcn = (int *)malloc(classes * sizeof(int)); /* *centcnに動的にメモリ割当[28;1H[93m    [m，609行目で解放 */[27;26H[?12l[?25h[?25l[1;28r[1;1H[2M[1;29r[27;1H[93m573 [m    int *cl = (int *)calloc(vocab_size, sizeof(int)); /* *clに動的にメモリ割当，611[94m>>[m[28;1H[93m    [m行目で解放 */[27;26H[?12l[?25h[?25l
+
+/[?12l[?25hReadVocab[?25l[38;5;224msearch hit BOTTOM, continuing at TOP[27m[m[H[2J[1;1H[93m295 [m  file_size = ftell(fin);
+[93m296 [m  fclose(fin);
+[93m297 [m} /* 263行目からのLearnVocabFromTrainFile終わり */
+[93m298 
+299 [mvoid SaveVocab() {
+[93m300 [m  long long i;
+[93m301 [m  FILE *fo = fopen(save_vocab_file, "wb"); /* save_vocab_fileをバイナリモードで書込[94m>>[m[8;1H[93m    [m専用で開く */
+[93m302 [m  for (i = 0; i < vocab_size; i++) fprintf(fo, "%s %lld\n", vocab[i].word, vocab[i]..[10;1H[93m    [mcn);
+[93m303 [m  fclose(fo);
+[93m304 [m}
+[93m305 
+306 [mvoid ReadVocab() { /* void型関数ReadVocab */
+[93m307 [m  long long a, i = 0;
+[93m308 [m  char c;
+[93m309 [m  char word[MAX_STRING];
+[93m310 [m  FILE *fin = fopen(read_vocab_file, "rb"); /* read_vocab_fileをバイナリモードで読出[19;1H[93m    [m専用で開く */
+[93m311 [m  if (fin == NULL) {
+[93m312 [m    printf("Vocabulary file not found\n");
+[93m313 [m    exit(1);
+[93m314 [m  }
+[93m315 [m  for (a = 0; a < vocab_hash_size; a++) vocab_hash[a] = -1; /* 0 <= a < vocab_hash_ss[25;1H[93m    [mizeの時 */
+[93m316 [m  vocab_size = 0;
+[93m317 [m  while (1) { /* 無限ループ */
+[93m318 [m    ReadWord(word, fin); /* 72行目で定義したReadWord関数 */
+[38;5;224msearch hit BOTTOM, continuing at TOP[14;10H[?12l[?25h[mReadVoca[?25lb[46m()[?12l[?25h[?25l([?12l[?25h[?25l[m()[?12l[?25h {[?25l[29;1H/ReadVocab[29;11H[K[29;1H[14;37H[?12l[?25h[?25l[29;1H[27m[m[H[2J[1;1H[93m539 [m  fclose(fi); /* 372行目で開いたtrain_fileを閉じる */
+[93m540 [m  free(neu1); /* 370行目で確保したneu1のメモリを解放 */
+[93m541 [m  free(neu1e); /* 371行目で確保したneu1eのメモリを解放 */
+[93m542 [m  pthread_exit(NULL); /* 呼び出したスレッドを終了(557行目と558行目に関係) */
+[93m543 [m} /* 363行目からのTrainModelThread終わり */
+[93m544 
+545 [mvoid TrainModel() { /* 614行目まで */
+[93m546 [m  long a, b, c, d;
+[93m547 [m  FILE *fo;
+[93m548 [m  pthread_t *pt = (pthread_t *)malloc(num_threads * sizeof(pthread_t)); /* pthread([94m>>[m[11;1H[93m    [mマルチスレッドのライブラリ) */
+[93m549 [m  printf("Starting training using file %s\n", train_file);
+[93m550 [m  starting_alpha = alpha;
+[93m551 [m  if (read_vocab_file[0] != 0) ReadVocab(); else LearnVocabFromTrainFile();
+[93m552 [m  if (save_vocab_file[0] != 0) SaveVocab();
+[93m553 [m  if (output_file[0] == 0) return;
+[93m554 [m  InitNet();
+[93m555 [m  if (negative > 0) InitUnigramTable();
+[93m556 [m  start = clock();
+[93m557 [m  for (a = 0; a < num_threads; a++) pthread_create(&pt[a], NULL, TrainModelThread, (([21;1H[93m    [mvoid *)a); /* 0 <= 1 < num_threadsで新規にスレッド(ID: pt[a])を作成し，TrainModelThrr[22;1H[93m    [meadを実行する */
+[93m558 [m  for (a = 0; a < num_threads; a++) pthread_join(pt[a], NULL); /* スレッドID: pt[a][94m>>[m[24;1H[93m    [mが終了(TrainModelThreadが543行目でスレッドを終わらせる)するまで実行を一時停止 */
+[93m559 [m  fo = fopen(output_file, "wb"); /* output_fileをバイナリモードで書込専用で開く，6133[26;1H[93m    [m行目で閉じる */
+[93m560 [m  if (classes == 0) { /* デフォルトでは44行目のclasses = 0よりTRUE，569行目まで */
+[93m561 [m    // Save the word vectors[14;36H[?12l[?25hReadVoca[?25lb[46m()[?12l[?25h[?25l([?12l[?25h[?25l[m()[?12l[?25h; else LearnVocabFromTrainFil[?25le[46m()[?12l[?25h[?25l([?12l[?25h[?25l[m()[?12l[?25h[?25l[29;1H[1m-- INSERT --[14;80H[?12l[?25h[?25l[m;/[?12l[?25h[?25l[14;80H[K[14;80H[?12l[?25h[?25l [?12l[?25h[?25l /[?12l[?25h[?25l/*[?12l[?25h[?25l [?12l[?25h[?25l [?12l[?25h[?25l *[?12l[?25h[?25l*/[?12l[?25h[?25l 3 */[?12l[?25h[?25l30 */[14;86H[?12l[?25h[?25l[15;28r[15;1H[L[1;29r[14;85H06 **[15;1H[93m    [m/[14;87H[?12l[?25h[?25l6行[15;4H[93m [m目 */[?12l[?25h[?25lの */[?12l[?25h[?25lR */[?12l[?25h[?25lRe */[?12l[?25h[?25lea */[?12l[?25h[?25lad */[?12l[?25h[?25ldV */[?12l[?25h[?25lVo */[?12l[?25h[?25loc */[?12l[?25h[?25lca */[?12l[?25h[?25lab */[?12l[?25h[?25lbと */[?12l[?25h[?25l2 */[?12l[?25h[?25l26 */[?12l[?25h[?25l63 */[?12l[?25h[?25l3行目 */[?12l[?25h[?25lの */[?12l[?25h[?25lL */[?12l[?25h[?25lLe */[?12l[?25h[?25lea */[?12l[?25h[?25lar */[?12l[?25h[?25lrn */[?12l[?25h[?25lnV */[?12l[?25h[?25lVo */[?12l[?25h[?25loc */[?12l[?25h[?25lca */[?12l[?25h[?25lab */[?12l[?25h[?25lbF */[?12l[?25h[?25lFr */[?12l[?25h[?25lro */[?12l[?25h[?25lom */[?12l[?25h[?25lmT */[?12l[?25h[?25lTr */[?12l[?25h[?25lra */[?12l[?25h[?25lai */[?12l[?25h[?25lin */[?12l[?25h[?25lnF */[?12l[?25h[?25lFi */[?12l[?25h[?25lil */[?12l[?25h[?25lle */[?12l[?25h[14;87H[?25l r306[94m>>[m[15;1H[93m    [m行目のReadVocabと263行目のLearnVocabFromTrainFile */[14;85H[?12l[?25h[?25lre3066[15;1H[93m [14;86H[?12l[?25h[?25l[mea300[15;1H[93m    [m6行目のReadVocabと263行目のLearnVocabFromTrainFile */[14;87H[?12l[?25h[?25lad33[15;1H[93m    [m06行目のReadVocabと263行目のLearnVocabFromTrainFile */[14;88H[?12l[?25h[?25ld__[15;1H[93m    [m306行目のReadVocabと263行目のLearnVocabFromTrainFile */[15;5H[?12l[?25h[?25l[93m [mv306行目のReadVocabと263行目のLearnVocabFromTrainFile */[15;6H[?12l[?25h[?25lvo306行目のReadVocabと263行目のLearnVocabFromTrainFile */[15;7H[?12l[?25h[?25loc306行目のReadVocabと263行目のLearnVocabFromTrainFile */[15;8H[?12l[?25h[?25lca306行目のReadVocabと263行目のLearnVocabFromTrainFile */[15;9H[?12l[?25h[?25lab306行目のReadVocabと263行目のLearnVocabFromTrainFile */[15;10H[?12l[?25h[?25lb_306行目のReadVocabと263行目のLearnVocabFromTrainFile */[15;11H[?12l[?25h[?25l_f306行目のReadVocabと263行目のLearnVocabFromTrainFile */[15;12H[?12l[?25h[?25lfi306行目のReadVocabと263行目のLearnVocabFromTrainFile */[15;13H[?12l[?25h[?25lil306行目のReadVocabと263行目のLearnVocabFromTrainFile */[15;14H[?12l[?25h[?25lle306行目のReadVocabと263行目のLearnVocabFromTrainFile */[15;15H[?12l[?25h[?25le[306行目のReadVocabと263行目のLearnVocabFromTrainFile */[15;16H[?12l[?25h[?25l[0306行目のReadVocabと263行目のLearnVocabFromTrainFile */[15;17H[?12l[?25h[?25l[46m[[m0[46m][m306行目のReadVocabと263行目のLearnVocabFromTrainFile */[15;18H[?12l[?25h[?25l[0] 306行目のReadVocabと263行目のLearnVocabFromTrainFile */[15;19H[?12l[?25h[?25l !306行目のReadVocabと263行目のLearnVocabFromTrainFile */[15;20H[?12l[?25h[?25l!=306行目のReadVocabと263行目のLearnVocabFromTrainFile */[15;21H[?12l[?25h[?25l= 306行目のReadVocabと263行目のLearnVocabFromTrainFile */[15;22H[?12l[?25h[?25l 0306行目のReadVocabと263行目のLearnVocabFromTrainFile */[15;23H[?12l[?25h[?25l0の306行目のReadVocabと263行目のLearnVocabFromTrainFile */[15;25H[?12l[?25h[?25l時306行目のReadVocabと263行目のLearnVocabFromTrainFile */[15;27H[?12l[?25h306[2C[2C[2CReadVocab[2C[?25lb263行目のLearnVocabFromTrainFile */[15;80H[K[15;45H[?12l[?25h[?25lb，263行目のLearnVocabFromTrainFile */[15;47H[?12l[?25h[?25l=263行目のLearnVocabFromTrainFile */[15;48H[?12l[?25h[?25l==263行目のLearnVocabFromTrainFile */[15;49H[?12l[?25h[?25l=0263行目のLearnVocabFromTrainFile */[15;50H[?12l[?25h[?25l= 0263行目のLearnVocabFromTrainFile */[15;50H[?12l[?25h00[?25l 263行目のLearnVocabFromTrainFile */[15;85H[K[15;50H[?12l[?25h[?25l=263行目のLearnVocabFromTrainFile */[15;84H[K[15;49H[?12l[?25h[?25l=263行目のLearnVocabFromTrainFile */[15;83H[K[15;48H[?12l[?25h[?25l263行目のLearnVocabFromTrainFile */[15;82H[K[15;47H[?12l[?25h[?25lb263行目のLearnVocabFromTrainFile */[15;80H[K[15;45H[?12l[?25h[?25lb，263行目のLearnVocabFromTrainFile */[15;47H[?12l[?25h[?25l[16;28r[16;1H[L[1;29r[15;47Hそうでない時263行目のLearnVocabFromTrainFii[16;1H[93m    [mle */[15;59H[?12l[?25h[?25lは263行目のLearnVocabFromTrainn[16;1H[93m    [mFile */[15;61H[?12l[?25h[?25lは306行目のReadVocab，そうでない時は263行目のLearnVocabFromTraa[16;1H[93m    [minFile */[15;29H[?12l[?25h[29;1H[K[15;27H[?25l[?12l[?25h[?25l[29;1H/[?12l[?25hReadVocab[?25l[15;38H[?12l[?25h[?25l[29;1H[38;5;224msearch hit BOTTOM, continuing at TOP[27m[m[H[2J[1;1H[93m295 [m  file_size = ftell(fin);
+[93m296 [m  fclose(fin);
+[93m297 [m} /* 263行目からのLearnVocabFromTrainFile終わり */
+[93m298 
+299 [mvoid SaveVocab() {
+[93m300 [m  long long i;
+[93m301 [m  FILE *fo = fopen(save_vocab_file, "wb"); /* save_vocab_fileをバイナリモードで書込[94m>>[m[8;1H[93m    [m専用で開く */
+[93m302 [m  for (i = 0; i < vocab_size; i++) fprintf(fo, "%s %lld\n", vocab[i].word, vocab[i]..[10;1H[93m    [mcn);
+[93m303 [m  fclose(fo);
+[93m304 [m}
+[93m305 
+306 [mvoid ReadVocab() { /* void型関数ReadVocab */
+[93m307 [m  long long a, i = 0;
+[93m308 [m  char c;
+[93m309 [m  char word[MAX_STRING];
+[93m310 [m  FILE *fin = fopen(read_vocab_file, "rb"); /* read_vocab_fileをバイナリモードで読出[19;1H[93m    [m専用で開く */
+[93m311 [m  if (fin == NULL) {
+[93m312 [m    printf("Vocabulary file not found\n");
+[93m313 [m    exit(1);
+[93m314 [m  }
+[93m315 [m  for (a = 0; a < vocab_hash_size; a++) vocab_hash[a] = -1; /* 0 <= a < vocab_hash_ss[25;1H[93m    [mizeの時 */
+[93m316 [m  vocab_size = 0;
+[93m317 [m  while (1) { /* 無限ループ */
+[93m318 [m    ReadWord(word, fin); /* 72行目で定義したReadWord関数 */
+[38;5;224msearch hit BOTTOM, continuing at TOP[14;10H[?12l[?25h[mReadVoca[?25lb[46m()[?12l[?25h[?25l([?12l[?25h[?25l[m()[?12l[?25h [?25l[27m[m[H[2J[1;1H[93m325 [m  if (debug_mode > 0) {
+[93m326 [m    printf("Vocab size: %lld\n", vocab_size);
+[93m327 [m    printf("Words in train file: %lld\n", train_words);
+[93m328 [m  }
+[93m329 [m  fin = fopen(train_file, "rb"); /* 読出モードでtrain_fileを開く */
+[93m330 [m  if (fin == NULL) {
+[93m331 [m    printf("ERROR: training data file not found!\n");
+[93m332 [m    exit(1);
+[93m333 [m  }
+[93m334 [m  fseek(fin, 0, SEEK_END); /* ファイルfinのファイル位置演算子をSEEK_ENDを基準に0バイ[11;1H[93m    [mト移動 */
+[93m335 [m  file_size = ftell(fin);
+[93m336 [m  fclose(fin);
+[93m337 [m}
+[93m338 
+339 [mvoid InitNet() { /* void関数IniNet() */
+[93m340 [m  long long a, b;
+[93m341 [m  unsigned long long next_random = 1;
+[93m342 [m  a = posix_memalign((void **)&syn0, 128, (long long)vocab_size * layer1_size * sizee[20;1H[93m    [mof(real)); /*  */
+[93m343 [m  if (syn0 == NULL) {printf("Memory allocation failed\n"); exit(1);}
+[93m344 [m  if (hs) { /* hs=0よりこのif文はFALSE */
+[93m345 [m    a = posix_memalign((void **)&syn1, 128, (long long)vocab_size * layer1_size * sii[24;1H[93m    [mzeof(real)); /* (long long)vocab_size * layer1_size * sizeof(real) bytesのメモリを割[25;1H[93m    [m当て，割当たメモリのアドレスを(void **)&syn1に割当る．割当たメモリのアドレスは128の[94m>>[m[26;1H[93m    [m倍数 */
+[93m346 [m    if (syn1 == NULL) {printf("Memory allocation failed\n"); exit(1);} /* 上でメモリ[28;1H[93m    [mの割当に失敗した時に表示 */[14;5H[?12l[?25h[?25l[27m[m[H[2J[1;1H[93m295 [m  file_size = ftell(fin);
+[93m296 [m  fclose(fin);
+[93m297 [m} /* 263行目からのLearnVocabFromTrainFile終わり */
+[93m298 
+299 [mvoid SaveVocab() {
+[93m300 [m  long long i;
+[93m301 [m  FILE *fo = fopen(save_vocab_file, "wb"); /* save_vocab_fileをバイナリモードで書込[94m>>[m[8;1H[93m    [m専用で開く */
+[93m302 [m  for (i = 0; i < vocab_size; i++) fprintf(fo, "%s %lld\n", vocab[i].word, vocab[i]..[10;1H[93m    [mcn);
+[93m303 [m  fclose(fo);
+[93m304 [m}
+[93m305 
+306 [mvoid ReadVocab() [46m{[m /* void型関数ReadVocab */
+[93m307 [m  long long a, i = 0;
+[93m308 [m  char c;
+[93m309 [m  char word[MAX_STRING];
+[93m310 [m  FILE *fin = fopen(read_vocab_file, "rb"); /* read_vocab_fileをバイナリモードで読出[19;1H[93m    [m専用で開く */
+[93m311 [m  if (fin == NULL) {
+[93m312 [m    printf("Vocabulary file not found\n");
+[93m313 [m    exit(1);
+[93m314 [m  }
+[93m315 [m  for (a = 0; a < vocab_hash_size; a++) vocab_hash[a] = -1; /* 0 <= a < vocab_hash_ss[25;1H[93m    [mizeの時 */
+[93m316 [m  vocab_size = 0;
+[93m317 [m  while (1) { /* 無限ループ */
+[93m318 [m    ReadWord(word, fin); /* 72行目で定義したReadWord関数 */[14;22H[?12l[?25h[?25l{[13;5H[?12l[?25h[?25l[5;22H[46m{[12;5H}[?12l[?25h[?25l[m[5;22H{[12;5H}[13;5H[?12l[?25h[14;22H[?25l[27m[m[H[2J[1;1H[93m325 [m  if (debug_mode > 0) {
+[93m326 [m    printf("Vocab size: %lld\n", vocab_size);
+[93m327 [m    printf("Words in train file: %lld\n", train_words);
+[93m328 [m  }
+[93m329 [m  fin = fopen(train_file, "rb"); /* 読出モードでtrain_fileを開く */
+[93m330 [m  if (fin == NULL) {
+[93m331 [m    printf("ERROR: training data file not found!\n");
+[93m332 [m    exit(1);
+[93m333 [m  }
+[93m334 [m  fseek(fin, 0, SEEK_END); /* ファイルfinのファイル位置演算子をSEEK_ENDを基準に0バイ[11;1H[93m    [mト移動 */
+[93m335 [m  file_size = ftell(fin);
+[93m336 [m  fclose(fin);
+[93m337 [m}
+[93m338 
+339 [mvoid InitNet() { /* void関数IniNet() */
+[93m340 [m  long long a, b;
+[93m341 [m  unsigned long long next_random = 1;
+[93m342 [m  a = posix_memalign((void **)&syn0, 128, (long long)vocab_size * layer1_size * sizee[20;1H[93m    [mof(real)); /*  */
+[93m343 [m  if (syn0 == NULL) {printf("Memory allocation failed\n"); exit(1);}
+[93m344 [m  if (hs) { /* hs=0よりこのif文はFALSE */
+[93m345 [m    a = posix_memalign((void **)&syn1, 128, (long long)vocab_size * layer1_size * sii[24;1H[93m    [mzeof(real)); /* (long long)vocab_size * layer1_size * sizeof(real) bytesのメモリを割[25;1H[93m    [m当て，割当たメモリのアドレスを(void **)&syn1に割当る．割当たメモリのアドレスは128の[94m>>[m[26;1H[93m    [m倍数 */
+[93m346 [m    if (syn1 == NULL) {printf("Memory allocation failed\n"); exit(1);} /* 上でメモリ[28;1H[93m    [mの割当に失敗した時に表示 */[14;5H[?12l[?25h[?25l[27m[m[H[2J[1;1H[93m295 [m  file_size = ftell(fin);
+[93m296 [m  fclose(fin);
+[93m297 [m} /* 263行目からのLearnVocabFromTrainFile終わり */
+[93m298 
+299 [mvoid SaveVocab() {
+[93m300 [m  long long i;
+[93m301 [m  FILE *fo = fopen(save_vocab_file, "wb"); /* save_vocab_fileをバイナリモードで書込[94m>>[m[8;1H[93m    [m専用で開く */
+[93m302 [m  for (i = 0; i < vocab_size; i++) fprintf(fo, "%s %lld\n", vocab[i].word, vocab[i]..[10;1H[93m    [mcn);
+[93m303 [m  fclose(fo);
+[93m304 [m}
+[93m305 
+306 [mvoid ReadVocab() [46m{[m /* void型関数ReadVocab */
+[93m307 [m  long long a, i = 0;
+[93m308 [m  char c;
+[93m309 [m  char word[MAX_STRING];
+[93m310 [m  FILE *fin = fopen(read_vocab_file, "rb"); /* read_vocab_fileをバイナリモードで読出[19;1H[93m    [m専用で開く */
+[93m311 [m  if (fin == NULL) {
+[93m312 [m    printf("Vocabulary file not found\n");
+[93m313 [m    exit(1);
+[93m314 [m  }
+[93m315 [m  for (a = 0; a < vocab_hash_size; a++) vocab_hash[a] = -1; /* 0 <= a < vocab_hash_ss[25;1H[93m    [mizeの時 */
+[93m316 [m  vocab_size = 0;
+[93m317 [m  while (1) { /* 無限ループ */
+[93m318 [m    ReadWord(word, fin); /* 72行目で定義したReadWord関数 */[14;22H[?12l[?25h[?25l{[?12l[?25h /* void[2C[2C[2CReadVocab[?25l[29;1H[1m-- INSERT --[14;47H[?12l[?25h[?25l[mb， */[?12l[?25h[?25l3 */[?12l[?25h[?25l33 */[?12l[?25h[?25l37 */[?12l[?25h[?25l7行目 */[?12l[?25h[?25lまで */[?12l[?25h[29;1H[K[14;23H[?25l[?12l[?25h[?25l[27m[m[H[2J[1;1H[93m325 [m  if (debug_mode > 0) {
+[93m326 [m    printf("Vocab size: %lld\n", vocab_size);
+[93m327 [m    printf("Words in train file: %lld\n", train_words);
+[93m328 [m  }
+[93m329 [m  fin = fopen(train_file, "rb"); /* 読出モードでtrain_fileを開く */
+[93m330 [m  if (fin == NULL) {
+[93m331 [m    printf("ERROR: training data file not found!\n");
+[93m332 [m    exit(1);
+[93m333 [m  }
+[93m334 [m  fseek(fin, 0, SEEK_END); /* ファイルfinのファイル位置演算子をSEEK_ENDを基準に0バイ[11;1H[93m    [mト移動 */
+[93m335 [m  file_size = ftell(fin);
+[93m336 [m  fclose(fin);
+[93m337 [m}
+[93m338 
+339 [mvoid InitNet() { /* void関数IniNet() */
+[93m340 [m  long long a, b;
+[93m341 [m  unsigned long long next_random = 1;
+[93m342 [m  a = posix_memalign((void **)&syn0, 128, (long long)vocab_size * layer1_size * sizee[20;1H[93m    [mof(real)); /*  */
+[93m343 [m  if (syn0 == NULL) {printf("Memory allocation failed\n"); exit(1);}
+[93m344 [m  if (hs) { /* hs=0よりこのif文はFALSE */
+[93m345 [m    a = posix_memalign((void **)&syn1, 128, (long long)vocab_size * layer1_size * sii[24;1H[93m    [mzeof(real)); /* (long long)vocab_size * layer1_size * sizeof(real) bytesのメモリを割[25;1H[93m    [m当て，割当たメモリのアドレスを(void **)&syn1に割当る．割当たメモリのアドレスは128の[94m>>[m[26;1H[93m    [m倍数 */
+[93m346 [m    if (syn1 == NULL) {printf("Memory allocation failed\n"); exit(1);} /* 上でメモリ[28;1H[93m    [mの割当に失敗した時に表示 */[14;5H[?12l[?25h[?25l[29;1H[1m-- INSERT --[14;6H[?12l[?25h[?25l[m [?12l[?25h[?25l /[?12l[?25h[?25l/*[?12l[?25h[?25l [?12l[?25h[?25l [?12l[?25h[?25l *[?12l[?25h[?25l*/[?12l[?25h[?25l 3 */[?12l[?25h[?25l30 */[?12l[?25h[?25l06 */[?12l[?25h[?25l6行目 */[?12l[?25h[?25lからの */[?12l[?25h[?25lR */[?12l[?25h[?25lRe */[?12l[?25h[?25lea */[?12l[?25h[?25lad */[?12l[?25h[?25ldV */[?12l[?25h[?25lVo */[?12l[?25h[?25loc */[?12l[?25h[?25lca */[?12l[?25h[?25lab */[?12l[?25h[?25lb終わり */[?12l[?25h[13;19H[12;30H[10;37H[?25l[6;24H[46m{[9;7H}[?12l[?25h[?25l[m[6;24H{[9;7H}[8;17H[?12l[?25h[7;38H[?25l[6;24H[46m{[9;7H}[6;25H[?12l[?25h[?25l[m{[9;7H}[5;38H[?12l[?25h[?25l[1;27H[46m{[4;7H}[?12l[?25h[?25l[m[1;27H{[4;7H}[3;38H[?12l[?25h[2;38H[?25l[1;27H[46m{[4;7H}[1;28H[?12l[?25h[?25l[1;28r[m[1;1H[L[1;29r[1;1H[93m324 [m  SortVocab();[2;27H{[5;7H}[28;1H[94m@                                                                                       [1;19H[?12l[?25h[?25l[1;28r[m[1;1H[L[1;29r[1;1H[93m323 [m  }[?12l[?25h[?25l[1;28r[1;1H[L[1;29r[1;1H[93m322 [m    i++;[26;1H[94m@                                                                                       [27;1H@                                                                                       [28;1H@                                                                                       [1;13H[?12l[?25h[?25l[1;28r[m[1;1H[2L[1;29r[1;1H[93m321 [m    fscanf(fin, "%lld%c", &vocab[46m[[ma[46m][m.cn, &c); /* ファイルポインタfinから読出した値をvv[2;1H[93m    [mocab[a].cnに取込み， */[1;38H[?12l[?25h[?25l[1;28r[1;1H[L[1;29r[1;1H[93m320 [m    a = AddWordToVocab(word); /* 単語を語彙に加える関数AddWordToVocab */[2;37H[a][48Cvv[3;1H[93m [1;38H[?12l[?25h[?25l[1;28r[m[1;1H[L[1;29r[1;1H[93m319 [m    if (feof(fin)) break; /* ファイルポインタが終端に達した時無限ループから脱出 */[1;38H[?12l[?25h[?25l[1;28r[1;1H[L[1;29r[1;1H[93m318 [m    ReadWord(word, fin); /* 72行目で定義したReadWord関数 */[1;37H[?12l[?25h[?25l[1;28r[1;1H[L[1;29r[1;1H[93m317 [m  while (1) { /* 無限ループ */[28;1H[94m@                                                                                       [1;35H[?12l[?25h[?25l[1;28r[m[1;1H[L[1;29r[1;1H[93m316 [m  vocab_size = 0;[?12l[?25h[?25l[1;28r[1;1H[2L[1;29r[1;1H[93m315 [m  for (a = 0; a < vocab_hash_size; a++) vocab_hash[a] = -1; /* 0 <= a < vocab_hash_ss[2;1H[93m    [mizeの時 */[1;38H[?12l[?25h[?25l[1;28r[1;1H[L[1;29r[1;1H[93m314 [m  }[?12l[?25h[?25l[1;28r[1;1H[L[1;29r[1;1H[93m313 [m    exit(1);[?12l[?25h[?25l[1;28r[1;1H[L[1;29r[1;1H[93m312 [m    printf("Vocabulary file not found\n");[1;38H[?12l[?25h[?25l[1;28r[1;1H[L[1;29r[1;1H[93m311 [m  if (fin == NULL) [46m{[4;7H}[1;25H[?12l[?25h[?25l[1;28r[m[1;1H[2L[1;29r[1;1H[93m310 [m  FILE *fin = fopen(read_vocab_file, "rb"); /* read_vocab_fileをバイナリモードで読出[2;1H[93m    [m専用で開く */[3;24H{[6;7H}[28;1H[94m@                                                                                       [1;38H[?12l[?25h[?25l[1;28r[m[1;1H[L[1;29r[1;1H[93m309 [m  char word[MAX_STRING];[?12l[?25h[?25l[1;28r[1;1H[L[1;29r[1;1H[93m308 [m  char c;[?12l[?25h[?25l[1;28r[1;1H[L[1;29r[1;1H[93m307 [m  long long a, i = 0;[?12l[?25h[?25l[1;28r[1;1H[L[1;29r[1;1H[93m306 [mvoid ReadVocab() { /* void型関数ReadVocab，337行目まで */[1;38H[?12l[?25h[?25l[1;28r[1;1H[L[1;29r[1;1H[93m305 [?12l[?25h[?25l[1;28r[m[1;1H[L[1;29r[1;1H[93m304 [m}[?12l[?25h[?25l[1;28r[1;1H[L[1;29r[1;1H[93m303 [m  fclose(fo);[?12l[?25h[?25l[1;28r[1;1H[2L[1;29r[1;1H[93m302 [m  for [46m([mi = 0; i < vocab_size; i++[46m)[m fprintf(fo, "%s %lld\n", vocab[i].word, vocab[i]..[2;1H[93m    [mcn);[1;38H[?12l[?25h[?25l[1;28r[1;1H[2L[1;29r[1;1H[93m301 [m  FILE *fo = fopen(save_vocab_file, "wb"); /* save_vocab_fileをバイナリモードで書込[94m>>[m[2;1H[93m    [m専用で開く */[3;11H([26C)[49C..[4;1H[93m [1;38H[?12l[?25h[?25l[m[50C[94m>>[m[2;1H[93m [m[3;11H[46m([26C)[m[49C..[4;1H[93m [3;38H[?12l[?25h[?25l[m[3;11H([26C)[49C..[4;1H[93m [5;18H[?12l[?25h[?25l[6;6H[?12l[?25h
+305 [8;38H[9;26H[10;14H[11;29H[12;38H[?25l[m[14;24H[46m{[17;7H}[14;25H[?12l[?25h[?25l[m{[17;7H}[15;38H[?12l[?25h[16;17H[?25l[14;24H[46m{[17;7H}[?12l[?25h[?25l[m[14;24H{[17;7H}[18;38H[?12l[?25h[20;22H[21;35H[22;37H[23;38H[24;38H[?25l[25;37H[46m[[ma[46m][m[48Cvv[26;1H[93m [25;38H[?12l[?25h[?25l[m[a][48Cvv[26;1H[93m [27;13H[?12l[?25h[?25l[m[21;17H[46m{[28;7H}[?12l[?25h[?25l[1;28r[m[1;1H[2M[1;29r[19;17H{[26;7H}
+[93m324 [m  SortVocab();
+[93m325 [m  if (debug_mode > 0) {[27;19H[?12l[?25h[?25l[28;28H[?12l[?25h[?25l[1;28r[1;1H[2M[1;29r[27;1H[93m326 [m    printf("Vocab size: %lld\n", vocab_size);
+[93m327 [m    printf("Words in train file: %lld\n", train_words);[27;38H[?12l[?25h[28;38H[?25l[1;28r[28;1H
+[1;29r[25;27H[46m{[m
+
+
+[93m328 [m  [46m}[?12l[?25h[?25l[1;28r[m[28;1H
+[1;29r[24;27H{[27;7H}
+[93m329 [m  fin = fopen(train_file, "rb"); /* 読出モードでtrain_fileを開く */[28;38H[?12l[?25h[?25l[1;28r[28;1H
+[1;29r[28;1H[93m330 [m  if (fin == NULL) {[?12l[?25h[?25l[1;28r[28;1H
+[1;29r[28;1H[93m331 [m    printf("ERROR: training data file not found!\n");[28;38H[?12l[?25h[?25l[1;28r[28;1H
+[1;29r[28;1H[93m332 [m    exit(1);[?12l[?25h[?25l[1;28r[28;1H
+[1;29r[25;24H[46m{[m
+
+
+[93m333 [m  [46m}[?12l[?25h[?25l[1;28r[m[1;1H[3M[1;29r[22;24H{[25;7H}
+[93m334 [m  fseek(fin, 0, SEEK_END); /* ファイルfinのファイル位置演算子をSEEK_ENDを基準に0バイ[27;1H[93m    [mト移動 */
+[93m335 [m  file_size = ftell(fin);[26;37H[?12l[?25h[28;30H[26;37H[?25l[22;24H[46m{[25;7H}[?12l[?25h[?25l[m[22;24H{[25;7H}[24;17H[?12l[?25h[23;38H[?25l[22;24H[46m{[25;7H}[22;25H[?12l[?25h[?25l[m{[25;7H}[21;38H[?12l[?25h[?25l[17;27H[46m{[20;7H}[?12l[?25h[?25l[m[17;27H{[20;7H}[19;38H[?12l[?25h[29;1H[K[19;37H[?25l[?12l[?25h[18;37H[?25l[17;27H[46m{[20;7H}[17;27H[?12l[?25h[?25l[m{[20;7H}[16;18H[?12l[?25h[?25l[8;17H[46m{[15;7H}[?12l[?25h[?25l[m[8;17H{[15;7H}[14;12H[?12l[?25h[?25l[12;37H[46m[[ma[46m][m[48Cvv[13;1H[93m [12;37H[?12l[?25h[?25l[m[a][48Cvv[13;1H[93m [11;37H[?12l[?25h[10;36H[9;37H[8;34H[7;21H[5;37H[?25l[m[1;24H[46m{[4;7H}[?12l[?25h[?25l[m[1;24H{[4;7H}[3;16H[?12l[?25h[2;37H[?25l[1;24H[46m{[4;7H}[1;24H[?12l[?25h[?25l[1;28r[m[1;1H[2L[1;29r[1;1H[93m310 [m  FILE *fin = fopen(read_vocab_file, "rb"); /* read_vocab_fileをバイナリモードで読出 [2;1H[93m    [m専用で開く */[3;24H{[6;7H}[28;1H[94m@                                                                                       [1;37H[?12l[?25h[?25l[1;28r[m[1;1H[L[1;29r[1;1H[93m309 [m  char word[MAX_STRING];[?12l[?25h[?25l[1;28r[1;1H[L[1;29r[1;1H[93m308 [m  char c;[?12l[?25h[?25l[1;28r[1;1H[L[1;29r[1;1H[93m307 [m  long long a, i = 0;[?12l[?25h[?25l[1;28r[1;1H[L[1;29r[1;1H[93m306 [mvoid ReadVocab() { /* void型関数ReadVocab，337行目まで */[1;37H[?12l[?25h[?25l[1;28r[1;1H[L[1;29r[1;1H[93m305 [?12l[?25h[?25l[1;28r[m[1;1H[L[1;29r[1;1H[93m304 [m}[?12l[?25h[?25l[1;28r[1;1H[L[1;29r[1;1H[93m303 [m  fclose(fo);[?12l[?25h[2;5H[3;5H[4;37H[5;25H[6;13H[7;28H[8;37H[?25l[51C  [9;1H[93m [m[10;24H[46m{[13;7H}[10;24H[?12l[?25h[?25l[m{[13;7H}[8;37H[?12l[?25h[7;28H[6;13H[5;25H[4;37H[3;5H[2;5H[1;17H[?25l[1;28r[1;1H[2L[1;29r[1;1H[93m302 [m  for (i = 0; i < vocab_size; i++) fprintf(fo, "%s %lld\n", vocab[i].word, vocab[i]..[2;1H[93m    [mcn);[1;37H[?12l[?25h[?25l[1;28r[1;1H[2L[1;29r[1;1H[93m301 [m  FILE *fo = fopen(save_vocab_file, "wb"); /* save_vocab_fileをバイナリモードで書込[94m>>[m[2;1H[93m    [m専用で開く */[1;37H[?12l[?25h[3;37H[5;17H[6;5H[7;5H[8;37H[9;25H[10;13H[11;28H[12;37Hile, "rb[?25l[12;24H[46m([21C)[m[41C  [13;1H[93m [12;46H[?12l[?25h[?25l[m[12;24H([21C)[41C  [13;1H[93m [12;47H[?12l[?25h[m; /* read_vocab_file[2C[2C[2C[2C[2C[2C[2C[2C[2C[2C[13;5H[2C[2C[2C[2C[2C [2C[?25l[29;1H[1m-- INSERT --[13;16H[?12l[?25h[?25l[m */[13;16H[K[13;13H[?12l[?25h[?25lき */[?12l[?25h[?25l[13;16H[K[14;5H */[14;8H[K[15;6H if (fin == NULL) {[15;25H[K[16;8H printf("Vocabulary file not found\n");[17;6H   exit(1);[18;6H }[18;8H[K[19;1H[93m316 [m  for (a = 0; a < vocab_hash_size; a++) vocab_hash[a] = -1; /* 0 <= a < vocab_hash_ss[20;1H[93m    [mizeの時 */[20;15H[K[21;6H vocab_size = 0;[21;22H[K[22;6H while (1) { /* 無限ループ */[22;35H[K[23;8H ReadWord(word, fin); /* 72行目で定義したReadWord関数 */[23;64H[K[24;8H if (feof(fin)) break; /* ファイルポインタが終端に達した時無限ループから脱出 */[25;8H a = AddWordToVocab(word); /* 単語を語彙に加える関数AddWordToVocab */ [25;78H[K[26;1H[93m322 [m    fscanf(fin, "%lld%c", &vocab[a].cn, &c); /* ファイルポインタfinから読出した値をvv[27;1H[93m    [mocab[a].cnに取込み， */[28;6H   i++;[14;5H[?12l[?25h[?25l[13;15H */[14;5H  if (fin == NULL) {[15;6H   printf("Vocabulary file not found\n");[16;8H exit(1);[16;17H[K[17;6H }[17;9H[K[18;6H for (a = 0; a < vocab_hash_size; a++) vocab_hash[a] = -1; /* 0 <= a < vocab_hash_ss[19;1H[93m    [mizeの時 */[19;16H[K[20;1H[93m316 [m  vocab_size = 0;[21;6H while (1) { /* 無限ループ */[22;6H   ReadWord(word, fin); /* 72行目で定義したReadWord関数 */[23;8H if (feof(fin)) break; /* ファイルポインタが終端に達した時無限ループから脱出 */[24;8H a = AddWordToVocab(word); /* 単語を語彙に加える関数AddWordToVocab */ [24;78H[K[25;8H fscanf(fin, "%lld%c", &vocab[a].cn, &c); /* ファイルポインタfinから読出した値をvv[26;1H[93m    [mocab[a].cnに取込み， */[26;28H[K[27;1H[93m322 [m    i++;[27;13H[K[28;6H }[28;9H[K[13;15H[?12l[?25h[?25lファイルポインタ */[?12l[?25h[?25l* */[?12l[?25h[?25l*f */[?12l[?25h[?25lfi */[?12l[?25h[?25lin */[?12l[?25h[?25lnに */[?12l[?25h[?25l代入 */[?12l[?25h[?25l[14;24H[46m{[17;7H}[14;25H[?12l[?25h[?25l[m{a[17;7H}[14;26H[?12l[?25h[?25l[46m{[m[14;25H[K[17;7H[46m}[14;25H[?12l[?25h[?25l[m{[17;7H}[14;26H[?12l[?25h[?25l /[?12l[?25h[?25l/*[?12l[?25h[?25l [?12l[?25h[?25l [?12l[?25h[?25l *[?12l[?25h[?25l*/[?12l[?25h[?25l f */[?12l[?25h[?25lfi */[?12l[?25h[?25lin */[?12l[?25h[?25lnが */[?12l[?25h[?25lN */[?12l[?25h[?25lNU */[?12l[?25h[?25lUL */[?12l[?25h[?25lLL */[?12l[?25h[?25lLの */[?12l[?25h[?25l時 */[?12l[?25h[15;42H[16;17H[?25l [?12l[?25h[?25l /[?12l[?25h[?25l/*[?12l[?25h[?25l [?12l[?25h[?25l [?12l[?25h[?25l *[?12l[?25h[?25l*/[?12l[?25h[?25l 異常終了 */[?12l[?25h[?25l[14;24H[46m{[17;7H}[?12l[?25h[?25l[m[14;24H{[17;7H}[18;29H[?12l[?25h[20;22H[21;28H[22;29H[23;29H[24;29H[25;29H[27;13H[?25l[21;17H[46m{[28;7H}[?12l[?25h[?25l[1;28r[m[1;1H[2M[1;29r[19;17H{[26;7H}
+[93m324 [m  SortVocab();
+[93m325 [m  if (debug_mode > 0) {[27;19H[?12l[?25h[?25l[28;28H[?12l[?25h[?25l[1;28r[1;1H[2M[1;29r[27;1H[93m326 [m    printf("Vocab size: %lld\n", vocab_size);
+[93m327 [m    printf("Words in train file: %lld\n", train_words);[27;29H[?12l[?25h[?25l[26;28H[?12l[?25h[25;19H[?25l[17;17H[46m{[24;7H}[?12l[?25h[?25l[m[17;17H{[24;7H}[23;13H[?12l[?25h[?25l[17;17H[46m{[24;7H}[?12l[?25h[?25l[m[17;17H{[24;7H}[25;19H[?12l[?25h[?25l[26;28H[?12l[?25h[27;29H[28;29H[?25l[1;28r[28;1H
+[1;29r[25;27H[46m{[m
+
+
+[93m328 [m  [46m}[?12l[?25h[?25l[1;28r[m[28;1H
+[1;29r[24;27H{[27;7H}
+[93m329 [m  fin = fopen(train_file, "rb"); /* 読出モードでtrain_fileを開く */[28;29H[?12l[?25h[?25l[24;27H[46m{[27;7H}[?12l[?25h[?25l[m[24;27H{[27;7H}[26;29H[?12l[?25h[25;29H[?25l[24;27H[46m{[27;7H}[24;28H[?12l[?25h[?25l[m{[27;7H}[23;19H[?12l[?25h[?25l[15;17H[46m{[22;7H}[?12l[?25h[?25l[m[15;17H{[22;7H}[21;13H[?12l[?25h[19;29H[18;29H[29;1H[K[18;28H[?25l[?12l[?25h[?25l[29;1H/[?12l[?25hReadVocab[?25l[1;28r[1;1H[9M[1;29r[20;1H[93m330 [m  if (fin == NULL) {
+[93m331 [m    printf("ERROR: training data file not found!\n");
+[93m332 [m    exit(1);
+[93m333 [m  }
+[93m334 [m  fseek(fin, 0, SEEK_END); /* ファイルfinのファイル位置演算子をSEEK_ENDを基準に0バイ [25;1H[93m    [mト移動 */
+[93m335 [m  file_size = ftell(fin);
+[93m336 [m  fclose(fin);
+[93m337 [m} /* 306行目からのReadVocab終わり */[29;1H[K[28;23H[?12l[?25h[?25l
+/ReadVocab[27m[m[H[2J[1;1H[93m540 [m  free(neu1); /* 370行目で確保したneu1のメモリを解放 */
+[93m541 [m  free(neu1e); /* 371行目で確保したneu1eのメモリを解放 */
+[93m542 [m  pthread_exit(NULL); /* 呼び出したスレッドを終了(557行目と558行目に関係) */
+[93m543 [m} /* 363行目からのTrainModelThread終わり */
+[93m544 
+545 [mvoid TrainModel() { /* 614行目まで */
+[93m546 [m  long a, b, c, d;
+[93m547 [m  FILE *fo;
+[93m548 [m  pthread_t *pt = (pthread_t *)malloc(num_threads * sizeof(pthread_t)); /* pthread([94m>>[m[10;1H[93m    [mマルチスレッドのライブラリ) */
+[93m549 [m  printf("Starting training using file %s\n", train_file);
+[93m550 [m  starting_alpha = alpha;
+[93m551 [m  if (read_vocab_file[0] != 0) ReadVocab(); else LearnVocabFromTrainFile(); /* read__[14;1H[93m    [mvocab_file[0] != 0の時は306行目のReadVocab，そうでない時は263行目のLearnVocabFromTraa[15;1H[93m    [minFile */
+[93m552 [m  if (save_vocab_file[0] != 0) SaveVocab();
+[93m553 [m  if (output_file[0] == 0) return;
+[93m554 [m  InitNet();
+[93m555 [m  if (negative > 0) InitUnigramTable();
+[93m556 [m  start = clock();
+[93m557 [m  for (a = 0; a < num_threads; a++) pthread_create(&pt[a], NULL, TrainModelThread, (([22;1H[93m    [mvoid *)a); /* 0 <= 1 < num_threadsで新規にスレッド(ID: pt[a])を作成し，TrainModelThrr[23;1H[93m    [meadを実行する */
+[93m558 [m  for (a = 0; a < num_threads; a++) pthread_join(pt[a], NULL); /* スレッドID: pt[a][94m>>[m[25;1H[93m    [mが終了(TrainModelThreadが543行目でスレッドを終わらせる)するまで実行を一時停止 */
+[93m559 [m  fo = fopen(output_file, "wb"); /* output_fileをバイナリモードで書込専用で開く，6133[27;1H[93m    [m行目で閉じる */
+[93m560 [m  if (classes == 0) { /* デフォルトでは44行目のclasses = 0よりTRUE，569行目まで */[13;36H[?12l[?25h[16;36HSaveVoca[?25lb[46m()[?12l[?25h[?25l([?12l[?25h[?25l[m()[?12l[?25h[?25l[29;1H[1m-- INSERT --[16;48H[?12l[?25h[?25l[m [?12l[?25h[?25l /[?12l[?25h[?25l/*[?12l[?25h[?25l [?12l[?25h[?25l [?12l[?25h[?25l *[?12l[?25h[?25l*/[?12l[?25h [?25l s */[?12l[?25h[?25lsa */[?12l[?25h[?25lav */[?12l[?25h[?25lve */[?12l[?25h[?25le_ */[?12l[?25h[?25l_v */[?12l[?25h[?25lvo */[?12l[?25h[?25loc */[?12l[?25h[?25lca */[?12l[?25h[?25lab */[?12l[?25h[?25lb_ */[?12l[?25h[?25l_f */[?12l[?25h[?25lfi */[?12l[?25h[?25lil */[?12l[?25h[?25lle */[?12l[?25h[?25le[ */[?12l[?25h[?25l[0 */[?12l[?25h[?25l[46m[[m0[46m][m */[?12l[?25h[?25l[0]  */[?12l[?25h[?25l ! */[?12l[?25h[?25l!= */[?12l[?25h[?25l  */[?12l[?25h[?25l 0 */[?12l[?25h[?25l0の */[?12l[?25h[?25l時は */[?12l[?25h[?25l3 */[?12l[?25h[?25l39 */[?12l[?25h[?25l99 */[?12l[?25h[?25l[17;28r[17;1H[L[1;29r[16;83H9行目  [17;1H[93m    [m*/[16;88H[?12l[?25h[?25l[94m>>[m[17;1H[93m    [mの */[?12l[?25h[16;86H[?25l99行目の [17;1H[93m    [m */[17;8H[K[16;81H[?12l[?25h[?25l299行目[94m>>[m[17;1H[93m    [mの */[16;82H[?12l[?25h99[2C[17;5H[2C [?25lS */[?12l[?25h[?25lSa */[?12l[?25h[?25lav */[?12l[?25h[?25lve */[?12l[?25h[?25leC */[?12l[?25h[?25le */[17;14H[K[17;11H[?12l[?25h[?25leV */[?12l[?25h[?25lVo */[?12l[?25h[?25loc */[?12l[?25h[?25lca */[?12l[?25h[?25lab */[?12l[?25h[?25lb( */[?12l[?25h[?25l[46m()[m */[?12l[?25h[?25l()を */[?12l[?25h[?25l開く */[?12l[?25h[?25l */[17;25H[K[17;22H[?12l[?25h[?25l */[17;23H[K[17;20H[?12l[?25h[?25l[46m()[m */[17;21H[K[17;18H[?12l[?25h[?25l()[18;39H[?12l[?25h[19;17H[18;39H[?25l [?12l[?25h[?25l ?[?12l[?25h[?25l[18;40H[K[18;40H[?12l[?25h[?25l /[?12l[?25h[?25l/*[?12l[?25h[?25l [?12l[?25h[?25l [?12l[?25h[?25l *[?12l[?25h[?25l*/[?12l[?25h[?25l o */[?12l[?25h[?25lou */[?12l[?25h[?25lut */[?12l[?25h[?25ltp */[?12l[?25h[?25lpu */[?12l[?25h[?25lut */[?12l[?25h[?25lt_ */[?12l[?25h[?25l__ */[?12l[?25h[?25l_f */[?12l[?25h[?25lfi */[?12l[?25h[?25lf */[18;55H[K[18;52H[?12l[?25h[?25l_ */[18;54H[K[18;51H[?12l[?25h[?25l_ */[18;53H[K[18;50H[?12l[?25h[?25l_f */[?12l[?25h[?25lfi */[?12l[?25h[?25lil */[?12l[?25h[?25lle */[?12l[?25h[?25le[ */[?12l[?25h[?25l[0 */[?12l[?25h[?25l[46m[[m0[46m][m */[?12l[?25h[?25l[0]  */[?12l[?25h[?25l = */[?12l[?25h[?25l== */[?12l[?25h[?25l  */[?12l[?25h[?25l 0 */[?12l[?25h[?25l0の */[?12l[?25h[?25l時は */[?12l[?25h[?25lここで */[?12l[?25h[?25l終わり */[?12l[?25h[19;17H[?25l[46m()[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[m()[?12l[?25h[?25l[18;10H[46m([19C)[18;11H[?12l[?25h[?25l[m([19C)[18;12H[?12l[?25hutput_fil[?25le[46m[[m0[46m][?12l[?25h[?25l[[?12l[?25h[?25l[m0[?12l[?25h[?25l[1C[?12l[?25h[?25l[0] [?12l[?25h== [?25l[18;10H[46m([19C)[?12l[?25h[?25l)[?12l[?25h[?25l[m[18;10H([19C) [?12l[?25hreturn; /* output_fil[?25le[46m[[m0[46m][?12l[?25h[?25l[[?12l[?25h[?25l[m0[?12l[?25h[?25l[1C[?12l[?25h[?25l[0] [?12l[?25h== 0[2C[2C[2C[2C[2C[?25lTここで終わり */[18;69H[?12l[?25h[?25lTrここで終わり */[18;70H[?12l[?25h[?25lraここで終わり */[18;71H[?12l[?25h[?25laiここで終わり */[18;72H[?12l[?25h[?25linここで終わり */[18;73H[?12l[?25h[?25lnMここで終わり */[18;74H[?12l[?25h[?25l[19;28r[19;1H[L[1;29r[18;73HMoここで終わり **[19;1H[93m    [m/[28;1H[94m@                                                                                       [18;75H[?12l[?25h[?25l[modここで終わり  [19;1H[93m    [m*/[18;76H[?12l[?25h[?25ldeここで終わり [19;1H[93m    [m */[18;77H[?12l[?25h[?25lelここで終わ[94m>>[m[19;1H[93m    [mり */[18;78H[?12l[?25hinModel[?25lは[2Cこで終[94m>>[m[19;1H[93m [m[3Cわり */[18;80H[?12l[?25h[20;17H[?25l [?12l[?25h[?25l /[?12l[?25h[?25l/*[?12l[?25h[?25l [?12l[?25h[?25l [?12l[?25h[?25l *[?12l[?25h[?25l*/[?12l[?25h[?25l 3 */[?12l[?25h[?25l33 */[?12l[?25h[?25l39 */[?12l[?25h[?25l9行目の */[?12l[?25h[?25lI */[?12l[?25h[?25lIn */[?12l[?25h[?25lni */[?12l[?25h[?25lit */[?12l[?25h[?25ltN */[?12l[?25h[?25lNe */[?12l[?25h[?25let */[?12l[?25h[21;37Habl[?25le[46m()[?12l[?25h[?25l([?12l[?25h[?25l)[?12l[?25h[?25l[m();[?12l[?25h[?25l [?12l[?25h[?25l /[?12l[?25h[?25l/*[?12l[?25h[?25l [?12l[?25h[?25l [?12l[?25h[?25l *[?12l[?25h[?25l*?[?12l[?25h?[?25l[21;50H[K[21;50H[?12l[?25h[?25l*/[?12l[?25h[?25l デフォルトでは */[?12l[?25h[?25ln */[?12l[?25h[?25lne */[?12l[?25h[?25leg */[?12l[?25h[?25lga */[?12l[?25h[?25lav */[?12l[?25h[?25la */[21;69H[K[21;66H[?12l[?25h[?25lat */[?12l[?25h[?25lti */[?12l[?25h[?25liv */[?12l[?25h[?25lve */[?12l[?25h[?25l  */[?12l[?25h[?25l = */[?12l[?25h[?25l== */[?12l[?25h[?25l  */[?12l[?25h[?25l 5 */[?12l[?25h[?25l5より */[?12l[?25h[?25lT */[?12l[?25h[?25lTR */[?12l[?25h[?25lRU */[?12l[?25h[?25lUE */[?12l[?25h[?25lE， */[?12l[?25h[?25l5 */[21;86H[?12l[?25h[?25l[22;28r[22;1H[L[1;29r[21;85H53 **[22;1H[93m    [m/[21;87H[?12l[?25h[?25l3行[22;4H[93m [m目の */[?12l[?25h[?25lI */[?12l[?25h[?25lIn */[?12l[?25h[?25lni */[?12l[?25h[?25lit */[?12l[?25h[?25ltU */[?12l[?25h[?25lUn */[?12l[?25h[?25lni */[?12l[?25h[?25lig */[?12l[?25h[?25lgr */[?12l[?25h[?25lra */[?12l[?25h[?25lam */[?12l[?25h[?25lmT */[?12l[?25h[?25lTa */[?12l[?25h[?25lab */[?12l[?25h[?25lbl */[?12l[?25h[?25lle */[?12l[?25h[23;23H[25;25H[28;25H[?25l[1;28r[1;1H[2M[1;29r[27;1H[93m559 [m  fo = fopen(output_file, "wb"); /* output_fileをバイナリモードで書込専用で開く，6133[28;1H[93m    [m行目で閉じる */[?12l[?25h[?25l[1;28r[28;1H
+[1;29r[28;1H[93m560 [m  if (classes == 0) { /* デフォルトでは44行目のclasses = 0よりTRUE，569行目まで */[?12l[?25h[?25l[1;28r[28;1H
+[1;29r[28;1H[93m561 [m    // Save the word vectors[?12l[?25h[?25l[1;28r[1;1H[2M[1;29r[27;1H[93m562 [m    fprintf(fo, "%lld %lld\n", vocab_size, layer1_size); /* foにvocab_sizeとlayer1_ss[28;1H[93m    [mizeをlong long型でそれぞれ出力 */[28;25H[?12l[?25h[?25l[1;28r[28;1H
+[1;29r[28;1H[93m563 [m    for (a = 0; a < vocab_size; a++) { /* 0 <= a < vocab_sizeの時，568行目まで */[?12l[?25h[?25l[1;28r[28;1H
+[1;29r[28;1H[93m564 [m      fprintf(fo, "%s ", vocab[a].word); /* foにvocab[a].wordを文字列として出力 */[?12l[?25h[?25l[1;28r[1;1H[4M[1;29r[25;1H[93m565 [m      if (binary) for (b = 0; b < layer1_size; b++) fwrite(&syn0[a * layer1_size + bb[26;1H[93m    [m], sizeof(real), 1, fo); /* デフォルトでは41行目のbinary = 0より動く，0 <= b < layerr[27;1H[93m    [m1_sizeの時foにポインタsyn0[a * layer1_size + b]からsizeof(real) bytes単位で1個のデー[28;1H[93m    [mタを書込み */[26;25H[?12l[?25h[?25l[1;28r[1;1H[3M[1;29r[26;1H[93m566 [m      else for (b = 0; b < layer1_size; b++) fprintf(fo, "%lf ", syn0[a * layer1_sizz[27;1H[93m    [me + b]); /* デフォルトでは動かない */
+[93m567 [m      fprintf(fo, "\n"); /* foに改行を出力 */[27;25H[?12l[?25h[28;50H[?25l[1;28r[1;1H[2M[1;29r[27;1H[93m568 [m    } /* 563行目からのfor文ここまで */
+[93m569 [m  } else { /* 612行目まで，デフォルトではclasses == 0より動かない！ */[27;43H[?12l[?25h[26;50H[25;25H[21;25H[19;87H[18;86H[17;25H[15;33H[14;87H[13;20H[11;25H[8;25H[6;23H[5;25H[3;40H[2;12H[?25l[1;28r[1;1H[2L[1;29r[1;1H[93m552 [m  if (save_vocab_file[0] != 0) SaveVocab(); /* save_vocab_file[0] != 0の時は299行目[94m>>[m[2;1H[93m    [mのSaveVocab() */[?12l[?25h[4;12H[5;40H[7;25H[8;23H[10;25H[13;25H[15;20H[16;87H[17;33H[19;25H[20;86H[21;87H[23;25H[27;25H[28;50H[?25l[1;28r[1;1H[2M[1;29r[27;1H[93m568 [m    } /* 563行目からのfor文ここまで */
+[93m569 [m  } else { /* 612行目まで，デフォルトではclasses == 0より動かない！ */[27;43H[?12l[?25h[28;75H[?25l[1;28r[1;1H[2M[1;29r[27;1H[93m570 [m    // Run K-means on the word vectors
+[93m571 [m    int clcn = classes, iter = 10, closeid;[27;43H[?12l[?25h[28;48H[?25l[1;28r[1;1H[3M[1;29r[26;1H[93m572 [m    int *centcn = (int *)malloc(classes * sizeof(int)); /* *centcnに動的にメモリ割当[27;1H[93m    [m，609行目で解放 */
+[93m573 [m    int *cl = (int *)calloc(vocab_size, sizeof(int)); /* *clに動的にメモリ割当，611[94m>[28;1H@                                                                                       [27;23H[?12l[?25h[?25l[1;28r[m[28;1H
+[1;29r[27;1H[93m573 [m    int *cl = (int *)calloc(vocab_size, sizeof(int)); /* *clに動的にメモリ割当，611[94m>>[m[28;1H[93m    [m行目で解放 */[?12l[?25h[29;1H[K[28;17H[?25l[?12l[?25h[?25l
+:[?12l[?25hw[?25l"word2vec.c" 703L, 45087C written[28;17H[?12l[?25h[?25l[29;1H[K[29;1H:[?12l[?25hq[?25l[29;1H[K[29;1H[?1l>[?12l[?25h[?1049lbash-3.2$ vi word2vec.c[C[C[C[C[C[C[C[C[C[C[5Pgit pushcommit -m "Correct errors"[C[C[C[C[C[C[C[C[C[C[C[C[C[Cadd .[K[5Pmake
+gcc word2vec.c -o word2vec -lm -pthread -O3 -march=native -Wall -funroll-loops -Wno-unused-result
+bash-3.2$ makevi word2vec.c[C[C[C[C[C[C[C[C[C[C[5Pgit pushcommit -m "Correct errors"[C[C[C[C[C[C[C[C[C[C[C[C[C[Cadd .[K

@@ -303,14 +303,14 @@ void SaveVocab() {
   fclose(fo);
 }
 
-void ReadVocab() { /* void型関数ReadVocab */
+void ReadVocab() { /* void型関数ReadVocab，337行目まで */
   long long a, i = 0;
   char c;
   char word[MAX_STRING];
-  FILE *fin = fopen(read_vocab_file, "rb"); /* read_vocab_fileをバイナリモードで読出専用で開く */
-  if (fin == NULL) {
+  FILE *fin = fopen(read_vocab_file, "rb"); /* read_vocab_fileをバイナリモードで読出専用で開きファイルポインタ*finに代入 */
+  if (fin == NULL) { /* finがNULLの時 */
     printf("Vocabulary file not found\n");
-    exit(1);
+    exit(1); /* 異常終了 */
   }
   for (a = 0; a < vocab_hash_size; a++) vocab_hash[a] = -1; /* 0 <= a < vocab_hash_sizeの時 */
   vocab_size = 0;
@@ -334,7 +334,7 @@ void ReadVocab() { /* void型関数ReadVocab */
   fseek(fin, 0, SEEK_END); /* ファイルfinのファイル位置演算子をSEEK_ENDを基準に0バイト移動 */ 
   file_size = ftell(fin);
   fclose(fin);
-}
+} /* 306行目からのReadVocab終わり */
 
 void InitNet() { /* void関数IniNet() */
   long long a, b;
@@ -548,11 +548,11 @@ void TrainModel() { /* 614行目まで */
   pthread_t *pt = (pthread_t *)malloc(num_threads * sizeof(pthread_t)); /* pthread(マルチスレッドのライブラリ) */
   printf("Starting training using file %s\n", train_file);
   starting_alpha = alpha;
-  if (read_vocab_file[0] != 0) ReadVocab(); else LearnVocabFromTrainFile();
-  if (save_vocab_file[0] != 0) SaveVocab();
-  if (output_file[0] == 0) return;
-  InitNet();
-  if (negative > 0) InitUnigramTable();
+  if (read_vocab_file[0] != 0) ReadVocab(); else LearnVocabFromTrainFile(); /* read_vocab_file[0] != 0の時は306行目のReadVocab，そうでない時は263行目のLearnVocabFromTrainFile */
+  if (save_vocab_file[0] != 0) SaveVocab(); /* save_vocab_file[0] != 0の時は299行目のSaveVocab() */
+  if (output_file[0] == 0) return; /* output_file[0] == 0の時はTrainModelはここで終わり */
+  InitNet(); /* 339行目のInitNet */
+  if (negative > 0) InitUnigramTable(); /* デフォルトではnegative == 5よりTRUE，53行目のInitUnigramTable */
   start = clock();
   for (a = 0; a < num_threads; a++) pthread_create(&pt[a], NULL, TrainModelThread, (void *)a); /* 0 <= 1 < num_threadsで新規にスレッド(ID: pt[a])を作成し，TrainModelThreadを実行する */
   for (a = 0; a < num_threads; a++) pthread_join(pt[a], NULL); /* スレッドID: pt[a]が終了(TrainModelThreadが543行目でスレッドを終わらせる)するまで実行を一時停止 */
