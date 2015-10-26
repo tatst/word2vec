@@ -38,10 +38,10 @@ struct vocab_word {
 char train_file[MAX_STRING], output_file[MAX_STRING]; /* 最大文字数MAX_STRINGを引数に持つchar型(1 byte文字型)train_fileとoutput_fileを宣言 */
 char save_vocab_file[MAX_STRING], read_vocab_file[MAX_STRING]; /* char型save_vocab_fileとread_vocab_fileを宣言 */
 struct vocab_word *vocab; /* 構造体型struct vocab_wordでポインタvocab(これは変数だからvocab.cn, vocab.point, vocab.word, vocab.code, vocab.codelenを持つ)を宣言 */
-int binary = 0, cbow = 1, debug_mode = 2, window = 5, min_count = 5, num_threads = 12, min_reduce = 1;
+int binary = 0, cbow = 1, debug_mode = 2, window = 5, min_count = 5, num_threads = 12, min_reduce = 1; /* スレッド数num_threads = 12，binary = 0は565行目で使用 */
 int *vocab_hash; /* int型ポインタvocab_hash(SearchVocab()で使用) */
 long long vocab_max_size = 1000, vocab_size = 0, layer1_size = 100; /* long long型vocab_max_size, vocab_sizeとlayer1_sizeを宣言 */
-long long train_words = 0, word_count_actual = 0, iter = 5, file_size = 0, classes = 0;
+long long train_words = 0, word_count_actual = 0, iter = 5, file_size = 0, classes = 0; /* 560行目でclassesを使用) */
 real alpha = 0.025, starting_alpha, sample = 1e-3; /* 655, 656行目よりalphaは学習比(learning rate) */
 real *syn0, *syn1, *syn1neg, *expTable; /* real型ポインタ */
 clock_t start;
@@ -122,7 +122,7 @@ int ReadWordIndex(FILE *fin) { /* ファイルポインタfinを引数に持つi
 int AddWordToVocab(char *word) { /* char型ポインタwordを引数に持つint型関数AddWordToVocab() */
   unsigned int hash, length = strlen(word) + 1; /* 符号無int型bash, length(wordの文字長+1を代入) */
   if (length > MAX_STRING) length = MAX_STRING; /* lengthが最大文字数より大きい場合はlenghに最大文字数を代入 */
-  vocab[vocab_size].word = (char *)calloc(length, sizeof(char)); /* length個のcharサイズのメモリを確保し，char型にしてvocab[vocab_size].wordに代入 */
+  vocab[vocab_size].word = (char *)calloc(length, sizeof(char)); /* length個のcharサイズのメモリを確保し，char型にしてvocab[vocab_size].wordに代入(158, 183行目で解放) */
   strcpy(vocab[vocab_size].word, word); /* vocab[vocab_size].wordにwordをコピー */
   vocab[vocab_size].cn = 0; /* vocab[vocab_size].cnに0を代入 */
   vocab_size++; /* vocab_sizeに1を足す */
@@ -155,7 +155,7 @@ void SortVocab() { /* void関数SortVocab() */
     // Words occuring less than min_count times will be discarded from the vocab /* min_count以下の頻度の単語をvocabから除外する */
     if ((vocab[a].cn < min_count) && (a != 0)) { /* vocab[a].cnがmin_count未満かつaが0でない時 */
       vocab_size--; /* vocab_sizeから1引く */
-      free(vocab[a].word); /* vocab[a].wordのメモリを解放 */
+      free(vocab[a].word); /* 125行目で確保したvocab[a].wordのメモリを解放 */
     } else {
       // Hash will be re-computed, as after the sorting it is not actual /* ハッシュを */
       hash=GetWordHash(vocab[a].word);
@@ -180,7 +180,7 @@ void ReduceVocab() {
     vocab[b].cn = vocab[a].cn;
     vocab[b].word = vocab[a].word;
     b++;
-  } else free(vocab[a].word);
+  } else free(vocab[a].word); /* 125行目で確保したvocab[a].wordのメモリを解放 */
   vocab_size = b;
   for (a = 0; a < vocab_hash_size; a++) vocab_hash[a] = -1;
   for (a = 0; a < vocab_size; a++) {
@@ -265,7 +265,7 @@ void LearnVocabFromTrainFile() { /* void型関数LearnVocabFromTrainFile() */
   FILE *fin; /* FILE型ポインタfin */
   long long a, i; /* long long型変数a, i */
   for (a = 0; a < vocab_hash_size; a++) vocab_hash[a] = -1; /* 0 <= a < vocab_hash_sizeの時vocab_hash[a]に-1を代入 */
-  fin = fopen(train_file, "rb"); /* train_fileを読込モードで開く */
+  fin = fopen(train_file, "rb"); /* train_fileをバイナリモードで読出専用で開く */
   if (fin == NULL) { /* ポインタfinがNULLの時 */
     printf("ERROR: training data file not found!\n");
     exit(1);
@@ -298,7 +298,7 @@ void LearnVocabFromTrainFile() { /* void型関数LearnVocabFromTrainFile() */
 
 void SaveVocab() {
   long long i;
-  FILE *fo = fopen(save_vocab_file, "wb");
+  FILE *fo = fopen(save_vocab_file, "wb"); /* save_vocab_fileをバイナリモードで書込専用で開く */
   for (i = 0; i < vocab_size; i++) fprintf(fo, "%s %lld\n", vocab[i].word, vocab[i].cn);
   fclose(fo);
 }
@@ -307,7 +307,7 @@ void ReadVocab() { /* void型関数ReadVocab */
   long long a, i = 0;
   char c;
   char word[MAX_STRING];
-  FILE *fin = fopen(read_vocab_file, "rb"); /* 読込モードでread_vocab_fileを開く */
+  FILE *fin = fopen(read_vocab_file, "rb"); /* read_vocab_fileをバイナリモードで読出専用で開く */
   if (fin == NULL) {
     printf("Vocabulary file not found\n");
     exit(1);
@@ -326,12 +326,12 @@ void ReadVocab() { /* void型関数ReadVocab */
     printf("Vocab size: %lld\n", vocab_size);
     printf("Words in train file: %lld\n", train_words);
   }
-  fin = fopen(train_file, "rb"); /* 読取モードでtrain_fileを開く */
+  fin = fopen(train_file, "rb"); /* 読出モードでtrain_fileを開く */
   if (fin == NULL) {
     printf("ERROR: training data file not found!\n");
     exit(1);
   }
-  fseek(fin, 0, SEEK_END);
+  fseek(fin, 0, SEEK_END); /* ファイルfinのファイル位置演算子をSEEK_ENDを基準に0バイト移動 */ 
   file_size = ftell(fin);
   fclose(fin);
 }
@@ -369,8 +369,8 @@ void *TrainModelThread(void *id) { /* 543行目まである */
   clock_t now;
   real *neu1 = (real *)calloc(layer1_size, sizeof(real)); /* *neu1にメモリを動的に割当， 540行目で解放*/
   real *neu1e = (real *)calloc(layer1_size, sizeof(real)); /* *neu1eにメモリを動的に割当，541行目で解放 */
-  FILE *fi = fopen(train_file, "rb"); /* 読取モードでtrain_fileを開き，ファイルポインタfiに代入，374行目から538行目までの無限ループの後539行目で閉じる */
-  fseek(fi, file_size / (long long)num_threads * (long long)id, SEEK_SET);
+  FILE *fi = fopen(train_file, "rb"); /* 読出モードでtrain_fileを開き，ファイルポインタfiに代入，374行目から538行目までの無限ループの後539行目で閉じる */
+  fseek(fi, file_size / (long long)num_threads * (long long)id, SEEK_SET);  /* ファイルfiのファイル位置演算子をSEEK_SETを基準にfile_size / (long long)num_threads * (long long)idバイト移動 */
   while (1) { /* 無限ループ(538行目まで) */
     if (word_count - last_word_count > 10000) { /* 387行目まで */
       word_count_actual += word_count - last_word_count;
@@ -411,7 +411,7 @@ void *TrainModelThread(void *id) { /* 543行目まである */
       word_count = 0;
       last_word_count = 0;
       sentence_length = 0;
-      fseek(fi, file_size / (long long)num_threads * (long long)id, SEEK_SET);
+      fseek(fi, file_size / (long long)num_threads * (long long)id, SEEK_SET);  /* ファイルfiのファイル位置演算子をSEEK_SETを基準にfile_size / (long long)num_threads * (long long)idバイト移動 */
       continue; /* 以下の処理をスキップして375行目に一気に戻る */
     } /* 407行目から */
     word = sen[sentence_position]; /* 最初はword = sen[0] */
@@ -539,13 +539,13 @@ void *TrainModelThread(void *id) { /* 543行目まである */
   fclose(fi); /* 372行目で開いたtrain_fileを閉じる */
   free(neu1); /* 370行目で確保したneu1のメモリを解放 */
   free(neu1e); /* 371行目で確保したneu1eのメモリを解放 */
-  pthread_exit(NULL);
-}
+  pthread_exit(NULL); /* 呼び出したスレッドを終了(557行目と558行目に関係) */
+} /* 363行目からのTrainModelThread終わり */
 
 void TrainModel() { /* 614行目まで */
   long a, b, c, d;
   FILE *fo;
-  pthread_t *pt = (pthread_t *)malloc(num_threads * sizeof(pthread_t));
+  pthread_t *pt = (pthread_t *)malloc(num_threads * sizeof(pthread_t)); /* pthread(マルチスレッドのライブラリ) */
   printf("Starting training using file %s\n", train_file);
   starting_alpha = alpha;
   if (read_vocab_file[0] != 0) ReadVocab(); else LearnVocabFromTrainFile();
@@ -554,19 +554,19 @@ void TrainModel() { /* 614行目まで */
   InitNet();
   if (negative > 0) InitUnigramTable();
   start = clock();
-  for (a = 0; a < num_threads; a++) pthread_create(&pt[a], NULL, TrainModelThread, (void *)a);
-  for (a = 0; a < num_threads; a++) pthread_join(pt[a], NULL);
-  fo = fopen(output_file, "wb");
-  if (classes == 0) {
+  for (a = 0; a < num_threads; a++) pthread_create(&pt[a], NULL, TrainModelThread, (void *)a); /* 0 <= 1 < num_threadsで新規にスレッド(ID: pt[a])を作成し，TrainModelThreadを実行する */
+  for (a = 0; a < num_threads; a++) pthread_join(pt[a], NULL); /* スレッドID: pt[a]が終了(TrainModelThreadが543行目でスレッドを終わらせる)するまで実行を一時停止 */
+  fo = fopen(output_file, "wb"); /* output_fileをバイナリモードで書込専用で開く，613行目で閉じる */
+  if (classes == 0) { /* デフォルトでは44行目のclasses = 0よりTRUE，569行目まで */
     // Save the word vectors
-    fprintf(fo, "%lld %lld\n", vocab_size, layer1_size);
-    for (a = 0; a < vocab_size; a++) {
-      fprintf(fo, "%s ", vocab[a].word);
-      if (binary) for (b = 0; b < layer1_size; b++) fwrite(&syn0[a * layer1_size + b], sizeof(real), 1, fo);
-      else for (b = 0; b < layer1_size; b++) fprintf(fo, "%lf ", syn0[a * layer1_size + b]);
-      fprintf(fo, "\n");
-    }
-  } else {
+    fprintf(fo, "%lld %lld\n", vocab_size, layer1_size); /* foにvocab_sizeとlayer1_sizeをlong long型でそれぞれ出力 */
+    for (a = 0; a < vocab_size; a++) { /* 0 <= a < vocab_sizeの時，568行目まで */
+      fprintf(fo, "%s ", vocab[a].word); /* foにvocab[a].wordを文字列として出力 */
+      if (binary) for (b = 0; b < layer1_size; b++) fwrite(&syn0[a * layer1_size + b], sizeof(real), 1, fo); /* デフォルトでは41行目のbinary = 0より動く，0 <= b < layer1_sizeの時foにポインタsyn0[a * layer1_size + b]からsizeof(real) bytes単位で1個のデータを書込み */
+      else for (b = 0; b < layer1_size; b++) fprintf(fo, "%lf ", syn0[a * layer1_size + b]); /* デフォルトでは動かない */
+      fprintf(fo, "\n"); /* foに改行を出力 */
+    } /* 563行目からのfor文ここまで */
+  } else { /* 612行目まで，デフォルトではclasses == 0より動かない！ */
     // Run K-means on the word vectors
     int clcn = classes, iter = 10, closeid;
     int *centcn = (int *)malloc(classes * sizeof(int)); /* *centcnに動的にメモリ割当，609行目で解放 */
@@ -610,7 +610,7 @@ void TrainModel() { /* 614行目まで */
     free(cent); /* 575行目で確保したcentのメモリを解放 */
     free(cl); /* 573行目で確保したclのメモリを解放 */
   } /* 569行目elseから */
-  fclose(fo);
+  fclose(fo); /* 559行目で開いたfoを閉じる */
 } /* 545行目void TrainModel()から */
 
 int ArgPos(char *str, int argc, char **argv) {
@@ -625,9 +625,9 @@ int ArgPos(char *str, int argc, char **argv) {
   return -1;
 }
 
-int main(int argc, char **argv) { /* main関数，703行目まで */
+int main(int argc, char **argv) { /* main関数，703行目まで(argc:コマンドライン引数の総個数，**argv: コマンドライン引数の文字列を指すポインタの配列 */
   int i;
-  if (argc == 1) {
+  if (argc == 1) { /* コマンドライン引数が1個の時，672行目まで */
     printf("WORD VECTOR estimation toolkit v 0.1c\n\n");
     printf("Options:\n");
     printf("Parameters for training:\n");
@@ -669,7 +669,7 @@ int main(int argc, char **argv) { /* main関数，703行目まで */
     printf("\nExamples:\n");
     printf("./word2vec -train data.txt -output vec.txt -size 200 -window 5 -sample 1e-4 -negative 5 -hs 0 -binary 0 -cbow 1 -iter 3\n\n");
     return 0;
-  }
+  } /* 630行目からのif文終わり */
   output_file[0] = 0;
   save_vocab_file[0] = 0;
   read_vocab_file[0] = 0;
@@ -691,13 +691,13 @@ int main(int argc, char **argv) { /* main関数，703行目まで */
   if ((i = ArgPos((char *)"-iter", argc, argv)) > 0) iter = atoi(argv[i + 1]);
   if ((i = ArgPos((char *)"-min-count", argc, argv)) > 0) min_count = atoi(argv[i + 1]);
   if ((i = ArgPos((char *)"-classes", argc, argv)) > 0) classes = atoi(argv[i + 1]);
-  vocab = (struct vocab_word *)calloc(vocab_max_size, sizeof(struct vocab_word));
-  vocab_hash = (int *)calloc(vocab_hash_size, sizeof(int));
-  expTable = (real *)malloc((EXP_TABLE_SIZE + 1) * sizeof(real));
+  vocab = (struct vocab_word *)calloc(vocab_max_size, sizeof(struct vocab_word)); /* vocabに動的にメモリ割当 */
+  vocab_hash = (int *)calloc(vocab_hash_size, sizeof(int)); /* vocab_hashに動的にメモリ(vocab_hash_size = 30M)割当(どこで解放？) */
+  expTable = (real *)malloc((EXP_TABLE_SIZE + 1) * sizeof(real)); /* expTableに動的にメモリ割当(どこで解放？) */
   for (i = 0; i < EXP_TABLE_SIZE; i++) {
     expTable[i] = exp((i / (real)EXP_TABLE_SIZE * 2 - 1) * MAX_EXP); // Precompute the exp() table
     expTable[i] = expTable[i] / (expTable[i] + 1);                   // Precompute f(x) = x / (x + 1)
   }
-  TrainModel();
+  TrainModel(); /* 545行目で定義したTrainModelを開く */
   return 0;
 }

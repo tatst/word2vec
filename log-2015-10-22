@@ -8845,4 +8845,43 @@ const int vocab_hash_size = 30000000;  // Maximum 30 * 0.7 = 21M words in the vo
 [1;29r[28;1H[93m577 [m    for (a = 0; a < iter; a++) {[?12l[?25h[27;51H[25;51H[24;23H[?25l[22;51H[46m([mint[46m)[m[33C  [23;1H[93m [22;51H[?12l[?25h[?25l[m(int)[33C  [23;1H[93m [20;51H[?12l[?25h[19;47H[18;42H[17;14H[?25l[m[9;42H[46m{[16;9H}[?12l[?25h[?25l[m[9;42H{[16;9H}[15;28H[?12l[?25h[13;51H[11;51H[10;44H[?25l[9;42H[46m{[16;9H}[9;42H[?12l[?25h[?25l[m{[16;9H}[8;51H[?12l[?25h[7;32H[?25l[6;25H[46m{[17;7H}[6;25H[?12l[?25h[?25l[m{[17;7H}[5;36H[?12l[?25h[4;51H[2;51H[1;22H[?25l[1;28r[1;1H[L[1;29r[1;1H[93m555 [m  if (negative > 0) InitUnigramTable();[?12l[?25h[?25l[1;28r[1;1H[L[1;29r[1;1H[93m554 [m  InitNet();[?12l[?25h[?25l[1;28r[1;1H[L[1;29r[1;1H[93m553 [m  if (output_file[0] == 0) return;[28;1H[94m@                                                                                        [1;38H[?12l[?25h[?25l[1;28r[m[1;1H[L[1;29r[1;1H[93m552 [m  if (save_vocab_file[0] != 0) SaveVocab();[?12l[?25h[?25l[1;28r[1;1H[L[1;29r[1;1H[93m551 [m  if (read_vocab_file[0] != 0) ReadVocab(); else LearnVocabFromTrainFile();[1;51H[?12l[?25h[?25l[1;28r[1;1H[L[1;29r[1;1H[93m550 [m  starting_alpha = alpha;[28;1H[94m@                                                                                        [1;29H[?12l[?25h[?25l[1;28r[m[1;1H[L[1;29r[1;1H[93m549 [m  printf("Starting training using file %s\n", train_file);[1;51H[?12l[?25h[?25l[1;28r[1;1H[L[1;29r[1;1H[93m548 [m  pthread_t *pt = (pthread_t *)malloc(num_threads * sizeof(pthread_t));[28;1H[94m@                                                                                        [1;51H[?12l[?25h[?25l[1;28r[m[1;1H[L[1;29r[1;1H[93m547 [m  FILE *fo;[?12l[?25h[?25l[1;28r[1;1H[L[1;29r[1;1H[93m546 [m  long a, b, c, d;[?12l[?25h[?25l[1;28r[1;1H[L[1;29r[1;1H[93m545 [mvoid TrainModel() { /* 614行目まで */[?12l[?25h[?25l[1;28r[1;1H[L[1;29r[1;1H[93m544 [?12l[?25h[?25l[1;28r[m[1;1H[L[1;29r[1;1H[93m543 [m}[?12l[?25h[?25l[1;28r[1;1H[L[1;29r[1;1H[93m542 [m  pthread_exit(NULL);[?12l[?25h[?25l[1;28r[1;1H[L[1;29r[1;1H[93m541 [m  free(neu1e); /* 371行目で確保したneu1eのメモリを解放 */[28;1H[94m@                                                                                        [1;51H[?12l[?25h[?25l[1;28r[m[1;1H[L[1;29r[1;1H[93m540 [m  free(neu1); /* 370行目で確保したneu1のメモリを解放 */[1;51H[?12l[?25h[?25l[1;28r[1;1H[L[1;29r[1;1H[93m539 [m  fclose(fi); /* 372行目で開いたtrain_fileを閉じる */[28;1H[94m@                                                                                        [1;51H[?12l[?25h[?25l[1;28r[m[1;1H[L[1;29r[1;1H[93m538 [m  } /* 374行目から無限ループ終り */[?12l[?25h[?25l[1;28r[1;1H[L[1;29r[1;1H[93m537 [m    }[?12l[?25h[?25l[1;28r[1;1H[2L[1;29r[1;1H[93m536 [m      continue; /* sentence_position >= sentence_lengthの時sentence_length = 0とした[94m>>[m[2;1H[93m    [m上で処理をスキップし，375行目に戻る */[1;51H[?12l[?25h[?25l[1;28r[1;1H[L[1;29r[1;1H[93m535 [m      sentence_length = 0;[?12l[?25h[?25l[1;28r[1;1H[L[1;29r[1;1H[93m534 [m    if (sentence_position >= sentence_length) [46m{[5;9H}[1;51H[?12l[?25h[?25l[1;28r[m[1;1H[L[1;29r[1;1H[93m533 [m    sentence_position++; /* sentence_positionはここで1増える */[2;51H{[6;9H}[1;50H[?12l[?25h[?25l[1;28r[1;1H[L[1;29r[1;1H[93m532 [m    } /* 483行目からのskip-gram終わり */[?12l[?25h[?25l[1;28r[1;1H[L[1;29r[1;1H[93m531 [m      }[28;1H[94m@                                                                                        [1;11H[?12l[?25h[?25l[1;28r[m[1;1H[L[1;29r[1;1H[93m530 [m[7C for (c = 0; c < layer1_size; c++) syn0[46m[[mc + l1[46m][m += neu1e[c];[1;51H[?12l[?25h[?25l[1;28r[1;1H[L[1;29r[1;1H[93m529 [m[7C // Learn weights input -> hidden[2;51H[c + l1][1;44H[?12l[?25h[?25l[1;28r[1;1H[L[1;29r[1;1H[93m528 [m[7C } /* 509行目からのfor文はここまで */[?12l[?25h[?25l[1;28r[1;1H[L[1;29r[1;1H[93m527 [m[9C for (c = 0; c < layer1_size; c++) syn1neg[c + l2] += g * syn0[c + l1];[1;51H[?12l[?25h[?25l[1;28r[1;1H[L[1;29r[1;1H[93m526 [m[9C for (c = 0; c < layer1_size; c++) neu1e[c] += g * syn1neg[c + l2];[1;51H[?12l[?25h[?25l[1;28r[1;1H[2L[1;29r[1;1H[93m525 [m[9C else g = (label - expTable[(int)((f + MAX_EXP) * (EXP_TABLE_SIZE / MAX_EXP  [2;1H[93m    [m/ 2))]) * alpha;[1;51H[?12l[?25h[?25l[1;28r[1;1H[L[1;29r[1;1H[93m524 [m[9C else if (f < -MAX_EXP) g = (label - 0) * alpha;[1;51H[?12l[?25h[?25l[1;28r[1;1H[L[1;29r[1;1H[93m523 [m[9C if (f > MAX_EXP) g = (label - 1) * alpha;[?12l[?25h[?25l[1;28r[1;1H[L[1;29r[1;1H[93m522 [m[9C for (c = 0; c < layer1_size; c++) f += syn0[c + l1] * syn1neg[c + l2];[1;51H[?12l[?25h[?25l[1;28r[1;1H[L[1;29r[1;1H[93m521 [m[9C f = 0;[?12l[?25h[?25l[1;28r[1;1H[L[1;29r[1;1H[93m520 [m[9C l2 = target * layer1_size;[?12l[?25h[?25l[29;1H:[?12l[?25hq[?25l[29;1H[K[29;1H[?1l>[?12l[?25h[?1049lbash-3.2$ vi word2vec.c[C[C[C[C[C[C[C[C[C[Cexit[Kvi word2vec.c[C[C[C[C[C[C[C[C[C[Cscript log-2015-10-20[C[C[C[C[C[C[C[C[C[Cls[Kscript log-2015-10-20[C[C[C[C[C[C[C[C[C[C[8Pvi word2vec.c[C[C[C[C[C[C[C[C[C[Cexit[Kvi word2vec.c[C[C[C[C[C[C[C[C[C[C[Kgit add .
 bash-3.2$ git [K[K[K[Kgit [K[K[K[Kmake
 gcc word2vec.c -o word2vec -lm -pthread -O3 -march=native -Wall -funroll-loops -Wno-unused-result
-bash-3.2$ gi
+bash-3.2$ git add .
+bash-3.2$ git commit -m ""A"d"d" "c"o"m"m"e"n"t"s" "o"n" "w"o"r"3"[1P"d"2"v"e"c"."c" "2"0"1"5"-"2"[1P"1"0"-"2"2"
+[other bb3ee09] Add comments on word2vec.c 2015-10-22
+ 2 files changed, 8914 insertions(+), 66 deletions(-)
+ create mode 100644 log_2015-10-22
+bash-3.2$ git push
+warning: push.default is unset; its implicit value has changed in
+Git 2.0 from 'matching' to 'simple'. To squelch this message
+and maintain the traditional behavior, use:
+
+  git config --global push.default matching
+
+To squelch this message and adopt the new behavior now, use:
+
+  git config --global push.default simple
+
+When push.default is set to 'matching', git will push local branches
+to the remote branches that already exist with the same name.
+
+Since Git 2.0, Git defaults to the more conservative 'simple'
+behavior, which only pushes the current branch to the corresponding
+remote branch that 'git pull' uses to update the current branch.
+
+See 'git help config' and search for 'push.default' for further information.
+(the 'simple' mode was introduced in Git 1.7.11. Use the similar mode
+'current' instead of 'simple' if you sometimes use older versions of Git)
+
+Username for 'https://github.com': tatst
+Password for 'https://tatst@github.com': 
+Counting objects: 4, done.
+Delta compression using up to 4 threads.
+Compressing objects:  25% (1/4)   Compressing objects:  50% (2/4)   Compressing objects:  75% (3/4)   Compressing objects: 100% (4/4)   Compressing objects: 100% (4/4), done.
+Writing objects:  25% (1/4)   Writing objects:  50% (2/4)   Writing objects:  75% (3/4)   Writing objects: 100% (4/4)   Writing objects: 100% (4/4), 97.92 KiB | 0 bytes/s, done.
+Total 4 (delta 2), reused 0 (delta 0)
+To https://github.com/tatst/word2vec.git
+   c0565f7..bb3ee09  other -> other
+bash-3.2$ exit
+exit
+
+Script done on Thu Oct 22 20:55:46 2015
