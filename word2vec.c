@@ -618,10 +618,10 @@ int ArgPos(char *str, int argc, char **argv) { /* 676行目以下に頻出 */
   for (a = 1; a < argc; a++) if (!strcmp(str, argv[a])) { /* 文字列strとargv[a]が等しい時 */
     if (a == argc - 1) {
       printf("Argument missing for %s\n", str);
-      exit(1); /* 1 <= a < argcかつ文字列str==argv[a]の時にfor文が動き，a == argc - 1の時にメッセージを表示，処理失敗で終了(これが成立するのは実引数がstrだけの場合と，実引数の最後がstrの時，i.e. -<argument>とだけ書いて直後に数字を書かないケースを排除) *
+      exit(1); /* 1 <= a < argcかつ文字列str==argv[a]の時にfor文が動き，a == argc - 1の時にメッセージを表示，処理失敗で終了(これが成立するのは実引数がstrだけの場合と，実引数の最後がstrの時，i.e. -<argument>とだけ書いて直後に数字を書かないケースを排除) */
     }
-    return a; // 1 <= a < argc -1かつ文字列str==argv[a]の時だけここに来る
-  } // 618行目から
+    return a; /* 1 <= a < argc -1かつ文字列str==argv[a]の時だけここに来る */
+  } /* 618行目から */
   return -1; /* 実引数が無い時や文字列strに一致するargv[a]が無い時にここに来る  */
 } /* 616行目から */
 

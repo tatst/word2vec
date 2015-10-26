@@ -7451,4 +7451,124 @@ const int vocab_hash_size = 30000000;  // Maximum 30 * 0.7 = 21M words in the vo
 
 688 [m  if [46m([m(i = ArgPos((char *)"-hs", argc, argv)) > 0[46m)[m hs = atoi(argv[i + 1]); /* 実引数 [27;1H[93m    [m"-hs"が直後の数字と共に書かれた場合に限り直後の数字argv[i + 1]をint型に変換してhsに[94m>>[m[28;1H[93m    [m代入 */[26;10H[?12l[?25h[?25l[1;28r[1;1H[3M[1;29r[23;10H([43C)[33C  [24;1H[93m [m[86C[94m>>[m[25;1H[93m 
 689 [m  if [46m([m(i = ArgPos((char *)"-negative", argc, argv)) > 0[46m)[m negative = atoi(argv[i + 1]][27;1H[93m    [m); /* 実引数"-negative"が直後の数字と共に書かれた場合に限り直後の数字argv[i + 1]をinn[28;1H[93m    [mt型に変換してnegativeに代入 */[26;10H[?12l[?25h[?25l[1;28r[1;1H[3M[1;29r[23;10H([49C)[27C]][24;1H[93m [m[86Cnn[25;1H[93m 
-690 [m  if [46m([m(i = ArgPos((char *)"-threads", argc, argv)) > 0[46m)[m num_threads = atoi(argv[i +  [27;1H[93m    [m1]); /* 実引数"-threads"が直後の数字と共に書かれた場合に限り直後の数字argv[i + 1]をii[28;1H[93m    [mnt型に変換してnum_threadsに代入 */[26;10H[?12l[?25h
+690 [m  if [46m([m(i = ArgPos((char *)"-threads", argc, argv)) > 0[46m)[m num_threads = atoi(argv[i +  [27;1H[93m    [m1]); /* 実引数"-threads"が直後の数字と共に書かれた場合に限り直後の数字argv[i + 1]をii[28;1H[93m    [mnt型に変換してnum_threadsに代入 */[26;10H[?12l[?25h[?25l[1;28r[1;1H[3M[1;29r[23;10H([48C)[28C  [24;1H[93m [m[86Cii[25;1H[93m 
+691 [m  if [46m([m(i = ArgPos((char *)"-iter", argc, argv)) > 0[46m)[m iter = atoi(argv[i + 1]); /* 実[27;1H[93m    [m引数"-iter"が直後の数字と共に書かれた場合に限りargv[i + 1]をint型に変換してiterに代[94m>>[m[28;1H[93m    [m入 */[26;10H[?12l[?25h[?25l[1;28r[1;1H[3M[1;29r[23;10H([45C)
+
+
+[93m692 [m  if [46m([m(i = ArgPos((char *)"-min-count", argc, argv)) > 0[46m)[m min_count = atoi(argv[i +  [27;1H[93m    [m1]); /* 実引数"-min-count"が直後の数字と共に書かれた場合に限り直後の数字argv[i + 1][94m>>[m[28;1H[93m    [mをint型に変換してmin_countに代入 */[26;10H[?12l[?25h[?25l[1;28r[1;1H[4M[1;29r[22;10H([50C)[26C  [23;1H[93m [m[86C[94m>>[m[24;1H[93m 
+693 [m  if [46m([m(i = ArgPos((char *)"-classes", argc, argv)) > 0[46m)[m classes = atoi(argv[i + 1]);;[26;1H[93m    [m /* 実引数"-classes"が直後の数字と共に書かれた場合に限り直後の数字argv[i + 1]をint型[27;1H[93m    [mに変換してclassesに代入 */
+[93m694 [m  vocab = (struct vocab_word *)calloc(vocab_max_size, sizeof(struct vocab_word)); /*[28;1H[94m@                                                                                       [25;10H[?12l[?25h[?25l[m[22;10H[46m([50C)[m[26C  [23;1H[93m [m[86C[94m>>[m[24;1H[93m [m[25;10H([48C)[28C;;[26;1H[93m [22;10H[?12l[?25h[?25l[m([50C)[26C  [23;1H[93m [m[86C[94m>>[m[24;1H[93m [m[25;10H[46m([48C)[m[28C;;[26;1H[93m [25;10H[?12l[?25h[?25l[1;28r[m[1;1H[3M[1;29r[22;10H([48C)[28C;;[23;1H[93m 
+
+694 [m  vocab = (struct vocab_word *)calloc(vocab_max_size, sizeof(struct vocab_word)); /**[26;1H[93m    [m vocabに動的にメモリ割当(どこで解放？) */
+[93m695 [m  vocab_hash = (int *)calloc(vocab_hash_size, sizeof(int)); /* vocab_hashに動的にメ[94m>>[m[28;1H[93m    [mモリ(vocab_hash_size = 30M)割当(どこで解放？) */[25;10H[?12l[?25hab =[?25l [46m([19C)[m[52C**[26;1H[93m [25;15H[?12l[?25h[?25l[m([19C)[52C**[26;1H[93m [27;15H[?12l[?25h[?25l[1;28r[m[1;1H[3M[1;29r[26;1H[93m696 [m  expTable = (real *)malloc((EXP_TABLE_SIZE + 1) * sizeof(real)); /* expTableに動的[94m>>[m[27;1H[93m    [mにメモリ割当(どこで解放？) */
+[93m697 [m  for (i = 0; i < EXP_TABLE_SIZE; i++) {[26;15H[?12l[?25h[28;15H[?25l[1;28r[1;1H[3M[1;29r[26;1H[93m698 [m    expTable[i] = exp((i / (real)EXP_TABLE_SIZE * 2 - 1) * MAX_EXP); // Precompute tt[27;1H[93m    [mhe exp() table
+[93m699 [m    expTable[i] = expTable[i] / (expTable[i] + 1);[18C // Precompute f[28;1H[94m@                                                                                       [26;15H[?12l[?25h[25;15H[23;15H[m =[?25l [46m([mreal *[46m)[m[62C[94m>>[m[24;1H[93m [23;18H[?12l[?25h[?25l[m(real *)[62C[94m>>[m[24;1H[93m [23;19H[?12l[?25h[mreal [?25l[46m([mreal *[46m)[m[62C[94m>>[m[24;1H[93m [23;25H[?12l[?25h[?25l[m[23;18H(real *)[62C[94m>>[m[24;1H[93m [23;26H[?12l[?25h[mma[?25l[29;1H:[?12l[?25hq[?25l[29;1H[K[29;1H[?1l>[?12l[?25h[?1049lbash-3.2$ git add .
+bash-3.2$ git commit -m ""A"d"d" "c"o"m"m"e"n"t"s" "o"n" "w"o"r"d"2"v"e"c"."c" "2"0"1"5"-"1"0"-"2"6"-"2"
+[other 280aed8] Add comments on word2vec.c 2015-10-26-2
+ 2 files changed, 1620 insertions(+), 29 deletions(-)
+bash-3.2$ git push
+warning: push.default is unset; its implicit value has changed in
+Git 2.0 from 'matching' to 'simple'. To squelch this message
+and maintain the traditional behavior, use:
+
+  git config --global push.default matching
+
+To squelch this message and adopt the new behavior now, use:
+
+  git config --global push.default simple
+
+When push.default is set to 'matching', git will push local branches
+to the remote branches that already exist with the same name.
+
+Since Git 2.0, Git defaults to the more conservative 'simple'
+behavior, which only pushes the current branch to the corresponding
+remote branch that 'git pull' uses to update the current branch.
+
+See 'git help config' and search for 'push.default' for further information.
+(the 'simple' mode was introduced in Git 1.7.11. Use the similar mode
+'current' instead of 'simple' if you sometimes use older versions of Git)
+
+Username for 'https://github.com': tatst
+Password for 'https://tatst@github.com': 
+Counting objects: 4, done.
+Delta compression using up to 4 threads.
+Compressing objects:  25% (1/4)   Compressing objects:  50% (2/4)   Compressing objects:  75% (3/4)   Compressing objects: 100% (4/4)   Compressing objects: 100% (4/4), done.
+Writing objects:  25% (1/4)   Writing objects:  50% (2/4)   Writing objects:  75% (3/4)   Writing objects: 100% (4/4)   Writing objects: 100% (4/4), 44.27 KiB | 0 bytes/s, done.
+Total 4 (delta 3), reused 0 (delta 0)
+To https://github.com/tatst/word2vec.git
+   130cff4..280aed8  other -> other
+bash-3.2$ git pushcommit -m "Add comments on word2vec.c 2015-10-26-2"[C[C[C[C[C[C[C[C[C[C[C[C[C[Cadd .[Kvi word2vec.c
+[?1049h[?1h=[1;29r[?12;25h[?12l[?25h[27m[m[H[2J[?25l[29;1H"word2vec.c" 703L, 44586C[>c[1;1H//  Copyright 2013 Google Inc. All Rights Reserved.
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+#include <pthread.h>
+
+#define MAX_STRING 100 /* 最大文字数は100字まで */
+#define EXP_TABLE_SIZE 1000
+#define MAX_EXP 6
+#define MAX_SENTENCE_LENGTH 1000 /* 365行目と403行目で使用 */
+#define MAX_CODE_LENGTH 40 /* 最大コード長は40字まで */
+
+const int vocab_hash_size = 30000000;  // Maximum 30 * 0.7 = 21M words in the vocabulary[1;1H[?12l[?25h[?25l[29;1H[K[29;1H:[?12l[?25hset number[?25l[1;1H[93m  1 [m//  Copyright 2013 Google Inc. All Rights Reserved.
+[93m  2 [m//
+[93m  3 [m//  Licensed under the Apache License, Version 2.0 (the "License");
+[93m  4 [m//  you may not use this file except in compliance with the License.
+[93m  5 [m//  You may obtain a copy of the License at
+[93m  6 [m//
+[93m  7 [m//      http://www.apache.org/licenses/LICENSE-2.0
+[93m  8 [m//
+[93m  9 [m//  Unless required by applicable law or agreed to in writing, software
+[93m 10 [m//  distributed under the License is distributed on an "AS IS" BASIS,
+[93m 11 [m//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+[93m 12 [m//  See the License for the specific language governing permissions and
+[93m 13 [m//  limitations under the License.
+[93m 14 
+ 15 [m#include <stdio.h>
+[93m 16 [m#include <stdlib.h>
+[93m 17 [m#include <string.h>
+[93m 18 [m#include <math.h>
+[93m 19 [m#include <pthread.h>
+[93m 20 
+ 21 [m#define MAX_STRING 100 /* 最大文字数は100字まで */
+[93m 22 [m#define EXP_TABLE_SIZE 1000
+[93m 23 [m#define MAX_EXP 6
+[93m 24 [m#define MAX_SENTENCE_LENGTH 1000 /* 365行目と403行目で使用 */
+[93m 25 [m#define MAX_CODE_LENGTH 40 /* 最大コード長は40字まで */
+[93m 26 
+ 27 [mconst int vocab_hash_size = 30000000;  // Maximum 30 * 0.7 = 21M words in the vocabuu[28;1H[93m    [mlary[1;5H[?12l[?25h[?25l[29;1H[K[29;1H:[?12l[?25h621[?25l[27m[m[H[2J[1;1H[93m610 [m    free(cent); /* 575行目で確保したcentのメモリを解放 */
+[93m611 [m    free(cl); /* 573行目で確保したclのメモリを解放 */
+[93m612 [m  } /* 569行目elseから */
+[93m613 [m  fclose(fo); /* 559行目で開いたfoを閉じる */
+[93m614 [m} /* 545行目void TrainModel()から */
+[93m615 
+616 [mint ArgPos(char *str, int argc, char **argv) { /* 676行目以下に頻出 */
+[93m617 [m  int a;
+[93m618 [m  for (a = 1; a < argc; a++) if (!strcmp(str, argv[a])) { /* 文字列strとargv[a]が等[94m>>[m[10;1H[93m    [mしい時 */
+[93m619 [m    if (a == argc - 1) {
+[93m620 [m      printf("Argument missing for %s\n", str);
+[93m621 [m      exit(1); /* 1 <= a < argcかつ文字列str==argv[a]の時にfor文が動き，a == argc -  [14;1H[93m    [m1の時にメッセージを表示，処理失敗で終了(これが成立するのは実引数がstrだけの場合と，[94m>>[m[15;1H[93m    [m実引数の最後がstrの時，i.e. -<argument>とだけ書いて直後に数字を書かないケースを排除))[16;1H[93m    [m *
+[93m622 [m    }
+[93m623 [m    return a; // 1 <= a < argc -1かつ文字列str==argv[a]の時だけここに来る
+[93m624 [m  } // 618行目から
+[93m625 [m  return -1; /* 実引数が無い時や文字列strに一致するargv[a]が無い時にここに来る  */
+[93m626 [m} /* 616行目から */
+[93m627 
+628 [mint main(int argc, char **argv) { /* main関数，703行目まで(argc:コマンドライン引数の[24;1H[93m    [m総個数-1(何も引数をつけない時はargc==1)，argv: コマンドライン引数の文字列を指すポイ[94m>>[m[25;1H[93m    [mンタの配列 */
+[93m629 [m  int i;
+[93m630 [m  if (argc == 1) { /* コマンドライン引数に何も付けない時，672行目まで */
+[93m631 [m    printf("WORD VECTOR estimation toolkit v 0.1c\n\n");[13;11H[?12l[?25h[16;6H[?25l[29;1H[1m-- INSERT --[16;7H[?12l[?25h[?25l[m*/[?12l[?25h[?25l[11;28H[46m{[17;9H}[?12l[?25h[?25l[m[11;28H{[17;9H}[18;78H[?12l[?25h[?25l [?12l[?25h[?25l :[?12l[?25h[?25l[18;79H[K[18;79H[?12l[?25h[?25l *[?12l[?25h[?25l*/[?12l[?25h[?25l[46m[[ma[46m][?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[?12l[?25h[?25l[m[a][?12l[?25h[?25l/ 1 <= a < argc -1かつ文字列str==argv[a]の時だけここに来る */[18;80H[K[18;20H[?12l[?25h[19;19H[2C[2C[18;21H[?25l/* 1 <= a < argc -1かつ文字列str==argv[a]の時だけここに来る */[18;21H[?12l[?25h[19;21H[2C[?25l [?12l[?25h[?25l *[?12l[?25h[?25l*_[?12l[?25h_[?25l[19;25H[K[19;25H[?12l[?25h[?25l*/[?12l[?25h[20;25H[19;23H[20;23H[19;21H[?25l/ 618行目から */[19;25H[K[19;10H[?12l[?25h[?25l/* 618行目から */[19;11H[?12l[?25h[29;1H[K[19;10H
