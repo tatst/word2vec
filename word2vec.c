@@ -260,7 +260,7 @@ void CreateBinaryTree() { /* void関数CreateBinaryTree() */
   free(parent_node); /* parent_node分のメモリを解放 */
 }
 
-void LearnVocabFromTrainFile() { /* void型関数LearnVocabFromTrainFile() */
+void LearnVocabFromTrainFile() { /* void型関数LearnVocabFromTrainFile()，297行目まで */
   char word[MAX_STRING];
   FILE *fin; /* FILE型ポインタfin */
   long long a, i; /* long long型変数a, i */
@@ -294,7 +294,7 @@ void LearnVocabFromTrainFile() { /* void型関数LearnVocabFromTrainFile() */
   }
   file_size = ftell(fin);
   fclose(fin); 
-}
+} /* 263行目からのLearnVocabFromTrainFile終わり */
 
 void SaveVocab() {
   long long i;
@@ -613,21 +613,21 @@ void TrainModel() { /* 614行目まで */
   fclose(fo); /* 559行目で開いたfoを閉じる */
 } /* 545行目void TrainModel()から */
 
-int ArgPos(char *str, int argc, char **argv) {
+int ArgPos(char *str, int argc, char **argv) { /* 676行目以下に頻出 */
   int a;
-  for (a = 1; a < argc; a++) if (!strcmp(str, argv[a])) {
+  for (a = 1; a < argc; a++) if (!strcmp(str, argv[a])) { /* 文字列strとargv[a]が等しい時 */
     if (a == argc - 1) {
       printf("Argument missing for %s\n", str);
-      exit(1);
+      exit(1); /* 1 <= a < argcかつ文字列str==argv[a]の時にfor文が動き，a == argc - 1の時にメッセージを表示，処理失敗で終了(これが成立するのは実引数がstrだけの場合と，実引数の最後がstrの時，i.e. -<argument>とだけ書いて直後に数字を書かないケースを排除) *
     }
-    return a;
-  }
-  return -1;
-}
+    return a; // 1 <= a < argc -1かつ文字列str==argv[a]の時だけここに来る
+  } // 618行目から
+  return -1; /* 実引数が無い時や文字列strに一致するargv[a]が無い時にここに来る  */
+} /* 616行目から */
 
-int main(int argc, char **argv) { /* main関数，703行目まで(argc:コマンドライン引数の総個数，**argv: コマンドライン引数の文字列を指すポインタの配列 */
+int main(int argc, char **argv) { /* main関数，703行目まで(argc:コマンドライン引数の総個数-1(何も引数をつけない時はargc==1)，argv: コマンドライン引数の文字列を指すポインタの配列 */
   int i;
-  if (argc == 1) { /* コマンドライン引数が1個の時，672行目まで */
+  if (argc == 1) { /* コマンドライン引数に何も付けない時，672行目まで */
     printf("WORD VECTOR estimation toolkit v 0.1c\n\n");
     printf("Options:\n");
     printf("Parameters for training:\n");
@@ -673,25 +673,25 @@ int main(int argc, char **argv) { /* main関数，703行目まで(argc:コマン
   output_file[0] = 0;
   save_vocab_file[0] = 0;
   read_vocab_file[0] = 0;
-  if ((i = ArgPos((char *)"-size", argc, argv)) > 0) layer1_size = atoi(argv[i + 1]);
-  if ((i = ArgPos((char *)"-train", argc, argv)) > 0) strcpy(train_file, argv[i + 1]);
-  if ((i = ArgPos((char *)"-save-vocab", argc, argv)) > 0) strcpy(save_vocab_file, argv[i + 1]);
-  if ((i = ArgPos((char *)"-read-vocab", argc, argv)) > 0) strcpy(read_vocab_file, argv[i + 1]);
-  if ((i = ArgPos((char *)"-debug", argc, argv)) > 0) debug_mode = atoi(argv[i + 1]);
-  if ((i = ArgPos((char *)"-binary", argc, argv)) > 0) binary = atoi(argv[i + 1]);
-  if ((i = ArgPos((char *)"-cbow", argc, argv)) > 0) cbow = atoi(argv[i + 1]);
+  if ((i = ArgPos((char *)"-size", argc, argv)) > 0) layer1_size = atoi(argv[i + 1]); /* 実引数"-size"が直後の数字と共に書かれた場合に限り直後の数字atoi(argv[i + 1]をint型に変換してlayer1_sizeに代入) */
+  if ((i = ArgPos((char *)"-train", argc, argv)) > 0) strcpy(train_file, argv[i + 1]); /* 実引数"-train"が直後の数字と共に書かれた場合に限りtrain_fileに直後の数字argv[i + 1]をコピー */
+  if ((i = ArgPos((char *)"-save-vocab", argc, argv)) > 0) strcpy(save_vocab_file, argv[i + 1]); /* 実引数"-save-vocab"が直後の数字と共に書かれた場合に限りsave_vocab_fileに直後の数字argv[i + 1]をコピー */
+  if ((i = ArgPos((char *)"-read-vocab", argc, argv)) > 0) strcpy(read_vocab_file, argv[i + 1]); /* 実引数"-read-vocab"が直後の数字と共に書かれた場合に限りread_vocab_fileに直後の数字argv[i + 1]をコピー */
+  if ((i = ArgPos((char *)"-debug", argc, argv)) > 0) debug_mode = atoi(argv[i + 1]); /* 実引数"-debug"が直後の数字と共に書かれた場合に限り直後の数字argv[i + 1]をint型に変換してdebug_modeに代入 */
+  if ((i = ArgPos((char *)"-binary", argc, argv)) > 0) binary = atoi(argv[i + 1]); /* 実引数"-binary"が直後の数字と共に書かれた場合に限り直後の数字argv[i + 1]をint型に変換してbinaryに代入 */
+  if ((i = ArgPos((char *)"-cbow", argc, argv)) > 0) cbow = atoi(argv[i + 1]); /* 実引数"-cbow"が直後の数字と共に書かれた場合に限り直後の数字argv[i + 1]をint型に変換してcbowに代入 */
   if (cbow) alpha = 0.05;
-  if ((i = ArgPos((char *)"-alpha", argc, argv)) > 0) alpha = atof(argv[i + 1]);
-  if ((i = ArgPos((char *)"-output", argc, argv)) > 0) strcpy(output_file, argv[i + 1]);
-  if ((i = ArgPos((char *)"-window", argc, argv)) > 0) window = atoi(argv[i + 1]);
-  if ((i = ArgPos((char *)"-sample", argc, argv)) > 0) sample = atof(argv[i + 1]);
-  if ((i = ArgPos((char *)"-hs", argc, argv)) > 0) hs = atoi(argv[i + 1]);
-  if ((i = ArgPos((char *)"-negative", argc, argv)) > 0) negative = atoi(argv[i + 1]);
-  if ((i = ArgPos((char *)"-threads", argc, argv)) > 0) num_threads = atoi(argv[i + 1]);
-  if ((i = ArgPos((char *)"-iter", argc, argv)) > 0) iter = atoi(argv[i + 1]);
-  if ((i = ArgPos((char *)"-min-count", argc, argv)) > 0) min_count = atoi(argv[i + 1]);
-  if ((i = ArgPos((char *)"-classes", argc, argv)) > 0) classes = atoi(argv[i + 1]);
-  vocab = (struct vocab_word *)calloc(vocab_max_size, sizeof(struct vocab_word)); /* vocabに動的にメモリ割当 */
+  if ((i = ArgPos((char *)"-alpha", argc, argv)) > 0) alpha = atof(argv[i + 1]); /* 実引数"-alpha"が直後の数字と共に書かれた場合に限りargv[i + 1]をdouble型に変換してalphaに代入 */
+  if ((i = ArgPos((char *)"-output", argc, argv)) > 0) strcpy(output_file, argv[i + 1]); /* 実引数"-output"が直後の数字と共に書かれた場合に限りoutput_fileに直後の数字argv[i + 1]をコピー */
+  if ((i = ArgPos((char *)"-window", argc, argv)) > 0) window = atoi(argv[i + 1]); /* 実引数"-window"が直後の数字と共に書かれた場合に限り直後の数字argv[i + 1]をint型に変換してwindowに代入 */
+  if ((i = ArgPos((char *)"-sample", argc, argv)) > 0) sample = atof(argv[i + 1]); /* 実引数"-sample"が直後の数字と共に書かれた場合に限り直後の数字argv[i + 1]をdouble型に変換してsampleに代入 */
+  if ((i = ArgPos((char *)"-hs", argc, argv)) > 0) hs = atoi(argv[i + 1]); /* 実引数"-hs"が直後の数字と共に書かれた場合に限り直後の数字argv[i + 1]をint型に変換してhsに代入 */
+  if ((i = ArgPos((char *)"-negative", argc, argv)) > 0) negative = atoi(argv[i + 1]); /* 実引数"-negative"が直後の数字と共に書かれた場合に限り直後の数字argv[i + 1]をint型に変換してnegativeに代入 */
+  if ((i = ArgPos((char *)"-threads", argc, argv)) > 0) num_threads = atoi(argv[i + 1]); /* 実引数"-threads"が直後の数字と共に書かれた場合に限り直後の数字argv[i + 1]をint型に変換してnum_threadsに代入 */
+  if ((i = ArgPos((char *)"-iter", argc, argv)) > 0) iter = atoi(argv[i + 1]); /* 実引数"-iter"が直後の数字と共に書かれた場合に限りargv[i + 1]をint型に変換してiterに代入 */
+  if ((i = ArgPos((char *)"-min-count", argc, argv)) > 0) min_count = atoi(argv[i + 1]); /* 実引数"-min-count"が直後の数字と共に書かれた場合に限り直後の数字argv[i + 1]をint型に変換してmin_countに代入 */
+  if ((i = ArgPos((char *)"-classes", argc, argv)) > 0) classes = atoi(argv[i + 1]); /* 実引数"-classes"が直後の数字と共に書かれた場合に限り直後の数字argv[i + 1]をint型に変換してclassesに代入 */
+  vocab = (struct vocab_word *)calloc(vocab_max_size, sizeof(struct vocab_word)); /* vocabに動的にメモリ割当(どこで解放？) */
   vocab_hash = (int *)calloc(vocab_hash_size, sizeof(int)); /* vocab_hashに動的にメモリ(vocab_hash_size = 30M)割当(どこで解放？) */
   expTable = (real *)malloc((EXP_TABLE_SIZE + 1) * sizeof(real)); /* expTableに動的にメモリ割当(どこで解放？) */
   for (i = 0; i < EXP_TABLE_SIZE; i++) {
