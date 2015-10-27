@@ -73,23 +73,23 @@ void ReadWord(char *word, FILE *fin) { /* char型ポインタwordとファイル
   int a = 0, ch; /* int型aとch */
   while (!feof(fin)) { /* ファイルポインタfinがファイルの終端に達した時にループ終了 */
     ch = fgetc(fin); /* ファイルポインタfinから1文字読込んでint型で返す */
-    if (ch == 13) continue; /* ch == 13の時処理をスキップ */
-    if ((ch == ' ') || (ch == '\t') || (ch == '\n')) {/* 空白・タブ・改行がある場合 */
-      if (a > 0) { /* 最初は条件を満たさない */
-        if (ch == '\n') ungetc(ch, fin); /* ファイルポインタfinに1文字返却しchを返す */
-        break;
+    if (ch == 13) continue; /* ch == 13(キャリッジ・リターン(CR)'/r'を表す)の時処理をスキップして75行目に戻る */
+    if ((ch == ' ') || (ch == '\t') || (ch == '\n')) {/* 空白・タブ・改行がある場合，86行目まで */
+      if (a > 0) { /* 文頭以外の時(最初は条件を満たさない) */
+        if (ch == '\n') ungetc(ch, fin); /* 文頭以外の箇所で改行の'\n'が出てきたらファイルポインタfinに1文字返却しchを返す */
+        break; /* 文頭以外の箇所で改行・タブ・空白(単語の切れ目)が出てきたら74行目からのループを脱出 */
       }
-      if (ch == '\n') { /* 改行が有る場合 */
+      if (ch == '\n') { /* 文頭を含めて改行が有る場合 */
         strcpy(word, (char *)"</s>"); /* 配列wordに文字列"</s>"をコピー */
         return;
-      } else continue; /* 改行が無い場合処理をスキップ */
-    }
+      } else continue; /* 改行が無い場合処理をスキップして75行目に戻る */
+    } /* 77行目から */
     word[a] = ch; /* 配列wordのa番目にint型chを代入 */
     a++;
     if (a >= MAX_STRING - 1) a--;   // Truncate too long words /* 長すぎる単語を削除 */
-  }
-  word[a] = 0;
-}
+  } /* 74行目から */
+  word[a] = 0; /* 文頭以外の箇所で改行・タブ・空白が出た時word[a]に0を代入 */
+} /* 72行目から */
 
 // Returns hash value of a word /* 単語のhash値を返す */
 int GetWordHash(char *word) { /* char型ポインタwordを引数に持つint型関数GetWordHash */
@@ -103,17 +103,17 @@ int GetWordHash(char *word) { /* char型ポインタwordを引数に持つint型
 int SearchVocab(char *word) { /* char型ポインタwordを引数に持つint型関数SearchVocab() */
   unsigned int hash = GetWordHash(word); /* 符号無int型hashにwordのhash値を代入 */
   while (1) { /* 無限ループ */
-    if (vocab_hash[hash] == -1) return -1; /* vocab_hash[hash]が-1の時-1を返す */
-    if (!strcmp(word, vocab[vocab_hash[hash]].word)) return vocab_hash[hash]; /* 文字列wordとvocab[vocab_hash[hash]].wordが等しい時vocab_hash[hash]を返す */
-    hash = (hash + 1) % vocab_hash_size; /* hashに(hash + 1) % vocab_hash_sizeを返す */
-  }
-  return -1;
-}
+    if (vocab_hash[hash] == -1) return -1; /* vocab_hash[hash]が-1の時-1を返して関数終了 */
+    if (!strcmp(word, vocab[vocab_hash[hash]].word)) return vocab_hash[hash]; /* 文字列wordとvocab[vocab_hash[hash]].wordが等しい時vocab_hash[hash]を返して関数終了 */
+    hash = (hash + 1) % vocab_hash_size; /* hashに(hash + 1)をvocab_hash_sizeで割った余りを代入(実質hash++) */
+  } /* 105行目の無限ループここまで */
+  return -1; /* このreturnの存在理由は？ */
+} /* 103行目より */
 
 // Reads a word and returns its index in the vocabulary /* 単語を読取り，語彙中での単語の番号を返す */
 int ReadWordIndex(FILE *fin) { /* ファイルポインタfinを引数に持つint型関数ReadWordIndex() */
-  char word[MAX_STRING]; /* MAX_STRINGを引数に持つchar型wordを宣言 */
-  ReadWord(word, fin); /* 先程定義したReadWordをchar型ポインタwordとファイルポインタfinを引数に計算 */
+  char word[MAX_STRING]; /* MAX_STRING個の要素を持つchar型配列wordを宣言 */
+  ReadWord(word, fin); /* 先程定義したReadWordをchar型ポインタwordとファイルポインタfinを引数に取り，単語の情報が入ったポインタwordを返す */
   if (feof(fin)) return -1; /* ファイルポインタが終端に達した時-1を返す */
   return SearchVocab(word); /* 単語wordの語彙中での位置を返す */
 }
@@ -276,7 +276,7 @@ void LearnVocabFromTrainFile() { /* void型関数LearnVocabFromTrainFile()，297
     ReadWord(word, fin); /* 72行目で定義したReadWord関数でtrain_fileの単語を読み込む */
     if (feof(fin)) break; /* ファイルポインタが終端に達した時無限ループから脱出 */
     train_words++; /* train_wordsに1を足す */
-    if ((debug_mode > 1) && (train_words % 100000 == 0)) { /* debug_mode > 1かつtrain_wordsが100000で割切れる時 */
+    if ((debug_mode > 1) && (train_words % 100000 == 0)) { /* debug_mode > 1かつtrain_wordsが100000で割切れる時，41行目よりdebug_mode == 2 > 1 */
       printf("%lldK%c", train_words / 1000, 13);
       fflush(stdout);
     }
@@ -288,7 +288,7 @@ void LearnVocabFromTrainFile() { /* void型関数LearnVocabFromTrainFile()，297
     if (vocab_size > vocab_hash_size * 0.7) ReduceVocab();
   }
   SortVocab(); /* 146行目で定義した語彙を単語数を用いて頻度順に並替える関数SortVocab() */
-  if (debug_mode > 0) {
+  if (debug_mode > 0) { /* 41行目debug_mode = 2よりこれはTRUE */
     printf("Vocab size: %lld\n", vocab_size);
     printf("Words in train file: %lld\n", train_words);
   }
@@ -322,7 +322,7 @@ void ReadVocab() { /* void型関数ReadVocab，337行目まで */
     i++;
   }
   SortVocab();
-  if (debug_mode > 0) {
+  if (debug_mode > 0) { /* 41行目debug_mode = 2よりTRUE */
     printf("Vocab size: %lld\n", vocab_size);
     printf("Words in train file: %lld\n", train_words);
   }
@@ -375,7 +375,7 @@ void *TrainModelThread(void *id) { /* 543行目まである */
     if (word_count - last_word_count > 10000) { /* 387行目まで */
       word_count_actual += word_count - last_word_count;
       last_word_count = word_count;
-      if ((debug_mode > 1)) { /* 384行目まで */
+      if ((debug_mode > 1)) { /* 41行目debug_mode = 2よりTRUE，384行目まで */
         now=clock();
         printf("%cAlpha: %f  Progress: %.2f%%  Words/thread/sec: %.2fk  ", 13, alpha,
          word_count_actual / (real)(iter * train_words + 1) * 100,
@@ -389,7 +389,7 @@ void *TrainModelThread(void *id) { /* 543行目まである */
       while (1) { /* 無限ループ(404行目まで) */
         word = ReadWordIndex(fi); /* 114行目で定義の単語を読取り，語彙中での単語の番号を返すReadWordIndex */
         if (feof(fi)) break; /* ファイルポインタが終端に達した時389行目からの無限ループから脱出 */
-        if (word == -1) continue; /* word == -1の時処理をスキップ */
+        if (word == -1) continue; /* word == -1の時処理をスキップして390行目に戻る */
         word_count++;
         if (word == 0) break; /* 389行目からの無限ループから脱出 */
         // The subsampling randomly discards frequent words while keeping the ranking same
