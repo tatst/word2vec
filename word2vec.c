@@ -272,7 +272,7 @@ void LearnVocabFromTrainFile() { /* void型関数LearnVocabFromTrainFile()，297
   }
   vocab_size = 0;
   AddWordToVocab((char *)"</s>"); /* 単語を語彙に加える関数AddWordToVocab */
-  while (1) { /* 無限ループ */
+  while (1) { /* 無限ループ，289行目まで */
     ReadWord(word, fin); /* 72行目で定義したReadWord関数でtrain_fileの単語を読み込む */
     if (feof(fin)) break; /* ファイルポインタが終端に達した時無限ループから脱出 */
     train_words++; /* train_wordsに1を足す */
@@ -286,7 +286,7 @@ void LearnVocabFromTrainFile() { /* void型関数LearnVocabFromTrainFile()，297
       vocab[a].cn = 1;
     } else vocab[i].cn++;
     if (vocab_size > vocab_hash_size * 0.7) ReduceVocab();
-  }
+  } /* 275行目からの無限ループここまで */
   SortVocab(); /* 146行目で定義した語彙を単語数を用いて頻度順に並替える関数SortVocab() */
   if (debug_mode > 0) { /* 41行目debug_mode = 2よりこれはTRUE */
     printf("Vocab size: %lld\n", vocab_size);
@@ -373,7 +373,7 @@ void *TrainModelThread(void *id) { /* 543行目まである */
   fseek(fi, file_size / (long long)num_threads * (long long)id, SEEK_SET);  /* ファイルfiのファイル位置演算子をSEEK_SETを基準にfile_size / (long long)num_threads * (long long)idバイト移動 */
   while (1) { /* 無限ループ(538行目まで) */
     if (word_count - last_word_count > 10000) { /* 387行目まで */
-      word_count_actual += word_count - last_word_count;
+      word_count_actual += word_count - last_word_count; /* 実際のword_countを記録 */
       last_word_count = word_count;
       if ((debug_mode > 1)) { /* 41行目debug_mode = 2よりTRUE，384行目まで */
         now=clock();
