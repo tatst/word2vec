@@ -23,7 +23,7 @@
 #define MAX_EXP 6
 #define MAX_SENTENCE_LENGTH 1000 /* 365行目と403行目で使用 */
 #define MAX_CODE_LENGTH 40 /* 最大コード長は40字まで */
-
+#define N 100000 /* 学習を途中で打ち切るパラメータ */
 const int vocab_hash_size = 30000000;  // Maximum 30 * 0.7 = 21M words in the vocabulary
 
 typedef float real;                    // Precision of float numbers
@@ -390,6 +390,7 @@ void *TrainModelThread(void *id) { /* 543行目まである */
         word = ReadWordIndex(fi); /* 114行目で定義したReadWordIndexで単語の位置をint型でwordに代入 */
         if (feof(fi)) break; /* ファイルポインタが終端に達した時389行目からの無限ループから脱出 */
         if (word == -1) continue; /* word == -1の時処理をスキップして390行目に戻る */
+	if (word_count > N) break; /* (以下1行ずれる)word_countがNを超えたら無限ループ脱出 */
         word_count++;
         if (word == 0) break; /* 389行目からの無限ループから脱出 */
         // The subsampling randomly discards frequent words while keeping the ranking same
