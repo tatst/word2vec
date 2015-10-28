@@ -1217,3 +1217,82 @@ void ReadWord(char *word, FILE *fin) { /* char型ポインタwordとファイル
 [93m128 [m  vocab_size++; /* vocab_sizeに1を足す */[27;68H[?12l[?25h[28;46H[29;1H[K[28;45H[?25l[?12l[?25h[?25l
 :[?12l[?25hw[?25l"word2vec.c" 703L, 45986C written[28;45H[?12l[?25h[?25l[29;1H[K[29;1H:[?12l[?25hq[?25l[29;1H[K[29;1H[?1l>[?12l[?25h[?1049lbash-3.2$ make
 gcc word2vec.c -o word2vec -lm -pthread -O3 -march=native -Wall -funroll-loops -Wno-unused-result
+bash-3.2$ git add .
+bash-3.2$ git commit ""[K[K-m ""A"d"d" "c"o"m"m"e"n"t"s" "o"n" "w"o"r"d"2"v"e"c"."c" "2"0"1"5"-"1"0"-"2"7"[C
+[other bb6bea8] Add comments on word2vec.c 2015-10-27
+ 4 files changed, 1282 insertions(+), 25 deletions(-)
+ create mode 100644 log-2015-10-27
+bash-3.2$ vi word2vec.c 
+[?1049h[?1h=[1;29r[?12;25h[?12l[?25h[27m[m[H[2J[?25l[29;1H"word2vec.c" 703L, 45986C[>c[1;1H//  Copyright 2013 Google Inc. All Rights Reserved.
+//
+//  Licensed under the Apache License, Version 2.0 (the "License");
+//  you may not use this file except in compliance with the License.
+//  You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS,
+//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//  See the License for the specific language governing permissions and
+//  limitations under the License.
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <math.h>
+#include <pthread.h>
+
+#define MAX_STRING 100 /* 最大文字数は100字まで */
+#define EXP_TABLE_SIZE 1000
+#define MAX_EXP 6
+#define MAX_SENTENCE_LENGTH 1000 /* 365行目と403行目で使用 */
+#define MAX_CODE_LENGTH 40 /* 最大コード長は40字まで */
+
+const int vocab_hash_size = 30000000;  // Maximum 30 * 0.7 = 21M words in the vocabulary[1;1H[?12l[?25h[?25l[29;1H[K[29;1H:[?12l[?25hset number[?25l[1;1H[93m  1 [m//  Copyright 2013 Google Inc. All Rights Reserved.
+[93m  2 [m//
+[93m  3 [m//  Licensed under the Apache License, Version 2.0 (the "License");
+[93m  4 [m//  you may not use this file except in compliance with the License.
+[93m  5 [m//  You may obtain a copy of the License at
+[93m  6 [m//
+[93m  7 [m//      http://www.apache.org/licenses/LICENSE-2.0
+[93m  8 [m//
+[93m  9 [m//  Unless required by applicable law or agreed to in writing, software
+[93m 10 [m//  distributed under the License is distributed on an "AS IS" BASIS,
+[93m 11 [m//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+[93m 12 [m//  See the License for the specific language governing permissions and
+[93m 13 [m//  limitations under the License.
+[93m 14 
+ 15 [m#include <stdio.h>
+[93m 16 [m#include <stdlib.h>
+[93m 17 [m#include <string.h>
+[93m 18 [m#include <math.h>
+[93m 19 [m#include <pthread.h>
+[93m 20 
+ 21 [m#define MAX_STRING 100 /* 最大文字数は100字まで */
+[93m 22 [m#define EXP_TABLE_SIZE 1000
+[93m 23 [m#define MAX_EXP 6
+[93m 24 [m#define MAX_SENTENCE_LENGTH 1000 /* 365行目と403行目で使用 */
+[93m 25 [m#define MAX_CODE_LENGTH 40 /* 最大コード長は40字まで */
+[93m 26 
+ 27 [mconst int vocab_hash_size = 30000000;  // Maximum 30 * 0.7 = 21M words in the vocabuu[28;1H[93m    [mlary[1;5H[?12l[?25h[2;5H[?25l[29;1H[K[29;1H:[?12l[?25h400[?25l[27m[m[H[2J[1;1H[93m391 [m[7C if (feof(fi)) break; /* ファイルポインタが終端に達した時389行目からの無限ル[94m>>[m[2;1H[93m    [mープから脱出 */
+[93m392 [m[7C if (word == -1) continue; /* word == -1の時処理をスキップして390行目に戻る **[4;1H[93m    [m/
+[93m393 [m[7C word_count++;
+[93m394 [m[7C if (word == 0) break; /* 389行目からの無限ループから脱出 */
+[93m395 [m[7C // The subsampling randomly discards frequent words while keeping the rankinn[8;1H[93m    [mg same
+[93m396 [m[7C if (sample > 0) { /* sample > 0 の時(400行目まで) */
+[93m397 [m[9C real ran = (sqrt(vocab[word].cn / (sample * train_words)) + 1) * (sample **[11;1H[93m    [m train_words) / vocab[word].cn;
+[93m398 [m[9C next_random = next_random * (unsigned long long)25214903917 + 11;
+[93m399 [m[9C if (ran < (next_random & 0xFFFF) / (real)65536) continue; /* ran < (next_rr[14;1H[93m    [mandom & 0xFFFF) / (real)65536 の時処理をスキップして390行目に戻る */
+[93m400 [m[7C } /* 396行目からのif文ここまで */
+[93m401 [m[7C sen[sentence_length] = word; /* 配列senの各要素にwordを代入 */
+[93m402 [m[7C sentence_length++; /* ここでsentence_lengthが増える */
+[93m403 [m[7C if (sentence_length >= MAX_SENTENCE_LENGTH) break; /* sentence_lengthがMAX_SS[19;1H[93m    [mENTENCE_LENGTH == 1000に達した時389行目からの無限ループから脱出 (i.e. 配列senはMAX_SS[20;1H[93m    [mENTENCE_LENGTH + 1個の要素が有るので，senの各要素にwordを代入し終わったら無限ループ[94m>>[m[21;1H[93m    [mを抜ける) */
+[93m404 [m      } /*  389行目からの無限ループここまで */
+[93m405 [m      sentence_position = 0; /* 364行目でlong long sentence_position = 0と置いている[24;1H[93m    [mが，ここでも改めて代入(533行目のsentence_position++はここに響く？) */
+[93m406 [m    } /* 388行目から */
+[93m407 [m    if (feof(fi) || (word_count > train_words / num_threads)) { /* ファイルポインタ[94m>>[m[27;1H[93m    [mが終端に達した若くはword_countがtrain_words / num_threadsより多い場合(416行目まで) **[28;1H[93m    [m/[15;13H[?12l[?25h[16;13H[17;13H[18;13H[22;13H[23;13H[25;13H[26;13H[25;13H[23;13H[22;13H[18;13H[17;13H[16;13H[?25l[9;29H[46m{[15;13H}[?12l[?25h[?25l[m[9;29H{[15;13H}[13;13H[?12l[?25h[12;13H[10;13H[9;13H[7;13H[6;13H[5;13H[3;13H[1;13H[?25l[1;28r[1;1H[2L[1;29r[1;1H[93m390 [m[7C word = ReadWordIndex(fi); /* 114行目で定義の単語を読取り，語彙中での単語の番[2;1H[93m    [m号を返すReadWordIndex */[28;1H[94m@                                                                                       [1;13H[?12l[?25h[?25l[1;28r[m[1;1H[L[1;29r[1;1H[93m389 [m      while (1) { /* 無限ループ(404行目まで) */[1;13H[?12l[?25h[2;13H[1;13H[?25l[1;28r[1;1H[2L[1;29r[1;1H[93m388 [m    if (sentence_length == 0) { /* if文(406行目まで),364行目より当初はsentence_lengtt[2;1H[93m    [mh == 0だが389行目からの無限ループで最終的にsentence_lengthが1000になる */[28;1H[94m@                                                                                       [1;13H[?12l[?25h[3;13H[4;13H[6;13H[8;13H[10;13H[11;13H[12;13H[14;13H[15;13H[17;13H[18;13H[?25l[m[14;29H[46m{[20;13H}[?12l[?25h[?25l[m[14;29H{[20;13H}[21;13H[?12l[?25h[22;13H[23;13H[27;13H[?25l[1;28r[1;1H[2M[1;29r[26;1H[93m405 [m      sentence_position = 0; /* 364行目でlong long sentence_position = 0と置いている[27;1H[93m    [mが，ここでも改めて代入(533行目のsentence_position++はここに響く？) */
+[93m406 [m    } /* 388行目から */[26;13H[?12l[?25h[28;13H[26;13H[25;13H[21;13H[20;13H[19;13H[?25l[12;29H[46m{[18;13H}[?12l[?25h[?25l[m[12;29H{[18;13H}[16;13H[?12l[?25h[15;13H[13;13H[12;13H[10;13H[9;13H[8;13H[6;13H[4;13H[2;13H[1;13H[2;13H[4;13H[6;13H[4;13H[2;13H[4;13H[6;13H[4;13H[2;13Hword =[4;19H[2;19H ReadWordInde[?25lx[46m([mfi[46m)[?12l[?25h[?25l[m(fi)[?12l[?25hf[?25l[46m([mfi[46m)[?12l[?25h[?25l[m(fi)[?12l[?25h; /* 114[2C[2C[2C[2C[2C[2C[2C[2C[2C[2C[2C[2C[2C[2C[2C[2C[2C[2C[2C[2C[2C[3;5H[2C[2C[2C[2CReadWordInde[?25l[29;1H[1m-- INSERT --[3;26H[?12l[?25h[?25l[mxで */[?12l[?25h[?25lSearchVocab */[?12l[?25h[?25la */[3;41H[K[3;38H[?12l[?25h[?25lc */[3;40H[K[3;37H[?12l[?25h[?25lo */[3;39H[K[3;36H[?12l[?25h[?25lV */[3;38H[K[3;35H[?12l[?25h[?25lh */[3;37H[K[3;34H[?12l[?25h[?25lc */[3;36H[K[3;33H[?12l[?25h[?25lr */[3;35H[K[3;32H[?12l[?25h[?25la */[3;34H[K[3;31H[?12l[?25h[?25le */[3;33H[K[3;30H[?12l[?25h[?25lS */[3;32H[K[3;29H[?12l[?25h[?25l */[3;31H[K[3;28H[?12l[?25h[?25lReadWordIndexで */[3;29H[K[3;11H[?12l[?25h[?25lReadWordIndexで */[3;27H[K[3;9H[?12l[?25h[?25lReadWordIndexで */[3;25H[K[3;7H[?12l[?25h[?25l[93m [mReadWordIndexで */[3;23H[K[3;5H[?12l[?25h[?25l[2;87HRee[3;1H[93m    [madWordIndexで */[3;21H[K[2;87H[?12l[?25h[?25lReadd[3;1H[93m    [mWordIndexで */[3;19H[K[2;85H[?12l[?25h[?25lReadWoo[3;1H[93m    [mrdIndexで */[3;17H[K[2;83H[?12l[?25h[?25lReadWordd[3;1H[93m    [mIndexで */[3;15H[K[2;81H[?12l[?25h[?25lReadWordInn[3;1H[93m    [mdexで */[3;13H[K[2;79H[?12l[?25h[?25lReadWordIndee[3;1H[93m    [mxで */[3;11H[K[2;77H[?12l[?25h[?25lReadWordIndex[94m>>[m[3;1H[93m    [mで */[3;10H[K[2;75H[?12l[?25h[?25lReadWordIndexで  [3;1H[93m    [m*/[3;8H[K[2;73H[?12l[?25h[?25l[2;28r[28;1H
+[1;29r[2;1H[93m390 [m        word = ReadWordIndex(fi); /* 114行目で定義の単語を読取り，ReadWordIndexで */[28;1H[93m407 [m    if (feof(fi) || (word_count > train_words / num_threads)) { /* ファイルポインタ[94m>[28;1H@                                                                                       [2;71H[?12l[?25h[?25l[mReadWordIndexで */[2;87H[K[2;69H[?12l[?25h[?25lReadWordIndexで */[2;85H[K[2;67H[?12l[?25h[?25lReadWordIndexで */[2;83H[K[2;65H[?12l[?25h[?25lReadWordIndexで */[2;81H[K[2;63H[?12l[?25h[?25lReadWordIndexで */[2;79H[K[2;61H[?12l[?25h[?25lReadWordIndexで */[2;77H[K[2;59H[?12l[?25h[?25lReadWordIndexで */[2;75H[K[2;57H[?12l[?25h[?25lReadWordIndexで */[2;73H[K[2;55H[?12l[?25h[?25lReadWordIndexで */[2;71H[K[2;53H[?12l[?25h[?25lReadWordIndexで */[2;69H[K[2;51H[?12l[?25h[?25l定義したReadWordIndexで */[2;59H[?12l[?25hReadWordIndex[2C[?25l単語の */[?12l[?25h[?25l位置を */[2;86H[?12l[?25h[?25l[3;28r[3;1H[L[1;29r[2;86Hw **[3;1H[93m    [m/[2;87H[?12l[?25h[?25lwo  [3;1H[93m    [m*/[2;88H[?12l[?25h[?25lorr[3;1H[93m    [m */[?12l[?25h[?25l[93m [md */[?12l[?25h[?25ldに */[?12l[?25h[?25l代入 */[?12l[?25h[2;88H[4;80H[6;79H[4;80H[6;30H[8;26H[6;30H[8;26H[9;30H[8;26H[6;30H[4;30H[2;30Hnde[?25lx[46m([mfi[46m)[m[51Crr[3;1H[93m [2;33H[?12l[?25h[?25l[m[55Crr[3;1H[93m [2;34H[?12l[?25h[?25l[m(fi)[51Crr[3;1H[93m [2;35H[?12l[?25h[?25l[m[46m([mfi[46m)[m[51Crr[3;1H[93m [2;36H[?12l[?25h[?25l[m[52Crr[3;1H[93m [2;37H[?12l[?25h[?25l[m(fi)[51Crr[3;1H[93m [2;38H[?12l[?25h[m /* 114[2C[2C[2C[2C[2C[2C[2CReadWordIndex[2C[2C[2C[2C[2C[2C[2C[?25liwoo[3;1H[93m    [mrdに代入 */[2;87H[?12l[?25h[?25linww[3;1H[93m    [mordに代入 */[2;88H[?12l[?25h[?25lntt[3;1H[93m    [mwordに代入 */[3;5H[?12l[?25h[?25l[93m [m型でwordに代入 */[3;9H[?12l[?25h[5;9H[7;6H[5;9H[2C[2C[2C[2C */[7;6H[8;26H[9;72H[11;11H[9;72H[11;11H[9;72H[10;45H[12;45H[13;45H[15;45H[16;45H[18;45H[19;45H[20;45H[19;45H[18;45H[16;45H[15;45H[16;45H[18;45H[19;45H[18;45H[16;45H[15;45H[13;45H[15;45Hnsigned long lon[?25l[15;43H[46m([18C)[?12l[?25h[?25l)[?12l[?25h[?25l[m[15;43H([18C)2[?12l[?25h5214903917 + 11;[?25l [?12l[?25h[?25l /[?12l[?25h[?25l/*[?12l[?25h[?25l [?12l[?25h[?25l [?12l[?25h[?25l *[?12l[?25h[?25l*/[?12l[?25h[?25l[16;28r[16;1H[L[1;29r[15;83H 線形  [16;1H[93m    [m*/[15;88H[?12l[?25h[?25l[94m>>[m[16;1H[93m    [m合同法 */[?12l[?25h[?25lで */[?12l[?25h[?25l乱数 */[?12l[?25h[?25l生成 */[?12l[?25h[18;21H/[?25l [46m([mreal[46m)[?12l[?25h[?25l([?12l[?25h[?25l[m(real)[?12l[?25hea[?25l[46m([mreal[46m)[?12l[?25h[?25l)[?12l[?25h[?25l[m(real)6[?12l[?25h5536 [2C[2C[2C[2C[2C[2C[2C[2C[19;46H[20;75H[29;1H[K[20;74H[?25l[?12l[?25h[?25l[29;1H:[?12l[?25hq[?25l[97m[41mE37: No write since last change (add ! to override)[20;74H[?12l[?25h[?25l[m[29;1H[K[29;1H:[?12l[?25hw[?25l"word2vec.c" 703L, 46009C written[20;74H[?12l[?25h[?25l[29;1H[K[29;1H:[?12l[?25hq[?25l[29;1H[K[29;1H[?1l>[?12l[?25h[?1049lbash-3.2$ vi word2vec.c [C[C[C[C[C[C[C[C[C[C[Kam[K[Kmake
+gcc word2vec.c -o word2vec -lm -pthread -O3 -march=native -Wall -funroll-loops -Wno-unused-result
+bash-3.2$ exi

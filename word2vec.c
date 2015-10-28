@@ -387,7 +387,7 @@ void *TrainModelThread(void *id) { /* 543行目まである */
     }
     if (sentence_length == 0) { /* if文(406行目まで),364行目より当初はsentence_length == 0だが389行目からの無限ループで最終的にsentence_lengthが1000になる */
       while (1) { /* 無限ループ(404行目まで) */
-        word = ReadWordIndex(fi); /* 114行目で定義の単語を読取り，語彙中での単語の番号を返すReadWordIndex */
+        word = ReadWordIndex(fi); /* 114行目で定義したReadWordIndexで単語の位置をint型でwordに代入 */
         if (feof(fi)) break; /* ファイルポインタが終端に達した時389行目からの無限ループから脱出 */
         if (word == -1) continue; /* word == -1の時処理をスキップして390行目に戻る */
         word_count++;
@@ -395,7 +395,7 @@ void *TrainModelThread(void *id) { /* 543行目まである */
         // The subsampling randomly discards frequent words while keeping the ranking same
         if (sample > 0) { /* sample > 0 の時(400行目まで) */
           real ran = (sqrt(vocab[word].cn / (sample * train_words)) + 1) * (sample * train_words) / vocab[word].cn;
-          next_random = next_random * (unsigned long long)25214903917 + 11;
+          next_random = next_random * (unsigned long long)25214903917 + 11; /* 線形合同法で乱数生成 */
           if (ran < (next_random & 0xFFFF) / (real)65536) continue; /* ran < (next_random & 0xFFFF) / (real)65536 の時処理をスキップして390行目に戻る */
         } /* 396行目からのif文ここまで */
         sen[sentence_length] = word; /* 配列senの各要素にwordを代入 */
